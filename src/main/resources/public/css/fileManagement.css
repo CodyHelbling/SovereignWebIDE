@@ -7,6 +7,17 @@
 
 }
 
+.bWidth {
+    border-radius: 0px;
+    border-color: #404040;
+    background-color: #657b83;
+    width: 197px;
+    height: 25px;
+    position: relative;
+    left: -57px;
+    top: -1.5px;
+}
+
 .newFolderForm {
     position: fixed;
     margin: 0 auto;

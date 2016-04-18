@@ -26,27 +26,46 @@ function fileDict() {
     targetDict["Mains"] = "mainFiles";
 
     this.addFolder = function(folderName) {
-        var divID = targetDict[cMenu1Target];
-        var div = createDiv(folderName + "div")
-        var filesDiv = createDiv(folderName + "div" + "files");
-        var img = createImg(folderName + "img", "14", "20", "index.png");
-        var name = document.createTextNode(folderName);
-        var button = document.createElement("BUTTON");
-        var dropB = createDropButton(folderName+"drop", filesDiv.getAttribute("id"));
-        button.appendChild(name);
-        document.body.appendChild(button);
-        button.setAttribute("id", folderName);
-        button.setAttribute("class", "folderStyle");
-        button.addEventListener("contextmenu", menuShowHide);
-        div.appendChild(dropB);
-        div.appendChild(img);
-        div.appendChild(button);
-        div.appendChild(filesDiv);
-        document.getElementById(divID).appendChild(div);
-        targetDict[div.getAttribute("id")] = filesDiv.getAttribute("id");
+        if (!(targetDict[folderName + "div_" + targetDict[cMenu1Target]])) {
+            var divID = targetDict[cMenu1Target];
+            var div = createDiv(folderName + "div_" + divID);
+            var filesDiv = createDiv(folderName + "div" + "files");
+            var img = createImg(folderName + "img", "14", "20", "index.png");
+            var name = document.createTextNode(folderName);
+            var button = document.createElement("BUTTON");
+            var dropB = createDropButton(folderName + "drop", filesDiv.getAttribute("id"));
+            button.appendChild(name);
+            document.body.appendChild(button);
+            button.setAttribute("id", folderName);
+            button.setAttribute("class", "folderStyle");
+            button.addEventListener("contextmenu", menuShowHide);
+            div.appendChild(dropB);
+            div.appendChild(img);
+            div.appendChild(button);
+            div.appendChild(filesDiv);
+            document.getElementById(divID).appendChild(div);
+            targetDict[div.getAttribute("id")] = filesDiv.getAttribute("id");
+        }
+        else {
+            alert('Folder Already Exist!');
+        }
         //fileCount += 1;
         return false;
     };
+    this.addFile = function(fileName) {
+        var divID = targetDict[cMenu1Target];
+        var div = createDiv(fileName + "div_" + targetDict[cMenu1Target]);
+        var name = document.createTextNode(fileName);
+        var button = document.createElement("BUTTON");
+        button.appendChild(name);
+        document.body.appendChild(button);
+        button.setAttribute("id", buttonName);
+        button.setAttribute("class", "fileStyle");
+        button.addEventListener("dblclick", openFile);
+        //div.appendChild(img);
+        div.appendChild(button);
+        document.getElementById(divID).appendChild(div);
+    }
     this.getCurrTarget = function() {
         return targetDict[cMenu1Target];
     };
@@ -56,6 +75,10 @@ function fileDict() {
     this.setMenuTarget = function(aTarget){
         cMenu1Target = aTarget;
     };
+    this.testTarget = function(key){
+        if (targetDict[key]) { return true; }
+        else { return false; }
+    }
     return this;
 }
 
@@ -71,7 +94,6 @@ function createFolder (input) {
     document.getElementById("folderInput").value = "";
     return false;
 }
-
 
 //http://stackoverflow.com/questions/15702867/html-tooltip-position-relative-to-mouse-pointer
 function menuShowHide(event) {
@@ -111,23 +133,11 @@ function showHide(id){
  * @param {String} divID - id of parent div.
  */
 
-function createFile () {
-    var divID = dict.getMenuTarget();
-    var buttonName = 'button' + bCount;
-    bCount += 1;
-    var div = createDiv(buttonName + "div");
-    //var img = createImg(buttonName + "img", "14", "20", "index.png");
-    //document.body.appendChild(img);
-    var name = document.createTextNode(buttonName);
-    var button = document.createElement("BUTTON");
-    button.appendChild(name);
-    document.body.appendChild(button);
-    button.setAttribute("id", buttonName);
-    button.setAttribute("class", "fileStyle");
-    button.addEventListener("dblclick", openFile);
-    //div.appendChild(img);
-    div.appendChild(button);
-    document.getElementById(divID).appendChild(div);
+function createFile (input) {
+    dict.addFile(document.getElementById(input).value);
+    showHide("newFileForm");
+    document.getElementById("fileInput").value = "";
+    return false;
 }
 
 /**
