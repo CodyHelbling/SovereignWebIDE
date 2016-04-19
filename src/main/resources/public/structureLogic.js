@@ -66,6 +66,10 @@ function fileDict() {
         div.appendChild(button);
         document.getElementById(divID).appendChild(div);
     }
+    this.deleteFolder = function(id) {
+        targetDict[id] = null;
+        document.getElementById(id).remove();
+    }
     this.getCurrTarget = function() {
         return targetDict[cMenu1Target];
     };
@@ -93,6 +97,12 @@ function createFolder (input) {
     showHide("newFolderForm");
     document.getElementById("folderInput").value = "";
     return false;
+}
+
+function deleteFolder(event) {
+    var something = event.target.getAttribute("id");
+    alert(something);
+    //dict.deleteFolder(event.target.getAttribute("id"));
 }
 
 //http://stackoverflow.com/questions/15702867/html-tooltip-position-relative-to-mouse-pointer
