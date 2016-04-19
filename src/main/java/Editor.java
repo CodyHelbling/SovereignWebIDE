@@ -28,6 +28,7 @@ public class Editor {
         port(4568);
         webSocket("/editor", EditorHandler.class);
         Commands.main();
+
         init();
     }
 

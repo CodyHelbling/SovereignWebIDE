@@ -19,6 +19,7 @@ public class SplitString {
         return data3;
     }
 
+
     public static String[] get_command(String command_and_name) {
         String[] data = command_and_name.split(":");
         System.out.println(data[0]);

@@ -15,6 +15,7 @@ public class EditorHandler {
     private int NumberOfUsers = 0;
     private String msg;
 
+
     /**
      * This method is called whenever a new client connects.
      * @param user The id of the user.
