@@ -13,29 +13,13 @@ import static spark.Spark.*;
 
 /**
  * Created by cody on 04/04/16.
- *
- * Commands contains methods for commands that will be ran in the IDE.
- *  - Save File
- *  - Open File
- *  - Find File
- *  - Compile
- *  - Run
  */
 public class Commands {
 
-    /**
-     * Establishes the webSocket used for IDE commands.
-     */
     public static void main() {
         webSocket("/commands", CommandsHandler.class);
     }
 
-
-
-    /**
-     * Saves the file to the project directory.
-     * @param file_name - The name of the file being saved.
-     */
     public static void save_file(String file_name) {
         try {
             // Grab the file from Editor. It is currently one string containing '\n'.
