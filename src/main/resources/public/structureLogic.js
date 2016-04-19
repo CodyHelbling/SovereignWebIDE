@@ -26,17 +26,17 @@ function fileDict() {
     targetDict["Mains"] = "mainFiles";
 
     this.addFolder = function(folderName) {
-        if (!(targetDict[folderName + "div_" + targetDict[cMenu1Target]])) {
+        if (!(targetDict[folderName + "div_" + targetDict[cMenu1Target]])) { //
             var divID = targetDict[cMenu1Target];
             var div = createDiv(folderName + "div_" + divID);
-            var filesDiv = createDiv(folderName + "div" + "files");
-            var img = createImg(folderName + "img", "14", "20", "index.png");
+            var filesDiv = createDiv(folderName + "div_" + divID + "files");
+            var img = createImg(folderName + "img_" + divID, "14", "20", "index.png");
             var name = document.createTextNode(folderName);
             var button = document.createElement("BUTTON");
-            var dropB = createDropButton(folderName + "drop", filesDiv.getAttribute("id"));
+            var dropB = createDropButton(folderName + "drop_" + divID, filesDiv.getAttribute("id"));
             button.appendChild(name);
             document.body.appendChild(button);
-            button.setAttribute("id", folderName);
+            button.setAttribute("id", folderName + divID);
             button.setAttribute("class", "folderStyle");
             button.addEventListener("contextmenu", menuShowHide);
             div.appendChild(dropB);
@@ -47,24 +47,28 @@ function fileDict() {
             targetDict[div.getAttribute("id")] = filesDiv.getAttribute("id");
         }
         else {
-            alert('Folder Already Exist!');
+            alert('Folder already exist!');
         }
-        //fileCount += 1;
         return false;
     };
     this.addFile = function(fileName) {
-        var divID = targetDict[cMenu1Target];
-        var div = createDiv(fileName + "div_" + targetDict[cMenu1Target]);
-        var name = document.createTextNode(fileName);
-        var button = document.createElement("BUTTON");
-        button.appendChild(name);
-        document.body.appendChild(button);
-        button.setAttribute("id", buttonName);
-        button.setAttribute("class", "fileStyle");
-        button.addEventListener("dblclick", openFile);
-        //div.appendChild(img);
-        div.appendChild(button);
-        document.getElementById(divID).appendChild(div);
+        if (!(targetDict[fileName + "div_" + targetDict[cMenu1Target]])) {
+            var divID = targetDict[cMenu1Target];
+            var div = createDiv(fileName + "div_" + targetDict[cMenu1Target]);
+            var name = document.createTextNode(fileName);
+            var button = document.createElement("BUTTON");
+            button.appendChild(name);
+            document.body.appendChild(button);
+            button.setAttribute("id", fileName + divID);
+            button.setAttribute("class", "fileStyle");
+            button.addEventListener("dblclick", openFile);
+            div.appendChild(button);
+            document.getElementById(divID).appendChild(div);
+            targetDict[div.getAttribute("id")] = fileName + divID;
+        }
+        else {
+            alert('File already exist!');
+        }
     }
     this.deleteFolder = function(id) {
         targetDict[id] = null;
