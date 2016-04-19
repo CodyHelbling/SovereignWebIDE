@@ -28,12 +28,12 @@ public class CommandsHandler {
 
     /**
      * Calls the save_file function in Commands.java.
-     * @param file_name - The name of the file to be saved.
+     * @param command_file_name - The name of the file to be saved.
      */
     @OnWebSocketMessage
-    public void onSave(String file_name) throws IOException {
+    public void DecodeCommand(String command_file_name) throws IOException {
         // System.out.print("Commands Handler execution!: " + message + "\n");
-        String[] decoded_command = SplitString.get_command(file_name);
+        String[] decoded_command = SplitString.get_command(command_file_name);
         if(decoded_command[0].equals("save")) {
             Commands.save_file(decoded_command[1]);
         }
@@ -41,12 +41,14 @@ public class CommandsHandler {
             System.out.println("Handler:Open\n");
             List<String> lines = Files.readAllLines(Paths.get(decoded_command[1]));
 
+
             String file_as_str = "";
             for (String s : lines) {
                 file_as_str += s + "\n";
             }
             Editor.file = file_as_str;
-            Editor.updateEditors("User 3333", file_as_str);
+            // This is a hack but it updates users
+            Editor.updateEditors("User OPEN", file_as_str);
             System.out.println("Handler:Open:file: "+file_as_str);
         }
     }
