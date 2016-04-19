@@ -23,7 +23,6 @@ function saveFile() {
     console.log("Save file function called!");
 }
 
-
 function openFile() {
     openFileName = document.getElementById("openFileName").value;
     console.log(openFileName);
