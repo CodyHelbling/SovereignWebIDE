@@ -24,7 +24,7 @@ function fileDict() {
     var cMenu1Target;
     targetDict["Srcs"] = "srcFiles";
     targetDict["Mains"] = "mainFiles";
-
+//
     this.addFolder = function(folderName) {
         if (!(targetDict[folderName + "div_" + targetDict[cMenu1Target]])) { //
             var divID = targetDict[cMenu1Target];
