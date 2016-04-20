@@ -20,6 +20,12 @@ public class Commands {
         webSocket("/commands", CommandsHandler.class);
     }
 
+
+
+    /**
+     * Saves the file to the project directory.
+     * @param file_name - The name of the file being saved.
+     */
     public static void save_file(String file_name) {
         try {
             // Grab the file from Editor. It is currently one string containing '\n'.

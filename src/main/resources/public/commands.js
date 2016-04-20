@@ -21,3 +21,11 @@ function saveFile() {
     webSocketCommands.send(fileName);
     console.log("Save file function called!");
 }
+
+function openFile() {
+    openFileName = document.getElementById("openFileName").value;
+    console.log(openFileName);
+    command = "open:" + openFileName;
+    webSocketCommands.send(command);
+    console.log("Open file function called!");
+}
