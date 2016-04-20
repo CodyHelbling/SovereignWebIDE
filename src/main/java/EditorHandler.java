@@ -9,7 +9,7 @@ import org.eclipse.jetty.websocket.api.annotations.*;
 @WebSocket
 public class EditorHandler {
     private int NumberOfUsers = 0;
-    private String msg;
+    private String sender, msg;
 
     @OnWebSocketConnect
     public void onConnect(Session user) throws Exception {
@@ -17,7 +17,7 @@ public class EditorHandler {
         NumberOfUsers += 1;
         String username = "User" + Editor.nextUserNumber++;
         Editor.userUsernameMap.put(user, username);
-        //Editor.updateEditors("Server", msg = (username + " joined the chat"));
+        Editor.updateEditors("Server", msg = (username + " joined the chat"));
     }
 
     @OnWebSocketMessage
@@ -25,4 +25,8 @@ public class EditorHandler {
         System.out.print("Handler execution!: " + message + "\n");
         Editor.updateEditors(Editor.userUsernameMap.get(user), msg = message);
     }
+
+
+
+
 }

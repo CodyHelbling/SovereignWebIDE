@@ -1,10 +1,12 @@
 import org.eclipse.jetty.websocket.api.*;
+import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 import org.json.*;
 import java.text.*;
 import java.util.*;
 import static j2html.TagCreator.*;
 import static spark.Spark.*;
 
+@WebSocket
 public class Chat {
 
     static Map<Session, String> userUsernameMap = new HashMap<>();

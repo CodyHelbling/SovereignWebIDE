@@ -20,7 +20,7 @@
     <![endif]-->
 
     <!-- Chat Stuff -->
-    <button type="button" class="button js-trigger">Chat (45)</button>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 
 
@@ -61,75 +61,18 @@
                 </div>
             </div>
 
-            <!-- New Chat -->
-            <nav class="chat">
-                <h2 class="chat__users">Users Online: 8</h2>
-                <ul class="chat__wrapper">
-                    <li class="chat__human">
-                        <img class="chat__avatar" src="https://robohash.org/joe" alt="" />
-                        <span class="chat__name">Chris</span>
-                    </li>
-
-                    <li class="chat__human">
-                        <img class="chat__avatar" src="https://robohash.org/joe" alt="" />
-                        <span class="chat__name">Dillon</span>
-                    </li>
-
-                    <li class="chat__human">
-                        <img class="chat__avatar" src="https://robohash.org/joe" alt="" />
-                        <span class="chat__name">Tyler</span>
-                    </li>
-
-                    <li class="chat__human">
-                        <img class="chat__avatar" src="https://robohash.org/joe" alt="" />
-                        <span class="chat__name">Cody</span>
-                    </li>
-
-                    <li class="chat__human">
-                        <img class="chat__avatar" src="https://robohash.org/bruh" alt="" />
-                        <span class="chat__name">Afnan</span>
-                    </li>
-                    <li class="chat__human">
-                        <img class="chat__avatar" src="https://robohash.org/bruh" alt="" />
-                        <span class="chat__name">Hue</span>
-                    </li>
-                    <li class="chat__human">
-                        <img class="chat__avatar" src="https://robohash.org/bruh" alt="" />
-                        <span class="chat__name">Austin</span>
-                    </li>
-                    <li class="chat__human">
-                        <img class="chat__avatar" src="https://robohash.org/bruh" alt="" />
-                        <span class="chat__name">Jesse</span>
-                    </li>
-                </ul>
-            </nav>
-
-            <div class="conversation">
-                <div class="conversation__header">
-                    User
-                    <span class="close-msg">&times;</span>
-                </div>
-                <ul class="conversation__wrap">
-                    <li class="conversation__msg cf">
-                        <span>Hey!</span>
-                    </li>
-
-                    <li class="conversation__msg cf">
-                        <span class="right">Hi!</span>
-                    </li>
-
-                    <li class="conversation__msg cf">
-                        <span>What's up?</span>
-                    </li>
-
-                    <li class="conversation__msg cf">
-                        <span class="right">Just chillin.</span>
-                    </li>
-                </ul>
-
-                <input class="input" type="message" placeholder="Enter Message" />
-
+            <button type="button" class="button js-trigger">Chat</button>
+            <!-- New Chat-->
+            <div id="sidebar">
             </div>
+           <div id="chatControls">
+                <input id="message"  placeholder="Type your message">
+                <button type="button" id="send">Send</button>
+            </div>
+            <ul id="userlist"> <!-- Built by JS --> </ul>
+            <div id="chat2">    <!-- Built by JS --> </div>
+
+
 
     </div>
         <div class="row">
