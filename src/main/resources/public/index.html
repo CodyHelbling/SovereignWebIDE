@@ -193,16 +193,23 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-md-8">
-			<div class="Editor">
-				<button type="button" class="btn btn-primary" onclick="saveFile()">Save File</button>
+			<div class="col-md-8">
+				<div class="Editor">
+					<button type="button" class="btn btn-primary" onclick="saveFile()">Save File</button>
+					<form role="form">
+						<div class="form-group">
+							<label>File Name</label>
+							<input type="text" class="form-control" id="saveFileName">
+						</div>
+					</form>
 
-				<form role="form">
-					<div class="form-group">
-						<label>File Name</label>
-						<input type="text" class="form-control" id="fileName">
-					</div>
-				</form>
+					<button type="button" class="btn btn-primary" onclick="openFile()">Open File</button>
+					<form role="form">
+						<div class="form-group">
+							<label>File Name</label>
+							<input type="text" class="form-control" id="openFileName">
+						</div>
+					</form>
 
 				<a name="editor"></a>
 			</div>

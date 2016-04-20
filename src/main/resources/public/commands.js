@@ -16,9 +16,10 @@ webSocketCommands.onclose = function () { alert("WebSocket connection closed") }
 
 //Update the chat-panel, and the list of connected users
 function saveFile() {
-    fileName = document.getElementById("fileName").value;
-    console.log(fileName);
-    webSocketCommands.send(fileName);
+    saveFileName = document.getElementById("saveFileName").value;
+    console.log(saveFileName);
+    command = "save:" + saveFileName;
+    webSocketCommands.send(command);
     console.log("Save file function called!");
 }
 
