@@ -28,8 +28,8 @@ function fileDict() {
     this.addFolder = function(folderName) {
         if (!(targetDict[folderName + "div_" + targetDict[cMenu1Target]])) { //
             var divID = targetDict[cMenu1Target];
-            var div = createDiv(folderName + "div_" + divID);
-            var filesDiv = createDiv(folderName + "div_" + divID + "files");
+            var div = createDiv(folderName + "div_" + divID, "folder");
+            var filesDiv = createDiv(folderName + "div_" + divID + "files", "folder");
             var img = createImg(folderName + "img_" + divID, "14", "20", "index.png");
             var name = document.createTextNode(folderName);
             var button = document.createElement("BUTTON");
@@ -54,7 +54,7 @@ function fileDict() {
     this.addFile = function(fileName) {
         if (!(targetDict[fileName + "div_" + targetDict[cMenu1Target]])) {
             var divID = targetDict[cMenu1Target];
-            var div = createDiv(fileName + "div_" + targetDict[cMenu1Target]);
+            var div = createDiv(fileName + "div_" + targetDict[cMenu1Target], "file");
             var name = document.createTextNode(fileName);
             var button = document.createElement("BUTTON");
             button.appendChild(name);
@@ -103,10 +103,10 @@ function createFolder (input) {
     return false;
 }
 
-function deleteFolder(event) {
-    var something = event.target.getAttribute("id");
-    alert(something);
-    //dict.deleteFolder(event.target.getAttribute("id"));
+function deleteFolder() {
+    var something = document.getElementById(dict.getCurrTarget()).parentNode.id;
+    //alert(something);
+    dict.deleteFolder(something);
 }
 
 //http://stackoverflow.com/questions/15702867/html-tooltip-position-relative-to-mouse-pointer
@@ -213,10 +213,10 @@ function createImg (id, hi, wi, imgfile) {
  * @param {String} id - id of the new div.
  * @returns {Element}
  */
-function createDiv(id) {
+function createDiv(id, aClass) {
     var div = document.createElement("div");
     div.setAttribute("id", id);
-    div.setAttribute("class", "folder");
+    div.setAttribute("class", aClass);
     document.body.appendChild(div);
     return div;
 }
