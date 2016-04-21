@@ -10,16 +10,12 @@
  * @type {WebSocket}
  */
 var webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/structure");
-webSocket.createStructure = function () { };
-var creator = document.getElementById('creator');
-var newfile = document.getElementById('newfile');
-var bCount = 1;
+//webSocket.createStructure = function () { };
 var cMenu1 = document.getElementById("fileStructureMenu");
 var cMenu1Target;
 var dict = new fileDict();
 
 function fileDict() {
-    var fileCount = 0;
     var targetDict = {};
     var cMenu1Target;
     targetDict["Srcs"] = "srcFiles";
