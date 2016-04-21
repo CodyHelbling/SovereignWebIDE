@@ -10,28 +10,31 @@
  * @type {WebSocket}
  */
 var webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/structure");
-webSocket.createStructure = function () { };
-var creator = document.getElementById('creator');
-var newfile = document.getElementById('newfile');
-var bCount = 1;
+//webSocket.createStructure = function () { };
 var cMenu1 = document.getElementById("fileStructureMenu");
 var cMenu1Target;
 var dict = new fileDict();
 
 function fileDict() {
-    var fileCount = 0;
     var targetDict = {};
     var cMenu1Target;
     targetDict["Srcs"] = "srcFiles";
     targetDict["Mains"] = "mainFiles";
 //
+    /**
+     * Creates a new folder in the file management UI. The location where all the necessary elements will be created is
+     * predetermined by "menuShowHide(event)", which preserves the id of the container that triggered the contextmenu
+     * event.
+     * @param {string} folderName - Specifies name of folder used to create appropriate elements and containers.
+     * @returns {boolean}  - Prevent unexpected behavior.
+     */
     this.addFolder = function(folderName) {
-        if (!(targetDict[folderName + "div_" + targetDict[cMenu1Target]])) { //
-            var divID = targetDict[cMenu1Target];
-            var div = createDiv(folderName + "div_" + divID, "folder");
-            var filesDiv = createDiv(folderName + "div_" + divID + "files", "folder");
-            var img = createImg(folderName + "img_" + divID, "14", "20", "index.png");
-            var name = document.createTextNode(folderName);
+        if (!(targetDict[folderName + "div_" + targetDict[cMenu1Target]])) { //folder doesn't exist
+            var divID = targetDict[cMenu1Target];   //parent of target div
+            var folderDiv = createDiv(folderName + "div_" + divID, "folder"); //new div for folder
+            var filesDiv = createDiv(folderName + "div_" + divID + "files", "file"); //file container inside the folder div
+            var img = createImg(folderName + "img_" + divID, "14", "20", "index.png"); //folder image
+            var name = document.createTextNode(folderName); //start appending to document...
             var button = document.createElement("BUTTON");
             var dropB = createDropButton(folderName + "drop_" + divID, filesDiv.getAttribute("id"));
             button.appendChild(name);
@@ -39,14 +42,14 @@ function fileDict() {
             button.setAttribute("id", folderName + divID);
             button.setAttribute("class", "folderStyle");
             button.addEventListener("contextmenu", menuShowHide);
-            div.appendChild(dropB);
-            div.appendChild(img);
-            div.appendChild(button);
-            div.appendChild(filesDiv);
-            document.getElementById(divID).appendChild(div);
-            targetDict[div.getAttribute("id")] = filesDiv.getAttribute("id");
+            folderDiv.appendChild(dropB);
+            folderDiv.appendChild(img);
+            folderDiv.appendChild(button);
+            folderDiv.appendChild(filesDiv);
+            document.getElementById(divID).appendChild(folderDiv);
+            targetDict[folderDiv.getAttribute("id")] = filesDiv.getAttribute("id");
         }
-        else {
+        else { //folder does exist
             alert('Folder already exist!');
         }
         return false;
@@ -69,11 +72,11 @@ function fileDict() {
         else {
             alert('File already exist!');
         }
-    }
+    };
     this.deleteFolder = function(id) {
         targetDict[id] = null;
         document.getElementById(id).remove();
-    }
+    };
     this.getCurrTarget = function() {
         return targetDict[cMenu1Target];
     };
@@ -84,9 +87,11 @@ function fileDict() {
         cMenu1Target = aTarget;
     };
     this.testTarget = function(key){
-        if (targetDict[key]) { return true; }
-        else { return false; }
-    }
+        if (targetDict[key])
+            return true;
+        else
+            return false;
+    };
     return this;
 }
 

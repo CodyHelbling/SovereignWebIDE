@@ -8,7 +8,7 @@
 	<meta http-equiv = "X-UA-Compatible" content = "IE = edge">
 	<meta name = "viewport" content = "width = device-width, initial-scale = 1">
 
-    <!-- Bootstrap -->
+	<!-- Bootstrap -->
 
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
@@ -36,7 +36,7 @@
 	<link rel="stylesheet" href="css/mod_bootstrap.css">
 
 </head>
-<body oncontextmenu="return false">
+<body>
 <div class="pad-top25px"></div>
 <div class="pad-top25px"></div>
 <div class="pad-top25px"></div>
@@ -128,44 +128,44 @@
 		</div>
 	</div>
 </div>
-<div id="newFolderModal" class="modal" role="dialog">
+<div id="newFolderModal" class="modal" role="dialog" >
 	<div class="modal-dialog">
 		<div class="modal-content">
-		<div class="modal-body">
-			<form class="form-horizontal" onsubmit="return false">
-				<div class="form-group form-group-sm">
-					<label for="formGroupInputSmall">Folder Name</label>
-					<div class="col-sm-10">
-						<input class="form-control" id="formGroupInputSmall" type="text" placeholder="New Folder">
-						<button onclick="createFolder('formGroupInputSmall')" class="btn btn-default btn-info" type="submit"
-								data-toggle="modal" data-target="#newFolderModal">Create</button>
-						<button class="btn btn-default" data-dismiss="modal">Cancel</button>
-					</div>
-				</div>
-			</form>
-		</div>
-		</div>
-	</div>
-</div>
-	<div id="newFileModal" class="modal" role="dialog">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-body">
-					<form class="form-horizontal" onsubmit="return false">
-						<div class="form-group form-group-sm">
-							<label for="formGroupInputSmall" >File Name</label>
-							<div class="col-sm-10">
-								<input class="form-control" id="formGroupInputSmall2" type="text" placeholder="New File">
-								<button onclick="createFile('formGroupInputSmall2')" class="btn btn-default btn-info" type="submit"
-										data-toggle="modal" data-target="#newFileModal">Create</button>
-								<button class="btn btn-default" data-dismiss="modal">Cancel</button>
-							</div>
+			<div class="modal-body">
+				<form class="form-horizontal" onsubmit="return false">
+					<div class="form-group form-group-sm">
+						<label for="formGroupInputSmall">Folder Name</label>
+						<div class="col-sm-10">
+							<input class="form-control" id="formGroupInputSmall" type="text" placeholder="New Folder">
+							<button onclick="createFolder('formGroupInputSmall')" class="btn btn-default btn-info" type="submit"
+									data-toggle="modal" data-target="#newFolderModal">Create</button>
+							<button class="btn btn-default" data-dismiss="modal">Cancel</button>
 						</div>
-					</form>
-				</div>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
+</div>
+<div id="newFileModal" class="modal" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body">
+				<form class="form-horizontal" onsubmit="return false">
+					<div class="form-group form-group-sm">
+						<label for="formGroupInputSmall" >File Name</label>
+						<div class="col-sm-10">
+							<input class="form-control" id="formGroupInputSmall2" type="text" placeholder="New File">
+							<button onclick="createFile('formGroupInputSmall2')" class="btn btn-default btn-info" type="submit"
+									data-toggle="modal" data-target="#newFileModal">Create</button>
+							<button class="btn btn-default" data-dismiss="modal">Cancel</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
 </div>
 
 
@@ -173,7 +173,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-2">
-			<div class="FileManagement">
+			<div class="FileManagement" oncontextmenu="return false">
 				<script src="structureLogic.js"></script>
 				<div id="Srcs" class="btn-group-vertical" oncontextmenu="menuShowHide(event);">
 					<button id="drop1" onclick="toggleDisplay('Mains', 'drop1'); toggleDisplay('srcFiles', 'drop1');" value=">">></button>
