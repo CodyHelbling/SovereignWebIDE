@@ -36,7 +36,7 @@ function fileDict() {
         if (!(targetDict[folderName + "div_" + targetDict[cMenu1Target]])) { //folder doesn't exist
             var divID = targetDict[cMenu1Target];   //parent of target div
             var folderDiv = createDiv(folderName + "div_" + divID, "folder"); //new div for folder
-            var filesDiv = createDiv(folderName + "div_" + divID + "files", "folder"); //file container inside the folder div
+            var filesDiv = createDiv(folderName + "div_" + divID + "files", "file"); //file container inside the folder div
             var img = createImg(folderName + "img_" + divID, "14", "20", "index.png"); //folder image
             var name = document.createTextNode(folderName); //start appending to document...
             var button = document.createElement("BUTTON");
@@ -50,7 +50,7 @@ function fileDict() {
             folderDiv.appendChild(img);
             folderDiv.appendChild(button);
             folderDiv.appendChild(filesDiv);
-            document.getElementById(divID).appendChild(div);
+            document.getElementById(divID).appendChild(folderDiv);
             targetDict[folderDiv.getAttribute("id")] = filesDiv.getAttribute("id");
         }
         else { //folder does exist
@@ -76,11 +76,11 @@ function fileDict() {
         else {
             alert('File already exist!');
         }
-    }
+    };
     this.deleteFolder = function(id) {
         targetDict[id] = null;
         document.getElementById(id).remove();
-    }
+    };
     this.getCurrTarget = function() {
         return targetDict[cMenu1Target];
     };
@@ -91,9 +91,11 @@ function fileDict() {
         cMenu1Target = aTarget;
     };
     this.testTarget = function(key){
-        if (targetDict[key]) { return true; }
-        else { return false; }
-    }
+        if (targetDict[key])
+            return true;
+        else
+            return false;
+    };
     return this;
 }
 
