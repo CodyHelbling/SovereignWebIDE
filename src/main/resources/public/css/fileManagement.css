@@ -90,7 +90,7 @@
 }
 
 
-#main, #addmain, #src, #addsrc {
+#main, #addmain, #srcs, #addsrc {
     background: transparent;
     border: none;
     margin: 0;
@@ -118,12 +118,12 @@
     border: none;
 }
 
-#Srcs {
+#srcs {
     color: #322931;
     padding-top: 5px;
 }
 
-#Mains {
+#src-main {
     color: #322931;
     display: none;
     padding-left: 28px;

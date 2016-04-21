@@ -175,15 +175,15 @@
 		<div class="col-md-2">
 			<div class="FileManagement" oncontextmenu="return false">
 				<script src="structureLogic.js"></script>
-				<div id="Srcs" class="btn-group-vertical" oncontextmenu="menuShowHide(event);">
-					<button id="drop1" onclick="toggleDisplay('Mains', 'drop1'); toggleDisplay('srcFiles', 'drop1');" value=">">></button>
+				<div id="src" class="btn-group-vertical" oncontextmenu="menuShowHide(event);">
+					<button id="drop1" onclick="toggleDisplay('src-main', 'drop1'); toggleDisplay('srcFiles', 'drop1');" value=">">></button>
 					<img id="i1" src="index.png" width="20" height="14">
-					<button id="src">src</button>
+					<button id="srcs">src</button>
 					<ul id="srcFiles" class="column">
 
 					</ul>
 				</div>
-				<div id="Mains" class="btn-group-vertical" oncontextmenu="menuShowHide(event);">
+				<div id="src-main" class="btn-group-vertical" oncontextmenu="menuShowHide(event);">
 					<button id="drop2" onclick="toggleDisplay('mainFiles', 'drop2')" value=">">></button>
 					<img id="i2" src="index.png" width="20" height="14">
 					<button id="main" oncontextmenu="displayMenu()">main</button>

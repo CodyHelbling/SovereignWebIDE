@@ -9,7 +9,7 @@
  * File structure websocket.
  * @type {WebSocket}
  */
-var webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/structure");
+var webSocketFileManagement = new WebSocket("ws://" + location.hostname + ":" + location.port + "/structure");
 //webSocket.createStructure = function () { };
 var cMenu1 = document.getElementById("fileStructureMenu");
 var cMenu1Target;
@@ -18,8 +18,8 @@ var dict = new fileDict();
 function fileDict() {
     var targetDict = {};
     var cMenu1Target;
-    targetDict["Srcs"] = "srcFiles";
-    targetDict["Mains"] = "mainFiles";
+    targetDict["src"] = "srcFiles";
+    targetDict["src-main"] = "mainFiles";
 //
     /**
      * Creates a new folder in the file management UI. The location where all the necessary elements will be created is
@@ -29,9 +29,11 @@ function fileDict() {
      * @returns {boolean}  - Prevent unexpected behavior.
      */
     this.addFolder = function(folderName) {
-        if (!(targetDict[folderName + "div_" + targetDict[cMenu1Target]])) { //folder doesn't exist
+        if (!(targetDict[cMenu1Target+"-"+folderName])) { //folder doesn't exist
+            var dirLocate = cMenu1Target;
+            webSocketCommands.send("addFolder:" + "/home/austin/sQuire/" + dirLocate.replace(/-/g, "/") + "/" + folderName);
             var divID = targetDict[cMenu1Target];   //parent of target div
-            var folderDiv = createDiv(folderName + "div_" + divID, "folder"); //new div for folder
+            var folderDiv = createDiv(cMenu1Target+"-"+folderName, "folder"); //new div for folder
             var filesDiv = createDiv(folderName + "div_" + divID + "files", "file"); //file container inside the folder div
             var img = createImg(folderName + "img_" + divID, "14", "20", "index.png"); //folder image
             var name = document.createTextNode(folderName); //start appending to document...
@@ -76,6 +78,7 @@ function fileDict() {
     this.deleteFolder = function(id) {
         targetDict[id] = null;
         document.getElementById(id).remove();
+        webSocketCommands.send("deleteFolder:" + "/home/austin/sQuire/" + id.replace(/-/g, "/"));
     };
     this.getCurrTarget = function() {
         return targetDict[cMenu1Target];
