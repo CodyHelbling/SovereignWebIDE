@@ -34,7 +34,7 @@ function fileDict() {
             webSocketCommands.send("addFolder:" + "/home/austin/sQuire/" + dirLocate.replace(/-/g, "/") + "/" + folderName);
             var divID = targetDict[cMenu1Target];   //parent of target div
             var folderDiv = createDiv(cMenu1Target+"-"+folderName, "folder"); //new div for folder
-            var filesDiv = createDiv(folderName + "div_" + divID + "files", "file"); //file container inside the folder div
+            var filesDiv = createDiv(folderName + "div_" + divID + "files", "folder"); //file container inside the folder div
             var img = createImg(folderName + "img_" + divID, "14", "20", "index.png"); //folder image
             var name = document.createTextNode(folderName); //start appending to document...
             var button = document.createElement("BUTTON");
@@ -262,7 +262,8 @@ function displayMenu(){
 /**
  * Unimportant.
  */
+/*
 function openFile() {
     alert('You opened a file');
 }
-
+*/
