@@ -57,9 +57,12 @@ function fileDict() {
         return false;
     };
     this.addFile = function(fileName) {
-        if (!(targetDict[fileName + "div_" + targetDict[cMenu1Target]])) {
+        if (!(targetDict[cMenu1Target+"-"+fileName])) {
+            var dirLocate = cMenu1Target;
+            var fileNameFix = fileName.replace(/-/g, "?"); //replace - with illegal "?" to prevent path corruption
+            webSocketCommands.send("addFile:" + "/home/austin/sQuire/" + dirLocate.replace(/-/g, "/") + "/" + fileName);
             var divID = targetDict[cMenu1Target];
-            var div = createDiv(fileName + "div_" + targetDict[cMenu1Target], "file");
+            var div = createDiv(cMenu1Target+"-"+fileNameFix, "file");
             var name = document.createTextNode(fileName);
             var button = document.createElement("BUTTON");
             button.appendChild(name);
@@ -69,7 +72,7 @@ function fileDict() {
             button.addEventListener("dblclick", openFile);
             div.appendChild(button);
             document.getElementById(divID).appendChild(div);
-            targetDict[div.getAttribute("id")] = fileName + divID;
+            targetDict[div.getAttribute("id")] = cMenu1Target+"-"+fileNameFix;
         }
         else {
             alert('File already exist!');
@@ -78,7 +81,7 @@ function fileDict() {
     this.deleteFolder = function(id) {
         targetDict[id] = null;
         document.getElementById(id).remove();
-        webSocketCommands.send("deleteFolder:" + "/home/austin/sQuire/" + id.replace(/-/g, "/"));
+        webSocketCommands.send("deleteFolder:" + "/home/austin/sQuire/" + id.replace(/-/g, "/").replace(/\?/g, "-"));
     };
     this.getCurrTarget = function() {
         return targetDict[cMenu1Target];
@@ -112,9 +115,13 @@ function createFolder (input) {
 }
 
 function deleteFolder() {
-    var something = document.getElementById(dict.getCurrTarget()).parentNode.id;
-    //alert(something);
-    dict.deleteFolder(something);
+    if(document.getElementById(dict.getCurrTarget()).getAttribute("class") != "file") {
+        var parentContainer = document.getElementById(dict.getCurrTarget()).parentNode.id;
+        dict.deleteFolder(parentContainer);
+    }
+    else {
+        dict.deleteFolder(dict.getCurrTarget());
+    }
 }
 
 //http://stackoverflow.com/questions/15702867/html-tooltip-position-relative-to-mouse-pointer

@@ -46,7 +46,7 @@ public class CommandsHandler {
             System.out.println("Handler:Open:file: "+file_as_str);
         }
         else if (decoded_command[0].equals("addFolder")) {
-            System.out.println("Trying to create: " + decoded_command[1]);
+            System.out.println("Trying to create folder: " + decoded_command[1]);
             try {
                 FileManager.createDirectory(decoded_command[1]);
             } catch (NullPointerException e) {
@@ -56,6 +56,10 @@ public class CommandsHandler {
         else if (decoded_command[0].equals("deleteFolder")) {
             System.out.println("Trying to delete: " + decoded_command[1]);
             FileManager.deleteDirectory(decoded_command[1]);
+        }
+        else if(decoded_command[0].equals("addFile")) {
+            System.out.println("Trying to create file: " + decoded_command[1]);
+            FileManager.createFile(decoded_command[1]);
         }
     }
 }

@@ -50,4 +50,13 @@ public class FileManager {
             System.err.println("FileManager::deleteDirectory() IOException +++ "+e+" +++: I/O error.");
         }
     }
+    public static void createFile(String pathName) {
+        try {
+            Files.createFile(Paths.get(pathName));
+        } catch (IOException e) {
+            System.err.println("FileManager::createFile() IOException +++ " + e + " +++: I/O error.");
+        } /*catch (FileAlreadyExistsException e) {
+            System.err.println("FileManager::createFile() FileAlreadyExistException +++ "+e+" +++: I/O error.");
+        }*/
+    }
 }
