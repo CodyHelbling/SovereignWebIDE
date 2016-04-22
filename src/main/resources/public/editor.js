@@ -1,6 +1,4 @@
-/**
- * Created by cody on 23/03/16.
- */
+
 
 
 // The link below explains WebSocket Client Applications.
@@ -8,10 +6,17 @@
 
 
 //Establish the WebSocket connection and set up event handlers
-var webSocketEdit = new WebSocket("ws://" + location.hostname + ":" + location.port + "/editor");
+var webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/editor");
 // An event listener to be called when a message is received from the server
-webSocketEdit.onmessage = function (msg) { updateEditor(msg, myCodeMirror); };
-webSocketEdit.onclose = function () { alert("WebSocket connection closed") };
+webSocket.onmessage = function (msg) { updateEditor(msg, myCodeMirror); };
+webSocket.onclose = function (event) { alert("WebSocket connection closed"); /*alert(event.code)*/ };
+
+
+var webSocketChat = new WebSocket("ws://" + location.hostname + ":" + location.port + "/chat");
+webSocketChat.onmessage = function(msg) {updateChat(msg);};
+//webSocketChat.onclose = function(event){alert ("Chat WebSocket Closed");};
+
+
 
 //CodeMirror
 
@@ -67,4 +72,50 @@ function insert(targetId, message) {
 //Helper function for selecting element by id
 function id(id) {
     return document.getElementById(id);
+}
+
+//Chat jQuery functions
+$('.js-trigger').on('click', function() {
+    $('html').toggleClass('show-me')
+});
+
+$('.conversation__header').on('click', function() {
+    $('.conversation').slideToggle(300);  //.conversation
+});
+
+$('.chat__name').on('click', function() {
+    $('.conversation').slideToggle(300);
+});
+
+$('.chat__avatar').on('click', function() {
+    $('.conversation').slideToggle(300);
+});
+
+/*--------Other Chat functions -----------*/
+//Send message if enter is pressed in the input field
+id("message").addEventListener("keypress", function (e) {
+    if (e.keyCode === 13) { sendMessage(e.target.value); }
+});
+
+id("send").addEventListener("click", function () {
+    sendMessage(id("message").value); 
+});
+
+
+//Send a message if it's not empty, then clear the input field
+function sendMessage(message) {
+    if (message !== "") {
+        webSocketChat.send(message);
+        id("message").value = "";
+    }
+}
+
+//Update the chat-panel, and the list of connected users
+function updateChat(msg) {
+    var data = JSON.parse(msg.data);
+    insert("chat2", data.userMessage);
+    id("userlist").innerHTML = "";
+    data.userlist.forEach(function (user) {
+        insert("userlist", "<li>" + user + "</li>");
+    });
 }
