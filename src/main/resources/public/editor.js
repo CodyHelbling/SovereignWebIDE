@@ -31,6 +31,7 @@ var myCodeMirror = CodeMirror(document.anchors.namedItem("editor"), {
     theme: "erlang-dark"
 });
 
+
 myCodeMirror.on("change", function(myCodeMirror, changeObj){
     oldCode = myCodeMirror.getValue();
 

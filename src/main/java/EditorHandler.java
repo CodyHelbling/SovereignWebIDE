@@ -6,11 +6,21 @@ import org.eclipse.jetty.websocket.api.*;
 import org.eclipse.jetty.websocket.api.annotations.*;
 
 
+/**
+ * Handles the Editor's webSocket. These methods are accessible from the client and the server.
+ */
+
 @WebSocket
 public class EditorHandler {
     private int NumberOfUsers = 0;
     private String sender, msg;
 
+
+    /**
+     * This method is called whenever a new client connects.
+     * @param user The id of the user.
+     * @throws Exception
+     */
     @OnWebSocketConnect
     public void onConnect(Session user) throws Exception {
         System.out.print("Editor Connection Established!\n");
@@ -20,6 +30,11 @@ public class EditorHandler {
         Editor.updateEditors("Server", msg = (username + " joined the chat"));
     }
 
+    /**
+     * This method is called whenever the client sends a message, or the server updates the clients.
+     * @param user - The id of the user.
+     * @param message - For now, this contains all the code in the editor.
+     */
     @OnWebSocketMessage
     public void onMessage(Session user, String message) {
         System.out.print("Handler execution!: " + message + "\n");
