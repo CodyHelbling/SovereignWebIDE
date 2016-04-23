@@ -6,10 +6,10 @@
 
 
 //Establish the WebSocket connection and set up event handlers
-var webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/editor");
+var webSocketEdit = new WebSocket("ws://" + location.hostname + ":" + location.port + "/editor");
 // An event listener to be called when a message is received from the server
-webSocket.onmessage = function (msg) { updateEditor(msg, myCodeMirror); };
-webSocket.onclose = function (event) { alert("WebSocket connection closed"); /*alert(event.code)*/ };
+webSocketEdit.onmessage = function (msg) { updateEditor(msg, myCodeMirror); };
+webSocketEdit.onclose = function (event) { alert("WebSocket connection closed"); /*alert(event.code)*/ };
 
 
 var webSocketChat = new WebSocket("ws://" + location.hostname + ":" + location.port + "/chat");
