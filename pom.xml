@@ -7,6 +7,13 @@
     <groupId>file_structure</groupId>
     <artifactId>file_structure</artifactId>
     <version>1.0</version>
+
+
+    <properties>
+        <jdk.version>1.8</jdk.version>
+        <spark.version>2.3</spark.version>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
@@ -17,6 +24,44 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${jdk.version}</source>
+                    <target>${jdk.version}</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>Editor</mainClass>
+                    <arguments>
+                    </arguments>
+                </configuration>
+            </plugin>
+
+
+
+
+
+
+
+
+
+
         </plugins>
     </build>
 
