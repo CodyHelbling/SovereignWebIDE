@@ -69,6 +69,12 @@ public class Editor {
             System.out.println(req.body());
             // Hue, you can plug in your auth and creation stuff here!
             System.out.println("Signing someone up....");
+            if(Authentication.chop(req.body(), 1)){
+                System.out.println("success");
+                //redirect to editor
+            }else{
+                //complain that username is taken
+            }
             String something = "hello";
             return something;
         });
@@ -77,6 +83,12 @@ public class Editor {
             System.out.println(req.body());
             // Hue, you can plug in your auth and creation stuff here!
             System.out.println("Logging someone in....");
+            if(Authentication.chop(req.body(), 2)){
+                System.out.println("success");
+                //redirect to editor
+            }else{
+                //complain of incorrect credentials
+            }
             String something = "hello";
             return something;
         });
