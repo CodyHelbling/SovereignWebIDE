@@ -2,47 +2,51 @@
  * Created by Cody on 4/23/16.
  */
 
-var signUpData = {
+
+
+function SignUp() {
+
+    var signUpData = {
     "email": "",
     "userName": "",
     "password": ""
 };
-
-function SignUp() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
-            console.log("Signing Up: ....");
-            var email = document.getElementById("inputEmailSignUp").value;
-            var userName = document.getElementById("inputUNameSignUp").value;
-            var password = document.getElementById("inputPasswordSignUp").value;
-            signUpData.email = email;
-            signUpData.userName = userName;
-            signUpData.password = password;
+
         }
     };
+    console.log("Signing Up: ....");
+    signUpData.email = document.getElementById("inputEmailSignUp").value;
+    signUpData.userName = document.getElementById("inputUNameSignUp").value;
+    signUpData.password = document.getElementById("inputPasswordSignUp").value;
     xhttp.open("POST", "/signup", true);
+    console.log("signUpData: " + signUpData);
     xhttp.send(JSON.stringify(signUpData));
 }
 
 
-var logInData = {
+
+
+function LogIn() {
+
+    var logInData = {
     "username":"",
     "password":""
 };
-
-function LogIn() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
-            console.log("Logging In: ....");
-            var userName = document.getElementById("inputUser").value;
-            var password = document.getElementById("inputPassword").value;
-            logInData.userName = userName;
-            logInData.password = password;
+
         }
     };
+
+    console.log("Logging In: ....");
+    logInData.userName = document.getElementById("inputUser").value;
+    logInData.password = document.getElementById("inputPassword").value;
+
     xhttp.open("POST", "/login", true);
-    xhttp.send(JSON.stringify(signUpData));
+    xhttp.send(JSON.stringify(logInData));
 }
 
