@@ -13,9 +13,9 @@ public class FileManager {
         Path newDir = Paths.get("/home/austin/sQuire/src/main/resources");
         //baseDir.createDirectory(newDir);
     }
-    public static void createProjectSpace(Path pathName) {
+    public static void createProjectSpace() {
         try {
-            Files.createDirectories(pathName);
+            Files.createDirectories(Paths.get(System.getProperty("user.home") + "/sQuire"));
         } catch (IOException e) {
             System.err.println("FileManager::createProjectSpace() IOException: I/O error; parent FileManager may not exist.");
         }/* catch (FileAlreadyExistsException e) {
