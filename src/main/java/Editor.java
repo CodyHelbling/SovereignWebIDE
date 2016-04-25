@@ -69,30 +69,34 @@ public class Editor {
             System.out.println(req.body());
             // Hue, you can plug in your auth and creation stuff here!
             System.out.println("Signing someone up....");
+            String response = "";
             if(Authentication.chop(req.body(), 1)){
                 System.out.println("success");
                 //redirect to editor
+                response = "true";
             }else{
                 System.out.println("Failiure");
                 //complain that username is taken
+                response = "false";
             }
-            String something = "hello";
-            return something;
+            return response;
         });
 
         post("/login", (req, res) -> {
             System.out.println(req.body());
             // Hue, you can plug in your auth and creation stuff here!
             System.out.println("Logging someone in....");
+            String response = "";
             if(Authentication.chop(req.body(), 2)){
                 System.out.println("success");
+                response = "true";
                 //redirect to editor
             }else{
                 System.out.println("Failiure");
+                response = "false";
                 //complain of incorrect credentials
             }
-            String something = "hello";
-            return something;
+            return response;
         });
 
 

@@ -14,7 +14,14 @@ function SignUp() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
-
+            var res = xhttp.responseText;
+            console.log("response: " + res);
+            if (res === "true") {
+                document.getElementById("SignInButton").style.backgroundColor = "red";
+            }
+            else if ( res === "false" ) {
+                document.getElementById("SignInButton").style.backgroundColor = "blue";
+            }
         }
     };
     console.log("Signing Up: ....");
@@ -38,7 +45,32 @@ function LogIn() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
+            var res = xhttp.responseText;
+            console.log("response: " + res);
+            if (res === "true") {
+                var para = document.createElement("p");
+                var node = document.createTextNode("Your Username and Password were recognized!");
+                para.appendChild(node);
 
+                var element = document.getElementById("modalText");
+                element.appendChild(para);
+
+                var para = document.createElement("button");
+                var node = document.createTextNode("Enter sQuire!");
+                para.appendChild(node);
+
+                var element = document.getElementById("link");
+                element.appendChild(para);
+
+            }
+            else if ( res === "false" ) {
+                var para = document.createElement("p");
+                var node = document.createTextNode("User and Password not recognized. \nPlease try again, or Sign Up if you are new to sQuire!");
+                para.appendChild(node);
+
+                var element = document.getElementById("modalText");
+                element.appendChild(para);
+            }
         }
     };
 
