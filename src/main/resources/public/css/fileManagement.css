@@ -4,7 +4,7 @@
     height: 700px;
     text-align: left;
     overflow: scroll;
-
+    color: black;
 }
 
 .bWidth {
@@ -54,6 +54,7 @@
 
 
 .folder {
+    padding-right: 10px; /* changed */
     white-space: nowrap;
 }
 
@@ -70,11 +71,24 @@
 .folderStyle {
     background: transparent;
     border: none;
+    margin: 0;
+    padding-left: 3px;
+    /*
+    background: transparent;
+    border: none;
+*/
 }
 
 .dropdown {
     background: transparent;
     border: none;
+    margin: 0;
+    padding-right: 3px;
+    /*
+    left: -5px;
+    background: transparent;
+    border: none;
+*/
 }
 
 .addButton {
@@ -124,6 +138,7 @@
 }
 
 #src-main {
+    position: relative; /*change*/
     color: #322931;
     display: none;
     padding-left: 28px;

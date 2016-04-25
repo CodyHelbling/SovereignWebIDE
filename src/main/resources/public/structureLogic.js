@@ -18,6 +18,7 @@ var dict = new fileDict();
 function fileDict() {
     var targetDict = {};
     var cMenu1Target;
+    var currentOpenFilePath;
     targetDict["src"] = "srcFiles";
     targetDict["src-main"] = "mainFiles";
 //
@@ -31,10 +32,10 @@ function fileDict() {
     this.addFolder = function(folderName) {
         if (!(targetDict[cMenu1Target+"-"+folderName])) { //folder doesn't exist
             var dirLocate = cMenu1Target;
-            webSocketCommands.send("addFolder:" + "/home/austin/sQuire/" + dirLocate.replace(/-/g, "/") + "/" + folderName);
+            webSocketCommands.send("addFolder:" /*+ "/home/austin/sQuire/"*/ + dirLocate.replace(/-/g, "/") + "/" + folderName);
             var divID = targetDict[cMenu1Target];   //parent of target div
             var folderDiv = createDiv(cMenu1Target+"-"+folderName, "folder"); //new div for folder
-            var filesDiv = createDiv(folderName + "div_" + divID + "files", "folder"); //file container inside the folder div
+            var filesDiv = createDiv(folderName + "div_" + divID + "files", "column"); //file container inside the folder div
             var img = createImg(folderName + "img_" + divID, "14", "20", "index.png"); //folder image
             var name = document.createTextNode(folderName); //start appending to document...
             var button = document.createElement("BUTTON");
@@ -56,11 +57,18 @@ function fileDict() {
         }
         return false;
     };
+    /**
+     * Creates a new file div inside a parent folder div and sends a command via a websocket to create a new file.
+     *
+     * @param {string} fileName - Name of the new file that will appended to the path of the parent directory. All "-" in
+     * the file name are replaced with "?" temporarily to aid setting the file div's id without ambiguity in the html.
+     */
+
     this.addFile = function(fileName) {
         if (!(targetDict[cMenu1Target+"-"+fileName])) {
             var dirLocate = cMenu1Target;
             var fileNameFix = fileName.replace(/-/g, "?"); //replace - with illegal "?" to prevent path corruption
-            webSocketCommands.send("addFile:" + "/home/austin/sQuire/" + dirLocate.replace(/-/g, "/") + "/" + fileName);
+            webSocketCommands.send("addFile:" /*+ "/home/austin/sQuire/"*/ + dirLocate.replace(/-/g, "/") + "/" + fileName);
             var divID = targetDict[cMenu1Target];
             var div = createDiv(cMenu1Target+"-"+fileNameFix, "file");
             var name = document.createTextNode(fileName);
@@ -69,7 +77,7 @@ function fileDict() {
             document.body.appendChild(button);
             button.setAttribute("id", fileName + divID);
             button.setAttribute("class", "fileStyle");
-            button.addEventListener("dblclick", openFile);
+            button.addEventListener("dblclick", fileOpenDoubleClick);
             div.appendChild(button);
             document.getElementById(divID).appendChild(div);
             targetDict[div.getAttribute("id")] = cMenu1Target+"-"+fileNameFix;
@@ -81,7 +89,7 @@ function fileDict() {
     this.deleteFolder = function(id) {
         targetDict[id] = null;
         document.getElementById(id).remove();
-        webSocketCommands.send("deleteFolder:" + "/home/austin/sQuire/" + id.replace(/-/g, "/").replace(/\?/g, "-"));
+        webSocketCommands.send("deleteFolder:" /*+ "/home/austin/sQuire/"*/ + id.replace(/-/g, "/").replace(/\?/g, "-"));
     };
     this.getCurrTarget = function() {
         return targetDict[cMenu1Target];
@@ -97,6 +105,14 @@ function fileDict() {
             return true;
         else
             return false;
+    };
+    this.setCurrentOpenFile = function(filePath){
+        if (currentOpenFilePath != null) {
+            currentOpenFilePath = filePath;
+        }
+        else {
+            console.log("structureLogic.js::setCurrentOpenFile(): currentOpenFilePath already set");
+        }
     };
     return this;
 }
@@ -138,6 +154,14 @@ function menuShowHide(event) {
         cMenu1.setAttribute("class", "contextMenuHide");
     }
 }
+
+function fileOpenDoubleClick(event) {
+    webSocketCommands.send("open2:" /*+ "/home/austin/sQuire/"*/ + event.target.parentNode.getAttribute("id").replace(/-/g, "/").replace(/\?/g, "-"));
+}
+
+function fileOpenFromMenu(event) {
+
+}
 function menuHide() {
     if(cMenu1.getAttribute("class") == "contextMenuShow") {
         cMenu1.setAttribute("class", "contextMenuHide");
@@ -159,11 +183,11 @@ function showHide(id){
  * A double-click attribute is added to the newly created button,
  * allowing the end user to command the opening of a respective
  * file.
- * @param {String} divID - id of parent div.
+ * @param {String} id - id of parent div.
  */
 
-function createFile (input) {
-    dict.addFile(document.getElementById(input).value);
+function createFile (id) {
+    dict.addFile(document.getElementById(id).value);
     showHide("newFileForm");
     document.getElementById("fileInput").value = "";
     return false;

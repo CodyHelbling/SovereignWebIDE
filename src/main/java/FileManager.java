@@ -34,7 +34,7 @@ public class FileManager {
     public static void createDirectory(String pathName) {
        System.out.println("FileManager::createDirectory(): " + pathName);
        try {
-           Files.createDirectory(Paths.get(pathName));
+           Files.createDirectory(Paths.get(System.getProperty("user.home") + "/sQuire/" + pathName));
        } catch (IOException e) {
            System.err.println("FileManager::createDirectory() IOException +++ "+e+" +++: I/O error; parent directory may not exist.");
        }/* catch (FileAlreadyExistsException e) {
@@ -45,14 +45,15 @@ public class FileManager {
     public static void deleteDirectory(String pathName) {
         System.out.println("FileManager::deleteDirectory(): " + pathName);
         try {
-            Files.deleteIfExists(Paths.get(pathName));
+            Files.deleteIfExists(Paths.get(System.getProperty("user.home") + "/sQuire/" + pathName));
         } catch (IOException e) {
             System.err.println("FileManager::deleteDirectory() IOException +++ "+e+" +++: I/O error.");
         }
     }
     public static void createFile(String pathName) {
         try {
-            Files.createFile(Paths.get(pathName));
+            System.out.println(System.getProperty("user.home") + "/sQuire/" + pathName);
+            Files.createFile(Paths.get(System.getProperty("user.home") + "/sQuire/" + pathName));
         } catch (IOException e) {
             System.err.println("FileManager::createFile() IOException +++ " + e + " +++: I/O error.");
         } /*catch (FileAlreadyExistsException e) {
