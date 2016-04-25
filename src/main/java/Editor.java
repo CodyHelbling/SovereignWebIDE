@@ -4,11 +4,11 @@
 
 import org.eclipse.jetty.websocket.api.*;
 import org.eclipse.jetty.websocket.api.annotations.WebSocket;
-import org.json.JSONObject;
 
-import static j2html.TagCreator.*;
 import static spark.Spark.*;
-import java.text.*;
+
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 
@@ -35,6 +35,67 @@ public class Editor {
         webSocket("/editor", EditorHandler.class);
         webSocket("/chat", ChatWebSocketHandler.class);
         Commands.main();
+        get("/ide", (request, response) -> {
+
+
+//            try (BufferedWriter bw = new BufferedWriter(new FileWriter(new File("./src/main/resources/public/TEST.txt")))) {
+//                bw.write("Hello, This is a test message");
+//                bw.close();
+//            }catch (FileNotFoundException ex) {
+//                System.out.println(ex.toString());
+//            }
+
+
+            String content = new String(Files.readAllBytes(Paths.get("./src/main/resources/public/index.html")));
+            return content;
+        });
+
+        get("/", (request, response) -> {
+
+
+//            try (BufferedWriter bw = new BufferedWriter(new FileWriter(new File("./src/main/resources/public/TEST.txt")))) {
+//                bw.write("Hello, This is a test message");
+//                bw.close();
+//            }catch (FileNotFoundException ex) {
+//                System.out.println(ex.toString());
+//            }
+
+
+            String content = new String(Files.readAllBytes(Paths.get("./src/main/resources/public/landing.html")));
+            return content;
+        });
+
+        post("/signup", (req, res) -> {
+            System.out.println(req.body());
+            // Hue, you can plug in your auth and creation stuff here!
+            System.out.println("Signing someone up....");
+            if(Authentication.chop(req.body(), 1)){
+                System.out.println("success");
+                //redirect to editor
+            }else{
+                System.out.println("Failiure");
+                //complain that username is taken
+            }
+            String something = "hello";
+            return something;
+        });
+
+        post("/login", (req, res) -> {
+            System.out.println(req.body());
+            // Hue, you can plug in your auth and creation stuff here!
+            System.out.println("Logging someone in....");
+            if(Authentication.chop(req.body(), 2)){
+                System.out.println("success");
+                //redirect to editor
+            }else{
+                System.out.println("Failiure");
+                //complain of incorrect credentials
+            }
+            String something = "hello";
+            return something;
+        });
+
+
 
         init();
     }
@@ -58,3 +119,7 @@ public class Editor {
         });
     }
 }
+
+
+
+

@@ -23,7 +23,7 @@ public class Commands {
 
 
     /**
-     * Saves the file to the project directory.
+     * Saves the file to the project FileManager.
      * @param file_name - The name of the file being saved.
      */
     public static void save_file(String file_name) {

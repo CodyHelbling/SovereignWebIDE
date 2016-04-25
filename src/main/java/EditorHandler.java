@@ -23,6 +23,7 @@ public class EditorHandler {
      */
     @OnWebSocketConnect
     public void onConnect(Session user) throws Exception {
+        FileManager.createProjectSpace();
         System.out.print("Editor Connection Established!\n");
         NumberOfUsers += 1;
         String username = "User" + Editor.nextUserNumber++;

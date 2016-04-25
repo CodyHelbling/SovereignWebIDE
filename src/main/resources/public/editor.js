@@ -6,10 +6,10 @@
 
 
 //Establish the WebSocket connection and set up event handlers
-var webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/editor");
+var webSocketEdit = new WebSocket("ws://" + location.hostname + ":" + location.port + "/editor");
 // An event listener to be called when a message is received from the server
-webSocket.onmessage = function (msg) { updateEditor(msg, myCodeMirror); };
-webSocket.onclose = function (event) { alert("WebSocket connection closed"); /*alert(event.code)*/ };
+webSocketEdit.onmessage = function (msg) { updateEditor(msg, myCodeMirror); };
+webSocketEdit.onclose = function (event) { alert("WebSocket connection closed"); /*alert(event.code)*/ };
 
 
 var webSocketChat = new WebSocket("ws://" + location.hostname + ":" + location.port + "/chat");
@@ -54,7 +54,7 @@ myCodeMirror.on("change", function(myCodeMirror, changeObj){
 function updateEditor(msg, myCodeMirror) {
     count = count+1;
     var data = msg;
-    if(oldCode != msg.data && count%3 == 0){
+    if(oldCode != msg.data && count%2 == 0){
         // console.log("new Code")
         myCodeMirror.setValue(msg.data)
     }
@@ -63,12 +63,10 @@ function updateEditor(msg, myCodeMirror) {
     }
     console.log("\n\n" + msg.data + " : updateEditor");
 }
-
 //Helper function for inserting HTML as the first child of an element
 function insert(targetId, message) {
     id(targetId).insertAdjacentHTML("afterbegin", message);
 }
-
 //Helper function for selecting element by id
 function id(id) {
     return document.getElementById(id);
