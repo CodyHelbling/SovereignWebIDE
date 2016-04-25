@@ -32,7 +32,7 @@ function fileDict() {
     this.addFolder = function(folderName) {
         if (!(targetDict[cMenu1Target+"-"+folderName])) { //folder doesn't exist
             var dirLocate = cMenu1Target;
-            webSocketCommands.send("addFolder:" /*+ "/home/austin/sQuire/"*/ + dirLocate.replace(/-/g, "/") + "/" + folderName);
+            webSocketCommands.send("addFolder:" /*+ "/home/austin/sQuire/"*/ + dirLocate.replace(/-/g, "/") + "/"+ folderName);
             var divID = targetDict[cMenu1Target];   //parent of target div
             var folderDiv = createDiv(cMenu1Target+"-"+folderName, "folder"); //new div for folder
             var filesDiv = createDiv(folderName + "div_" + divID + "files", "column"); //file container inside the folder div
