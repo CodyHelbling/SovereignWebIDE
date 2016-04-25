@@ -17,23 +17,28 @@
  * @since   2014-03-31
  */
 
-import static spark.Spark.*;
-import org.eclipse.jetty.websocket.api.*;
-import org.eclipse.jetty.websocket.api.annotations.*;
-
-@WebSocket
+//@WebSocket
 public class fileManagementHandler {
-    //private fileStructure newStructure;
-
+    private FileManager projectSpace;
+    /*
     @OnWebSocketConnect
     public void creator(Session session){
-        //newStructure = new fileStructure();
-        //newStructure.createStructure();
+        projectSpace = new FileManager();
+        projectSpace.createProjectSpace(Paths.get("/home/austin/sQuire/src/main"));
     }
     @OnWebSocketClose
-    public void destructor(int closeCode, String closeReason){
-        //newStructure.deleteStructure();
-        System.out.println("Destructor: websocket closed with:" + closeReason + " " + closeCode);
+    public void destructor(){
+        projectSpace.deleteProjectSpace(Paths.get("/home/austin/sQuire"));
+        System.out.println("Destructor: websocket closed with:"); // + closeReason + " " + closeCode);
     }
+    @OnWebSocketMessage
+    public void decodeFileOpCmd(String fileOp) {
+        String[] fileOperationParse = SplitString.get_command(fileOp);
+        System.out.println(fileOperationParse[0] + ", " + fileOperationParse[1]);
+        if (fileOperationParse[0].equals("addFolder")) {
+            projectSpace.createDirectory(Paths.get(fileOperationParse[1]));
+        }
+    }*/
 }
+
 
