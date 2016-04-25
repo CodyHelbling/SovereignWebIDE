@@ -73,6 +73,7 @@ public class Editor {
                 System.out.println("success");
                 //redirect to editor
             }else{
+                System.out.println("Failiure");
                 //complain that username is taken
             }
             String something = "hello";
@@ -87,6 +88,7 @@ public class Editor {
                 System.out.println("success");
                 //redirect to editor
             }else{
+                System.out.println("Failiure");
                 //complain of incorrect credentials
             }
             String something = "hello";
