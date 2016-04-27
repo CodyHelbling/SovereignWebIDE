@@ -38,10 +38,11 @@ public class Editor {
      * @param args
      */
     public static void main(String[] args) {
-        staticFileLocation("public"); //index.html is served at localhost:4567 (default port)
+        staticFileLocation("public"); //index.html is served at localhost:80
         port(80);
         webSocket("/editor", EditorHandler.class);
         webSocket("/chat", ChatWebSocketHandler.class);
+        webSocket("/console", ConsoleHandler.class);
         Commands.main();
         get("/ide", (request, response) -> {
 
