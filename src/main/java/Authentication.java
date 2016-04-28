@@ -11,32 +11,18 @@ import java.nio.file.StandardOpenOption;
 public class Authentication {
     static String fileName="users.txt";//name of the file of user data.
     
-    public static boolean chop(String info, int type){
+    public static String[] chop(String info, int type){
     //cuts the given string into pieces. May have trouble if the format is off or a field is empty.
-        if(info.startsWith("{\"email\":\"\",\"userName\":\"\",\"password\":\"\"}")){
-            System.out.println("empty\n");
-            return false;
-        }else{
-            int i=info.indexOf(":")+2;
-            int j=info.indexOf("\"", i);
-            if(j==-1){System.out.println("bad string\n"); return false;}
-            String s1=info.substring(i, j);
-            i=info.indexOf(":", j)+2;
-            j=info.indexOf("\"", i);
-            String s2=info.substring(i, j);
-            i=info.indexOf(":", j)+2;
-            j=info.indexOf("\"", i);
-            String s3=info.substring(i, j);
-            switch(type) {
-                case 1:
-                    return Authentication.createUser(s2, s3, s1);
-                case 2:
-                    return Authentication.logIn(s3, s2);
-                default:
-                    System.out.println("incorrect call\n");
-                    return false;
-            }
+        int i=info.indexOf(":")+2;
+        int j=info.indexOf("\"", i);
+        if(j==-1){System.out.println("bad string\n"); return null;}
+        String[] s=new String[4];
+        for(int k=0; k<4; k++){
+            s[k] = info.substring(i, j);
+            i = info.indexOf(":", j) + 2;
+            j = info.indexOf("\"", i);
         }
+        return s;
     }
 
     public static boolean createUser(String uName, String password, String email){
@@ -86,13 +72,25 @@ public class Authentication {
         }
     }
 
-    public static boolean logIn(String uName, String password) {
+    public static boolean logIn(String uName, String password, String project) {
         //logs a user in. Would have more to it if the username actually got used anywhere
         try {
-            return Authentication.isUser(uName, password, true);
+            if(Authentication.isUser(uName, password, true)){
+                Users.enterProject(uName, project);
+                return true;
+            }else{return false;}
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public static boolean bounds(String path){//sneakiness checker
+        int i=0, j=0, k=0;
+        while(k!=-1){
+            k=path.indexOf("/", k);
+            if((path.substring(k+1, k+3)).equals("../")){j++;}else{i++;}
+        }
+        return i>j;
     }
 }
 
