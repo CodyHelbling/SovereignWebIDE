@@ -12,10 +12,11 @@ var webSocketConsole = new WebSocket("ws://" + location.hostname + ":" + locatio
 webSocketConsole.onmessage = function (msg) { updateConsole(msg, consoleCodeMirror); };
 
 var consoleCodeMirror = CodeMirror(document.anchors.namedItem("console"), {
-    value: "Hello, World",
+    value: "Hello World",
     mode:  "text",
     lineNumbers: false,
-    theme: "erlang-dark"
+    theme: "erlang-dark",
+    readOnly: true
 });
 
 var updateCount = 0;
