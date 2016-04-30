@@ -89,6 +89,7 @@ public class Authentication {
     public static boolean logIn(String uName, String password) {
         //logs a user in. Would have more to it if the username actually got used anywhere
         try {
+            Chat.currentUserName = uName;
             return Authentication.isUser(uName, password, true);
         } catch (Exception e) {
             return false;

@@ -3,12 +3,12 @@ import org.eclipse.jetty.websocket.api.*;
 import org.eclipse.jetty.websocket.api.annotations.*;
 
 /**
- * Contains WebSocket functions for conecting, messaging, and closing.
+ * Contains WebSocket functions for connecting, messaging, and closing.
  */
 @WebSocket
 public class ChatWebSocketHandler {
 
-    private String sender, msg;
+    private String sender, msg, username;
 
     /**
      * On connect creates and assigns username and outputs that user joined
@@ -17,7 +17,11 @@ public class ChatWebSocketHandler {
      */
     @OnWebSocketConnect
     public void onConnect(Session user) throws Exception {
-        String username = "User" + Chat.nextUserNumber++;
+        username = Chat.currentUserName;
+       /* if(Chat.currentUserName.equals("Placeholder")){
+        username = "User" + Chat.nextUserNumber++;
+        }*/
+
         Chat.userUsernameMap.put(user, username);
         Chat.broadcastMessage(sender = "Server", msg = (username + " joined the chat"));
     }

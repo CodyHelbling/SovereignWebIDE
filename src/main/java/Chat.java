@@ -13,6 +13,7 @@ import static spark.Spark.*;
 public class Chat {
     static Map<Session, String> userUsernameMap = new HashMap<>();
     static int nextUserNumber = 1; //Assign to username for next connecting user
+    static String currentUserName;
     public static void main(String[] args) {
         staticFileLocation("public"); //index.html is served at localhost:4567 (default port)
         webSocket("/chat", ChatWebSocketHandler.class);
@@ -40,9 +41,9 @@ public class Chat {
      */
     private static String createHtmlMessageFromSender(String sender, String message) {
         return article().with(
-                b(sender + " says:"),
-                p(message),
-                span().withClass("timestamp").withText(new SimpleDateFormat("HH:mm:ss").format(new Date()))
+                b(sender + ":"),
+                p(message)
+                //span().withClass("timestamp").withText(new SimpleDateFormat("HH:mm:ss").format(new Date()))
         ).render();
     }
 
