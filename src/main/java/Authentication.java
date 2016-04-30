@@ -9,8 +9,10 @@ import java.nio.file.StandardOpenOption;
 
 
 public class Authentication {
-    static String fileName="users.txt";
+    static String fileName="users.txt";//name of the file of user data.
+    
     public static boolean chop(String info, int type){
+    //cuts the given string into pieces. May have trouble if the format is off or a field is empty.
         if(info.startsWith("{\"email\":\"\",\"userName\":\"\",\"password\":\"\"}")){
             System.out.println("empty\n");
             return false;
@@ -39,11 +41,14 @@ public class Authentication {
 
     public static boolean createUser(String uName, String password, String email){
         try{
-            if(Authentication.isUser(uName, password, false)){
+            if(Authentication.isUser(uName, password, false)){//only works if the username is not taken
                 return false;
             }else {
+                //Section dealing with creating a new user
+                //to be modified to work with the database
                 String temp=uName+"\n"+password+"\n"+email+"\n\n";
                 Files.write(Paths.get(Authentication.fileName), temp.getBytes(), StandardOpenOption.APPEND);
+                //
                 return true;
             }
         }catch(Exception e){
@@ -53,12 +58,15 @@ public class Authentication {
     }
 
     public static boolean isUser(String uName, String password, Boolean checkPass){
+        //This entire function will be much simplified with the addition of the database
+        //output: if(checkpass){if(user exists AND password matches){true}else{false}}
+        //        else{if(user exists){true}else{false}}
         try{
             File f=new File(Authentication.fileName);
             if(f.createNewFile()){System.out.println("file created"); return false;}
             BufferedReader in=new BufferedReader(new FileReader(f));
             String line;
-            while((line=in.readLine())!=null){
+            while((line=in.readLine())!=null){//loops through the file, reading a person at a time
                 if(line.startsWith(uName)){
                     if(checkPass){
                         return (in.readLine()).startsWith(password);
@@ -79,6 +87,7 @@ public class Authentication {
     }
 
     public static boolean logIn(String uName, String password) {
+        //logs a user in. Would have more to it if the username actually got used anywhere
         try {
             return Authentication.isUser(uName, password, true);
         } catch (Exception e) {

@@ -13,7 +13,7 @@ webSocketEdit.onclose = function (event) { alert("WebSocket connection closed");
 
 
 var webSocketChat = new WebSocket("ws://" + location.hostname + ":" + location.port + "/chat");
-webSocketChat.onmessage = function(msg) {updateChat(msg);};
+webSocketChat.onmessage = function(message) {updateChat(message);};
 //webSocketChat.onclose = function(event){alert ("Chat WebSocket Closed");};
 
 
@@ -109,8 +109,8 @@ function sendMessage(message) {
 }
 
 //Update the chat-panel, and the list of connected users
-function updateChat(msg) {
-    var data = JSON.parse(msg.data);
+function updateChat(message) {
+    var data = JSON.parse(message.data);
     insert("chat2", data.userMessage);
     id("userlist").innerHTML = "";
     data.userlist.forEach(function (user) {

@@ -28,7 +28,6 @@ public class EditorHandler {
         NumberOfUsers += 1;
         String username = "User" + Editor.nextUserNumber++;
         Editor.userUsernameMap.put(user, username);
-        Editor.updateEditors("Server", msg = (username + " joined the chat"));
     }
 
     /**
