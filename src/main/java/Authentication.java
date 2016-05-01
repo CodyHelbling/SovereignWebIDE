@@ -89,8 +89,9 @@ public class Authentication {
         while(k!=-1){
             k=path.indexOf("/", k);
             if((path.substring(k+1, k+3)).equals("../")){j++;}else{i++;}
+            if(j>i){return false;}
         }
-        return i>j;
+        return true;
     }
 }
 
