@@ -1,3 +1,4 @@
+import org.eclipse.jetty.server.session.JDBCSessionManager;
 import java.util.Hashtable;
 
 /**
@@ -5,6 +6,7 @@ import java.util.Hashtable;
  */
 public class Users {
     static Hashtable<String, String> projects=new Hashtable<String, String>();
+    public static JDBCSessionManager.Session current;
     public static String getProject(String name){
         return projects.get(name);
     }

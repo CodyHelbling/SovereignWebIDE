@@ -73,7 +73,7 @@ public class Authentication {
     }
 
     public static boolean logIn(String uName, String password, String project) {
-        //logs a user in. Would have more to it if the username actually got used anywhere
+        //logs a user in.
         try {
             if(Authentication.isUser(uName, password, true)){
                 Users.enterProject(uName, project);

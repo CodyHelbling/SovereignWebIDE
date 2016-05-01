@@ -92,8 +92,6 @@ public class Editor {
             String[] s;
             if((s=Authentication.chop(req.body(), 2))!=null) {
                 if (Authentication.logIn(s[2], s[1], s[3])) {
-                    //new for project differentiation
-                    res.cookie("userName", s[1]);
 
                     System.out.println("success");
                     return "true";
