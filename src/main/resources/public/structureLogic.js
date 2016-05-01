@@ -29,27 +29,34 @@ function fileDict() {
      * @param {string} folderName - Specifies name of folder used to create appropriate elements and containers.
      * @returns {boolean}  - Prevent unexpected behavior.
      */
-    this.addFolder = function(folderName) {
+    this.addFolder = function(folderName) { //indentType="sub-folder" indentType="root-folder"
         if (!(targetDict[cMenu1Target+"-"+folderName])) { //folder doesn't exist
             var dirLocate = cMenu1Target;
             webSocketCommands.send("addFolder:" /*+ "/home/austin/sQuire/"*/ + dirLocate.replace(/-/g, "/") + "/"+ folderName);
-            var divID = targetDict[cMenu1Target];   //parent of target div
-            var folderDiv = createDiv(cMenu1Target+"-"+folderName, "folder"); //new div for folder
-            var filesDiv = createDiv(folderName + "div_" + divID + "files", "column"); //file container inside the folder div
+            var divID = cMenu1Target;   //parent of target div
+            var folderDiv = createDiv(cMenu1Target+"-"+folderName, "sub-folder"); //new div for folder
+            var subDiv = createDiv(cMenu1Target+"-"+folderName+"-sub","sub-container"); //file container inside the folder div
+            subDiv.style.display = "none";
+            var filesDiv = createDiv(cMenu1Target+"-"+folderName+"-files","file-container"); //file container inside the folder div
+            var foldersDiv = createDiv(cMenu1Target+"-"+folderName+"-folders","sub-folder-container"); //folder container inside the folder div
             var img = createImg(folderName + "img_" + divID, "14", "20", "index.png"); //folder image
             var name = document.createTextNode(folderName); //start appending to document...
             var button = document.createElement("BUTTON");
-            var dropB = createDropButton(folderName + "drop_" + divID, filesDiv.getAttribute("id"));
+            button.style.margin = "1px";
+            var dropB = createDropButton(cMenu1Target+"-"+folderName+"_drop", cMenu1Target+"-"+folderName+"-sub");
             button.appendChild(name);
             document.body.appendChild(button);
             button.setAttribute("id", folderName + divID);
-            button.setAttribute("class", "folderStyle");
+            button.setAttribute("class", "button-text-only");
             button.addEventListener("contextmenu", menuShowHide);
+            filesDiv.setAttribute("style", "display:none");
             folderDiv.appendChild(dropB);
             folderDiv.appendChild(img);
             folderDiv.appendChild(button);
-            folderDiv.appendChild(filesDiv);
-            document.getElementById(divID).appendChild(folderDiv);
+            subDiv.appendChild(foldersDiv);
+            subDiv.appendChild(filesDiv);
+            folderDiv.appendChild(subDiv);
+            document.getElementById(divID+"-folders").appendChild(folderDiv);
             targetDict[folderDiv.getAttribute("id")] = filesDiv.getAttribute("id");
         }
         else { //folder does exist
@@ -69,17 +76,17 @@ function fileDict() {
             var dirLocate = cMenu1Target;
             var fileNameFix = fileName.replace(/-/g, "?"); //replace - with illegal "?" to prevent path corruption
             webSocketCommands.send("addFile:" /*+ "/home/austin/sQuire/"*/ + dirLocate.replace(/-/g, "/") + "/" + fileName);
-            var divID = targetDict[cMenu1Target];
+            var divID = cMenu1Target;
             var div = createDiv(cMenu1Target+"-"+fileNameFix, "file");
             var name = document.createTextNode(fileName);
             var button = document.createElement("BUTTON");
             button.appendChild(name);
             document.body.appendChild(button);
             button.setAttribute("id", fileName + divID);
-            button.setAttribute("class", "fileStyle");
+            button.setAttribute("class", "button-text-only file");
             button.addEventListener("dblclick", fileOpenDoubleClick);
             div.appendChild(button);
-            document.getElementById(divID).appendChild(div);
+            document.getElementById(divID+"-files").appendChild(div);
             targetDict[div.getAttribute("id")] = cMenu1Target+"-"+fileNameFix;
         }
         else {
@@ -132,7 +139,7 @@ function createFolder (input) {
 
 function deleteFolder() {
     if(document.getElementById(dict.getCurrTarget()).getAttribute("class") != "file") {
-        var parentContainer = document.getElementById(dict.getCurrTarget()).parentNode.id;
+        var parentContainer = document.getElementById(dict.getCurrTarget()).parentNode.parentNode.id;
         dict.deleteFolder(parentContainer);
     }
     else {
@@ -145,6 +152,7 @@ function menuShowHide(event) {
     cMenu1.addEventListener("click", menuShowHide);
     if(cMenu1.getAttribute("class") == "contextMenuHide"){
         dict.setMenuTarget(event.target.parentNode.getAttribute("id"));
+        //alert(event.target.parentNode.getAttribute("id"));
         var x = event.clientX, y = event.clientY;
         cMenu1.setAttribute("class", "contextMenuShow");
         cMenu1.style.top = (y + 0) + 'px';
@@ -205,7 +213,8 @@ function createDropButton(id, divId) {
     dropB.innerHTML = ">";
     dropB.setAttribute("id", id);
     dropB.setAttribute("onclick", "toggleDisplay('"+ divId + "','" + id + "');");
-    dropB.setAttribute("class", "dropdown");
+    dropB.setAttribute("class", "button-text-only");
+    dropB.setAttribute("style", "margin:1px");
     document.body.appendChild(dropB);
     return dropB;
 }

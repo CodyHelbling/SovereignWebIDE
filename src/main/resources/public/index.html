@@ -34,7 +34,7 @@
 	<link rel="stylesheet" href="css/chat.css">
 	<link rel="stylesheet" href="css/console.css">
 	<link rel="stylesheet" href="css/editor.css">
-	<link rel="stylesheet" href="css/fileManagement.css">
+	<link rel="stylesheet" href="css/fileManagementNew.css">
 	<link rel="stylesheet" href="css/mod_bootstrap.css">
 
 </head>
@@ -171,21 +171,38 @@
 		<div class="col-md-2">
 			<div class="FileManagement" oncontextmenu="return false">
 				<script src="structureLogic.js"></script>
-				<div id="src" class="btn-group-vertical" oncontextmenu="menuShowHide(event);">
-					<button id="drop1" onclick="toggleDisplay('src-main', 'drop1'); toggleDisplay('srcFiles', 'drop1');" value=">">></button>
-					<img id="i1" src="index.png" width="20" height="14">
-					<button id="srcs">src</button>
-					<ul id="srcFiles" class="column">
-
-					</ul>
-				</div>
-				<div id="src-main" class="btn-group-vertical" oncontextmenu="menuShowHide(event);">
-					<button id="drop2" onclick="toggleDisplay('mainFiles', 'drop2')" value=">">></button>
-					<img id="i2" src="index.png" width="20" height="14">
-					<button id="main" oncontextmenu="displayMenu()">main</button>
-					<ul id="mainFiles" class="column">
-
-					</ul>
+				<div class="root-folder" id="project" oncontextmenu="menuShowHide(event);">
+					<button class="button-text-only" id="drop1a" onclick="toggleDisplay('project-sub', 'drop1a');" value="&gt;">^</button>
+					<img id="i1a" src="index.png" height="14" width="20">
+					<button class="button-text-only" id="projects">Untitled</button>
+					<div class="sub-container" id="project-sub" style="display: block;">
+						<div class="sub-folder-container" id="project-folders">
+							<div class="sub-folder" id="src" oncontextmenu="menuShowHide(event);">
+								<button class="button-text-only" id="drop1" onclick="toggleDisplay('src-sub', 'drop1');" value="&gt;">^</button>
+								<img id="i1" src="index.png" height="14" width="20">
+								<button class="button-text-only" id="srcs">src</button>
+								<div class="sub-container" id="src-sub" style="display: block;">
+									<div class="sub-folder-container" id="src-folders">
+										<div class="sub-folder" id="src-main" oncontextmenu="menuShowHide(event);">
+											<button class="button-text-only" id="drop2" onclick="toggleDisplay('src-main-sub', 'drop2')" value="&gt;">^</button>
+											<img id="i2" src="index.png" height="14" width="20">
+											<button class="button-text-only" id="main">main</button>
+											<div class="sub-container" id="src-main-sub" style="display: block;">
+												<div class="sub-folder-container" id="src-main-folders">
+												</div>
+												<div class="file-container" id="src-main-files">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="file-container" id="src-files">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="file-container" id="project-files">
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
