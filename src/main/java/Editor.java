@@ -70,15 +70,17 @@ public class Editor {
             // Hue, you can plug in your auth and creation stuff here!
             System.out.println("Signing someone up....");
             String response = "";
-            if(Authentication.chop(req.body(), 1)){
-                System.out.println("success");
-                //redirect to editor
-                response = "true";
-            }else{
-                System.out.println("Failiure");
-                //complain that username is taken
-                response = "false";
+            String[] s;
+            if((s=Authentication.chop(req.body(), 1))!=null){
+                if(Authentication.createUser(s[1], s[2], s[0])) {
+                    System.out.println("success");
+                    //redirect to editor
+                    return "true";
+                }
             }
+            System.out.println("Failiure");
+            //complain that username is taken
+            response = "false";
             return response;
         });
 
@@ -87,15 +89,20 @@ public class Editor {
             // Hue, you can plug in your auth and creation stuff here!
             System.out.println("Logging someone in....");
             String response = "";
-            if(Authentication.chop(req.body(), 2)){
-                System.out.println("success");
-                response = "true";
-                //redirect to editor
-            }else{
-                System.out.println("Failiure");
-                response = "false";
-                //complain of incorrect credentials
+            String[] s;
+            if((s=Authentication.chop(req.body(), 2))!=null) {
+                if (Authentication.logIn(s[2], s[1], s[3])) {
+                    //new for project differentiation
+                    res.cookie("userName", s[1]);
+
+                    System.out.println("success");
+                    return "true";
+                    //redirect to editor
+                }
             }
+            System.out.println("Failiure");
+            response = "false";
+            //complain of incorrect credentials
             return response;
         });
 

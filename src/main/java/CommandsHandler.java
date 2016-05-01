@@ -33,6 +33,10 @@ public class CommandsHandler {
         }
         else if (decoded_command[0].equals("open")) {
             System.out.println("Handler:Open\n");
+
+            //new for project differentiation
+            //decoded_command[1]="projects/"+Users.getProject()+"/"+decoded_command[1];
+
             List<String> lines = Files.readAllLines(Paths.get(decoded_command[1]));
 
 
