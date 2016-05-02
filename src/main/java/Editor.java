@@ -62,6 +62,7 @@ public class Editor {
             if((s=Authentication.chop(req.body()))!=null){
                 if(Authentication.createUser(s[1], s[2], s[0])){
                     System.out.println("success");
+                    Users.recent=s[1];
                     //redirect to editor
                     return "true";
                 }
@@ -82,8 +83,9 @@ public class Editor {
                     Users.userUsernameMap.put(Users.current, s[2]);
                     userUsernameMap.put(Users.current, s[2]);
                     System.out.println("success");
-                    return "true";
+                    Users.recent=s[2];
                     //redirect to editor
+                    return "true";
                 }
             }
             System.out.println("Failiure");
@@ -102,6 +104,7 @@ public class Editor {
             String[] s=Authentication.chop(req.body());
             if(s!=null){
                 if(Users.createProject(s[1], s[0])){
+                    Users.recent=s[1];
                     return "true";
                 }
             }
@@ -117,6 +120,7 @@ public class Editor {
             String[] s=Authentication.chop(req.body());
             if(s!=null){
                 if(Users.enterProject(s[1], s[0])){
+                    Users.recent=s[1];
                     return "true";
                 }
             }

@@ -16,7 +16,9 @@ import java.util.Map;
 public class Users {
     public static Map<String, String> projects=new HashMap<>();
     public static Map<Session, String> userUsernameMap=new HashMap<>();
+    public static Map<Session, String> userProjectnameMap=new HashMap<>();
     public static Session current=null;
+    public static String recent=null;
     static String fileName="owners.txt";
 
 
@@ -188,5 +190,21 @@ public class Users {
             System.out.println("trouble with ownership");
             return false;
         }
+    }
+//end permissions checkers------------------------------------------------------------------
+
+
+//Associate username, session, and project
+    public static void set(String uName, Session sess, String pName){
+        projects.put(uName, pName);
+        userUsernameMap.put(sess, uName);
+        userProjectnameMap.put(sess, pName);
+    }
+    public static void set(String uName, Session sess){
+        userUsernameMap.put(sess, uName);
+
+    }
+    public static void set(Session sess, String pName){
+        userProjectnameMap.put(sess, pName);
     }
 }

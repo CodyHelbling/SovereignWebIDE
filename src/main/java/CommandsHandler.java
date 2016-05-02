@@ -29,10 +29,8 @@ public class CommandsHandler {
         System.out.print("Commands Handler execution!: " + command_file_name + "\n");
 
         String[] decoded_command = SplitString.get_command(command_file_name);
-        //new for project differentiation
-        decoded_command[1]=Users.prefix(user, decoded_command[1]);
-        if(user.getRemoteAddress().equals(Users.current.getRemoteAddress())){System.out.println("same");}else{System.out.println("different");}
 
+        //new for project differentiation
         System.out.println("filename modified to:"+decoded_command[1]);
 
 
