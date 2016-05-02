@@ -58,10 +58,13 @@ public class Editor {
             // Hue, you can plug in your auth and creation stuff here!
             System.out.println("Signing someone up....");
             String response = "";
-            if(Authentication.chop(req.body(), 1)){
-                System.out.println("success");
-                //redirect to editor
-                response = "true";
+            String[] s=new String[3];
+            if((s=Authentication.chop(req.body(), 1))!=null){
+                if(Authentication.createUser(s[1], s[2], s[0])) {
+                    System.out.println("success");
+                    //redirect to editor
+                    response = "true";
+                }else{response="false";}
             }else{
                 System.out.println("Failiure");
                 //complain that username is taken

@@ -16,8 +16,8 @@ public class Authentication {
         int i=info.indexOf(":")+2;
         int j=info.indexOf("\"", i);
         if(j==-1){System.out.println("bad string\n"); return null;}
-        String[] s=new String[4];
-        for(int k=0; k<4; k++){
+        String[] s=new String[3];
+        for(int k=0; k<3; k++){
             s[k] = info.substring(i, j);
             i = info.indexOf(":", j) + 2;
             j = info.indexOf("\"", i);
