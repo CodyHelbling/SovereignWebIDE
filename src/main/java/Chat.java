@@ -11,7 +11,7 @@ import static spark.Spark.*;
  */
 @WebSocket
 public class Chat {
-    static Map<Session, String> userUsernameMap = new HashMap<>();
+    public static Map<Session, String> userUsernameMap = new HashMap<>();
     static int nextUserNumber = 1; //Assign to username for next connecting user
     static String currentUserName;
     public static void main(String[] args) {

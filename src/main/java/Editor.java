@@ -92,7 +92,8 @@ public class Editor {
             String[] s;
             if((s=Authentication.chop(req.body(), 2))!=null) {
                 if (Authentication.logIn(s[2], s[1], s[3])) {
-
+                    Users.userUsernameMap.put(Users.current, s[2]);
+                    System.out.println("login as:"+Users.userUsernameMap.get(Users.current)+": project:"+s[3]);
                     System.out.println("success");
                     return "true";
                     //redirect to editor

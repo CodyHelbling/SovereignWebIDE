@@ -28,6 +28,9 @@ public class EditorHandler {
         NumberOfUsers += 1;
         String username = "User" + Editor.nextUserNumber++;
         Editor.userUsernameMap.put(user, username);
+
+        //probably not the best way of doing this
+        Users.current=user;
     }
 
     /**

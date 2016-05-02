@@ -83,16 +83,6 @@ public class Authentication {
             return false;
         }
     }
-
-    public static boolean bounds(String path){//sneakiness checker
-        int i=0, j=0, k=0;
-        while(k!=-1){
-            k=path.indexOf("/", k);
-            if((path.substring(k+1, k+3)).equals("../")){j++;}else{i++;}
-            if(j>i){return false;}
-        }
-        return true;
-    }
 }
 
 
