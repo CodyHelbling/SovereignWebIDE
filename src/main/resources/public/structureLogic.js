@@ -63,8 +63,8 @@ function fileDict() {
                 document.getElementById(divID + "-folders").appendChild(folderDiv);
             }
             contextDiv.setAttribute("oncontextmenu", "menuShowHide(event)");
-            contextDiv.addEventListener("focus", changeBackground);
-            contextDiv.addEventListener("blur", changeBackground);
+            contextDiv.addEventListener("focus", changeBackground, true);
+            contextDiv.addEventListener("blur", changeBackground, true);
             targetDict[folderDiv.getAttribute("id")] = filesDiv.getAttribute("id");
         }
         else { //folder does exist
@@ -182,11 +182,12 @@ function menuShowHide(event) {
 }
 
 function changeBackground(event) {
+    //alert("here: " + event.target.id);
     if (event.type == "focus") {
-        event.target.setAttribute("style", "background-color: #abcdef");
+        event.target.parentNode.setAttribute("style", "color: white; background: #abcdef");
     }
     else {
-        event.target.setAttribute("style", "background-color: transparent");
+        event.target.parentNode.setAttribute("style", "color: black; background: transparent");
     }
 }
 
