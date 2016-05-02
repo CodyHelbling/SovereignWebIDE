@@ -38,29 +38,17 @@ public class Editor {
         Commands.main();
         get("/ide", (request, response) -> {
 
-
-//            try (BufferedWriter bw = new BufferedWriter(new FileWriter(new File("./src/main/resources/public/TEST.txt")))) {
-//                bw.write("Hello, This is a test message");
-//                bw.close();
-//            }catch (FileNotFoundException ex) {
-//                System.out.println(ex.toString());
-//            }
-
-
             String content = new String(Files.readAllBytes(Paths.get("./src/main/resources/public/index.html")));
             return content;
         });
 
+        get("/projects", (request, response) -> {
+
+            String content = new String(Files.readAllBytes(Paths.get("./src/main/resources/public/projects.html")));
+            return content;
+        });
+
         get("/", (request, response) -> {
-
-
-//            try (BufferedWriter bw = new BufferedWriter(new FileWriter(new File("./src/main/resources/public/TEST.txt")))) {
-//                bw.write("Hello, This is a test message");
-//                bw.close();
-//            }catch (FileNotFoundException ex) {
-//                System.out.println(ex.toString());
-//            }
-
 
             String content = new String(Files.readAllBytes(Paths.get("./src/main/resources/public/landing.html")));
             return content;
@@ -83,24 +71,23 @@ public class Editor {
             return response;
         });
 
-        post("/login", (req, res) -> {
+
+
+        post("/createproject", (req, res) -> {
             System.out.println(req.body());
-            // Hue, you can plug in your auth and creation stuff here!
-            System.out.println("Logging someone in....");
+            System.out.println("Creating Project....");
             String response = "";
-            if(Authentication.chop(req.body(), 2)){
-                System.out.println("success");
-                response = "true";
-                //redirect to editor
-            }else{
-                System.out.println("Failiure");
-                response = "false";
-                //complain of incorrect credentials
-            }
+            // Do ya thang Hue!!
             return response;
         });
 
-
+        post("/openproject", (req, res) -> {
+            System.out.println(req.body());
+            System.out.println("Opening Project....");
+            String response = "";
+            // Do ya thang Hue!!
+            return response;
+        });
 
         init();
     }
