@@ -14,7 +14,14 @@ public class Users {
     public static Map<Session, String> userUsernameMap=new HashMap<>();
     public static Session current=null;
     public static String getProject(String name){
-        return projects.get(name);
+        try {
+            String s = projects.get(name);
+            if (s!=null) {
+                return s;
+            } else {
+                return "default";
+            }
+        }catch(Exception e){e.printStackTrace(); return "default";}
     }
     public static void enterProject(String name, String pName){
         try {//enters a user into a project and creates the relevant files

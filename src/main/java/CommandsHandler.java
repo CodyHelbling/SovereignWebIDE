@@ -31,8 +31,10 @@ public class CommandsHandler {
         String[] decoded_command = SplitString.get_command(command_file_name);
         //new for project differentiation
         decoded_command[1]=Users.prefix(user, decoded_command[1]);
-        if(user.equals(Users.current)){System.out.println("same");}else{System.out.println("different");}
+        if(user.getRemoteAddress().equals(Users.current.getRemoteAddress())){System.out.println("same");}else{System.out.println("different");}
+
         System.out.println("filename modified to:"+decoded_command[1]);
+
 
         if(decoded_command[0].equals("save")) {
             Commands.save_file(decoded_command[1]);
