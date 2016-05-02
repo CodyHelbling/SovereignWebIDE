@@ -31,6 +31,7 @@ public class CommandsHandler {
         String[] decoded_command = SplitString.get_command(command_file_name);
 
         //new for project differentiation
+        decoded_command[1]=Users.prefix(user, decoded_command[1]);
         System.out.println("filename modified to:"+decoded_command[1]);
 
 

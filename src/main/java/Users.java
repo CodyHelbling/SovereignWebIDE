@@ -70,7 +70,7 @@ public class Users {
                 return false;
             }
             if (!Files.exists(Paths.get("projects/" + pName))) {return false;}
-            if(canEnter(name, pName)) {
+            if(canRead(name, pName)) {
                 projects.put(name, pName);
                 System.out.println("logging into " + pName);
                 return true;
@@ -161,14 +161,9 @@ public class Users {
 
 
 //permissions checkers-------------------------------------------------------------------------
-    public static boolean canEnter(String uName, String pName){
-        if(owner(uName, pName)||canRead(uName, pName)){return true;}
-        return false;
-    }
-
-
     public static boolean canRead(String uName, String pName){
         try{
+            if(owner(uName, pName)){return true;}
             File f=new File("projects/"+pName+"/users.txt");
             if(f.createNewFile()){System.out.println("file created"); return false;}
             BufferedReader in=new BufferedReader(new FileReader(f));
@@ -187,7 +182,61 @@ public class Users {
             }
             return false;
         }catch(Exception e){
-            System.out.println("trouble with ownership");
+            System.out.println("canRead fails");
+            return false;
+        }
+    }
+
+
+    public static boolean canWrite(String uName, String pName){
+        try{
+            if(owner(uName, pName)){return true;}
+            File f=new File("projects/"+pName+"/users.txt");
+            if(f.createNewFile()){System.out.println("file created"); return false;}
+            BufferedReader in=new BufferedReader(new FileReader(f));
+            String line;
+            in.readLine();
+            in.readLine();
+            in.readLine();
+            in.readLine();
+            while((line=in.readLine())!=null){//loops through the file, reading a person at a time
+                if(line.startsWith("//"+uName)){
+                    while((line=in.readLine())!=null&&line.contains("+")){
+                        if(line.startsWith("//+w")){return true;}
+                    }
+                    return false;
+                }
+            }
+            return false;
+        }catch(Exception e){
+            System.out.println("canWrite fails");
+            return false;
+        }
+    }
+
+
+    public static boolean canExecute(String uName, String pName){
+        try{
+            if(owner(uName, pName)){return true;}
+            File f=new File("projects/"+pName+"/users.txt");
+            if(f.createNewFile()){System.out.println("file created"); return false;}
+            BufferedReader in=new BufferedReader(new FileReader(f));
+            String line;
+            in.readLine();
+            in.readLine();
+            in.readLine();
+            in.readLine();
+            while((line=in.readLine())!=null){//loops through the file, reading a person at a time
+                if(line.startsWith("//"+uName)){
+                    while((line=in.readLine())!=null&&line.contains("+")){
+                        if(line.startsWith("//+e")){return true;}
+                    }
+                    return false;
+                }
+            }
+            return false;
+        }catch(Exception e){
+            System.out.println("canExecute fails");
             return false;
         }
     }
@@ -202,7 +251,7 @@ public class Users {
     }
     public static void set(String uName, Session sess){
         userUsernameMap.put(sess, uName);
-
+        userProjectnameMap.put(sess, userUsernameMap.get(uName));
     }
     public static void set(Session sess, String pName){
         userProjectnameMap.put(sess, pName);
