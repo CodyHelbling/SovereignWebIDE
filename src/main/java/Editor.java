@@ -34,6 +34,7 @@ public class Editor {
         port(4568);
         webSocket("/editor", EditorHandler.class);
         webSocket("/chat", ChatWebSocketHandler.class);
+        webSocket("/files", fileManagementHandler.class);
         Commands.main();
         get("/ide", (request, response) -> {
 

@@ -60,7 +60,6 @@
     margin: auto;
 }
 
-
 .folder {
     padding-right: 10px; /* changed */
     white-space: nowrap;
@@ -68,6 +67,7 @@
 
 .file {
     white-space: nowrap;
+    padding-left: 5px;
 }
 
 .fileStyle {
