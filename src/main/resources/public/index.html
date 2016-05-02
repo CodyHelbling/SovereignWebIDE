@@ -114,14 +114,13 @@
 
 
 <div class="container">
-<div class="row text-center contextMenuHide" id="fileStructureMenu">
+<div class="row text-center contextMenuHide" id="fileStructureMenu" oncontextmenu="return false">
 	<div class="col-xs-4">
 		<div class="btn-group-vertical bWidth" role="group">
 				<button onclick="openFile()" type="button" class="btn btn-info btn-sm">Open File</button>
 				<button onclick="showHide('newFolderForm')" type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#newFolderModal">New Folder</button>
 				<button onclick="createFile()" type="button" class="btn btn-info btn-sm btn-block" data-toggle="modal" data-target="#newFileModal">New File</button>
-				<button onclick="deleteFolder()" type="button" class="btn btn-info btn-sm btn-block">Delete</button>
-		</div>
+				<button onclick="deleteFolder()" type="button" class="btn btn-info btn-sm btn-block">Delete</button></div>
 	</div>
 </div>
 <div id="newFolderModal" class="modal" role="dialog" >
@@ -169,22 +168,30 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-2">
-			<div class="FileManagement" oncontextmenu="return false">
+			<div id="fileManagementStart" class="FileManagement" oncontextmenu="return false">
 				<script src="structureLogic.js"></script>
+				<button onclick="initFileStructure('NewProject')" type="button" class="btn btn-info btn-sm btn-block">New Project</button>
+				<!--
 				<div class="root-folder" id="project" oncontextmenu="menuShowHide(event);">
-					<button class="button-text-only" id="drop1a" onclick="toggleDisplay('project-sub', 'drop1a');" value="&gt;">^</button>
+					<button class="button-text-only" id="drop1a" onclick="toggleDisplay('project-sub', 'project-arrow');" style="transform: rotate(0deg)" value="&gt;">
+						<img id="project-arrow" src="file_arrow.png" height="9" width="9">
+					</button>
 					<img id="i1a" src="index.png" height="14" width="20">
 					<button class="button-text-only" id="projects">Untitled</button>
 					<div class="sub-container" id="project-sub" style="display: block;">
 						<div class="sub-folder-container" id="project-folders">
 							<div class="sub-folder" id="src" oncontextmenu="menuShowHide(event);">
-								<button class="button-text-only" id="drop1" onclick="toggleDisplay('src-sub', 'drop1');" value="&gt;">^</button>
+								<button class="button-text-only" id="drop1" onclick="toggleDisplay('src-sub', 'src-arrow');" style="transform: rotate(0deg)" value="&gt;">
+									<img id="src-arrow" src="file_arrow.png" height="9" width="9">
+								</button>
 								<img id="i1" src="index.png" height="14" width="20">
 								<button class="button-text-only" id="srcs">src</button>
 								<div class="sub-container" id="src-sub" style="display: block;">
 									<div class="sub-folder-container" id="src-folders">
 										<div class="sub-folder" id="src-main" oncontextmenu="menuShowHide(event);">
-											<button class="button-text-only" id="drop2" onclick="toggleDisplay('src-main-sub', 'drop2')" value="&gt;">^</button>
+											<button class="button-text-only" id="drop2" onclick="toggleDisplay('src-main-sub', 'src-main-arrow')" style="transform: rotate(0deg)" value="&gt;">
+												<img id="src-main-arrow" src="file_arrow.png" height="9" width="9">
+											</button>
 											<img id="i2" src="index.png" height="14" width="20">
 											<button class="button-text-only" id="main">main</button>
 											<div class="sub-container" id="src-main-sub" style="display: block;">
@@ -203,7 +210,7 @@
 						<div class="file-container" id="project-files">
 						</div>
 					</div>
-				</div>
+				</div> -->
 			</div>
 		</div>
 			<div class="col-md-8">

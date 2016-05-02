@@ -45,34 +45,6 @@ public class CommandsHandler {
             Editor.updateEditors("User OPEN", file_as_str);
             System.out.println("Handler:Open:file: "+file_as_str);
         }
-        else if (decoded_command[0].equals("addFolder")) {
-            System.out.println("Trying to create folder: " + decoded_command[1]);
-            try {
-                FileManager.createDirectory(decoded_command[1]);
-            } catch (NullPointerException e) {
-                System.err.println(e);
-            }
-        }
-        else if (decoded_command[0].equals("deleteFolder")) {
-            System.out.println("Trying to delete: " + decoded_command[1]);
-            FileManager.deleteDirectory(decoded_command[1]);
-        }
-        else if(decoded_command[0].equals("addFile")) {
-            System.out.println("Trying to create file: " + decoded_command[1]);
-            FileManager.createFile(decoded_command[1]);
-        }
-        else if (decoded_command[0].equals("open2")) {
-            System.out.println("Handler:Open2\n");
-            List<String> lines = Files.readAllLines(Paths.get(System.getProperty("user.home") + "/sQuire/" + decoded_command[1]));
-            String file_as_str = "";
-            for (String s : lines) {
-                file_as_str += s + "\n";
-            }
-            Editor.file = file_as_str;
-            // This is a hack but it updates users
-            Editor.updateEditors("User OPEN", file_as_str);
-            System.out.println("Handler:Open:file: "+file_as_str);
-        };
     }
 }
 
