@@ -11,7 +11,7 @@ import java.nio.file.StandardOpenOption;
 public class Authentication {
     static String fileName="users.txt";//name of the file of user data.
     
-    public static String[] chop(String info, int type){
+    public static String[] chop(String info){
     //cuts the given string into pieces. May have trouble if the format is off or a field is empty.
         int i=info.indexOf(":")+2;
         int j=info.indexOf("\"", i);
@@ -72,13 +72,14 @@ public class Authentication {
         }
     }
 
-    public static boolean logIn(String uName, String password, String project) {
+    public static boolean logIn(String uName, String password) {
         //logs a user in.
         try {
             if(Authentication.isUser(uName, password, true)){
-                Users.enterProject(uName, project);
+                Chat.currentUserName=uName;
                 return true;
-            }else{return false;}
+            }
+            return false;
         } catch (Exception e) {
             return false;
         }

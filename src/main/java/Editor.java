@@ -58,18 +58,37 @@ public class Editor {
             // Hue, you can plug in your auth and creation stuff here!
             System.out.println("Signing someone up....");
             String response = "";
-            String[] s=new String[3];
-            if((s=Authentication.chop(req.body(), 1))!=null){
-                if(Authentication.createUser(s[1], s[2], s[0])) {
+            String[] s;
+            if((s=Authentication.chop(req.body()))!=null){
+                if(Authentication.createUser(s[1], s[2], s[0])){
                     System.out.println("success");
                     //redirect to editor
-                    response = "true";
-                }else{response="false";}
-            }else{
-                System.out.println("Failiure");
-                //complain that username is taken
-                response = "false";
+                    return "true";
+                }
             }
+            System.out.println("Failiure");
+            //complain that username is taken
+            return "false";
+        });
+
+        post("/login", (req, res) -> {
+            System.out.println(req.body());
+            // Hue, you can plug in your auth and creation stuff here!
+            System.out.println("Logging someone in....");
+            String response = "";
+            String[] s;
+            if((s=Authentication.chop(req.body()))!=null) {
+                if (Authentication.logIn(s[2], s[1])) {
+                    Users.userUsernameMap.put(Users.current, s[2]);
+                    userUsernameMap.put(Users.current, s[2]);
+                    System.out.println("success");
+                    return "true";
+                    //redirect to editor
+                }
+            }
+            System.out.println("Failiure");
+            response = "false";
+            //complain of incorrect credentials
             return response;
         });
 
@@ -80,7 +99,14 @@ public class Editor {
             System.out.println("Creating Project....");
             String response = "";
             // Do ya thang Hue!!
-            return response;
+            String[] s=Authentication.chop(req.body());
+            if(s!=null){
+                if(Users.createProject(s[1], s[0])){
+                    return "true";
+                }
+            }
+
+            return "false";
         });
 
         post("/openproject", (req, res) -> {
@@ -88,7 +114,14 @@ public class Editor {
             System.out.println("Opening Project....");
             String response = "";
             // Do ya thang Hue!!
-            return response;
+            String[] s=Authentication.chop(req.body());
+            if(s!=null){
+                if(Users.enterProject(s[1], s[0])){
+                    return "true";
+                }
+            }
+
+            return "false";
         });
 
         init();
