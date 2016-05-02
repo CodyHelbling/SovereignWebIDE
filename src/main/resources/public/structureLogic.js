@@ -269,7 +269,6 @@ function createAddButton(id, typeCall) {
 }
 
 /**
- *
  * @param {String} id - Used to set id attribute of image.
  * @param {String} hi - Used to set image height.
  * @param {String} wi - Used to set image width.
