@@ -1,4 +1,5 @@
 import org.eclipse.jetty.websocket.api.Session;
+import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
 import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 
@@ -22,8 +23,14 @@ public class CommandsHandler {
 
     /**
      * Calls the save_file function in Commands.java.
-     * @param command_file_name - The name of the file to be saved.
+     * param command_file_name - The name of the file to be saved.
      */
+    @OnWebSocketConnect
+    public void onConnect(Session user) throws Exception {
+        Users.set(Users.recent, user);
+        System.out.println("lfkajshdflkjashd");
+    }
+
     @OnWebSocketMessage
     public void DecodeCommand(Session user, String command_file_name) throws IOException {
         System.out.print("Commands Handler execution!: " + command_file_name + "\n");

@@ -81,7 +81,6 @@ public class Editor {
             if((s=Authentication.chop(req.body()))!=null) {
                 if (Authentication.logIn(s[2], s[1])) {
                     Users.userUsernameMap.put(Users.current, s[2]);
-                    userUsernameMap.put(Users.current, s[2]);
                     System.out.println("success");
                     Users.recent=s[2];
                     //redirect to editor

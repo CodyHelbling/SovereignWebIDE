@@ -45,10 +45,13 @@ public class Users {
             if (!Files.exists(Paths.get("projects"))) {
                 File f = new File("projects");
                 f.mkdir();
+                createProject("nonsense", "default");
             }
             if (!Files.exists(Paths.get("projects/" + pName))) {
                 File f = new File("projects/" + pName);
                 f.mkdir();
+                f=new File("projects/" + pName+"/users.txt");
+                f.createNewFile();
                 String temp="//This file contains the names of users allowed to do various things with this project.\n"+
                         "//The owner's name is provided as a guide. Removing it will not change their permissions.\n"+
                         "//All lines should be commented out and there should be a blank line between each user.\n"+
@@ -56,6 +59,7 @@ public class Users {
                 Files.write(Paths.get("projects/"+pName+"/users.txt"), temp.getBytes(), StandardOpenOption.APPEND);
                 return true;
             }
+            recent=name;
             return false;
         }catch(Exception e){e.printStackTrace(); return false;}
     }
@@ -75,6 +79,7 @@ public class Users {
                 System.out.println("logging into " + pName);
                 return true;
             }
+            recent=name;
             return false;
         }catch(Exception e){e.printStackTrace(); return false;}
     }
@@ -163,15 +168,12 @@ public class Users {
 //permissions checkers-------------------------------------------------------------------------
     public static boolean canRead(String uName, String pName){
         try{
+            if(pName.equals("default")){return true;}
             if(owner(uName, pName)){return true;}
             File f=new File("projects/"+pName+"/users.txt");
             if(f.createNewFile()){System.out.println("file created"); return false;}
             BufferedReader in=new BufferedReader(new FileReader(f));
             String line;
-            in.readLine();
-            in.readLine();
-            in.readLine();
-            in.readLine();
             while((line=in.readLine())!=null){//loops through the file, reading a person at a time
                 if(line.startsWith("//"+uName)){
                     while((line=in.readLine())!=null&&line.contains("+")){
@@ -190,15 +192,12 @@ public class Users {
 
     public static boolean canWrite(String uName, String pName){
         try{
+            if(pName.equals("default")){return true;}
             if(owner(uName, pName)){return true;}
             File f=new File("projects/"+pName+"/users.txt");
             if(f.createNewFile()){System.out.println("file created"); return false;}
             BufferedReader in=new BufferedReader(new FileReader(f));
             String line;
-            in.readLine();
-            in.readLine();
-            in.readLine();
-            in.readLine();
             while((line=in.readLine())!=null){//loops through the file, reading a person at a time
                 if(line.startsWith("//"+uName)){
                     while((line=in.readLine())!=null&&line.contains("+")){
@@ -217,15 +216,12 @@ public class Users {
 
     public static boolean canExecute(String uName, String pName){
         try{
+            if(pName.equals("default")){return true;}
             if(owner(uName, pName)){return true;}
             File f=new File("projects/"+pName+"/users.txt");
             if(f.createNewFile()){System.out.println("file created"); return false;}
             BufferedReader in=new BufferedReader(new FileReader(f));
             String line;
-            in.readLine();
-            in.readLine();
-            in.readLine();
-            in.readLine();
             while((line=in.readLine())!=null){//loops through the file, reading a person at a time
                 if(line.startsWith("//"+uName)){
                     while((line=in.readLine())!=null&&line.contains("+")){
