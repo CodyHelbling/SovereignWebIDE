@@ -57,6 +57,7 @@ public class Users {
                         "//All lines should be commented out and there should be a blank line between each user.\n"+
                         "//\n//"+name+"\n//+read\n//+write\n//+execute\n//\n";
                 Files.write(Paths.get("projects/"+pName+"/users.txt"), temp.getBytes(), StandardOpenOption.APPEND);
+                own(name, pName);
                 return true;
             }
             recent=name;
@@ -89,7 +90,7 @@ public class Users {
         try {
             File f=new File(fileName);
             if(f.createNewFile()){System.out.println("file created");}
-            if(!pExists(pName)) {
+            if(pExists(pName)) {
                 String temp = pName + "\n" + uName + "\n\n";
                 Files.write(Paths.get(fileName), temp.getBytes(), StandardOpenOption.APPEND);
             }
@@ -106,9 +107,6 @@ public class Users {
             while((line=in.readLine())!=null){//loops through the file, reading a person at a time
                 if(line.startsWith(pName)){
                     return in.readLine().equals(uName);
-                }else{
-                    in.readLine();
-                    in.readLine();
                 }
             }
             return false;
