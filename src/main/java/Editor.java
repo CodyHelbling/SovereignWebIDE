@@ -43,6 +43,7 @@ public class Editor {
         webSocket("/editor", EditorHandler.class);
         webSocket("/chat", ChatWebSocketHandler.class);
         webSocket("/console", ConsoleHandler.class);
+        webSocket("/compile", CompileHandler.class);
         Commands.main();
         get("/ide", (request, response) -> {
 

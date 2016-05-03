@@ -17,8 +17,6 @@ public class Console {
     static int nextUserNumber = 1;
 
     public static void main(String[] args) {
-        staticFileLocation("public"); //index.html is served at localhost:80
-        webSocket("/console", ConsoleHandler.class);
         init();
     }
 
@@ -27,7 +25,6 @@ public class Console {
     public static void updateConsole(String sender, String update) {
         userUsernameMap.keySet().stream().filter(Session::isOpen).forEach(session -> {
             try {
-                //file.add(update);
                 Console.consoleFile = update;
                 System.out.print("Console: " + consoleFile + "\n");
                 System.out.print("actually runing update console in the loop");
@@ -36,5 +33,14 @@ public class Console {
                 e.printStackTrace();
             }
         });
+    }
+
+    public static void compile(){
+        try{
+            Runtime rt = Runtime.getRuntime();
+            Process pr = rt.exec("java -jar map.jar time.rel test.txt debug");
+        } catch(Exception e){
+            System.out.print("Exception" + e);
+        }
     }
 }

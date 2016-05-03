@@ -42,3 +42,4 @@ function updateConsole(msg, consoleCodeMirror) {
         console.log("Console is up to date")
     }
 }
+
