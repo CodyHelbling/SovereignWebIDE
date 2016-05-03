@@ -72,6 +72,7 @@ public class Authentication {
         }
     }
 
+
     public static boolean logIn(String uName, String password) {
         //logs a user in.
         try {

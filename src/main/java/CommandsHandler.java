@@ -31,6 +31,7 @@ public class CommandsHandler {
         System.out.println("lfkajshdflkjashd");
     }
 
+
     @OnWebSocketMessage
     public void DecodeCommand(Session user, String command_file_name) throws IOException {
         System.out.print("Commands Handler execution!: " + command_file_name + "\n");

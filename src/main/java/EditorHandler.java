@@ -33,6 +33,7 @@ public class EditorHandler {
         Users.current=user;
     }
 
+
     /**
      * This method is called whenever the client sends a message, or the server updates the clients.
      * @param user - The id of the user.
