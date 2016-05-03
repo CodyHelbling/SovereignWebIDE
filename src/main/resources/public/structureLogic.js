@@ -10,6 +10,7 @@
  * @type {WebSocket}
  */
 var webSocketFileManagement = new WebSocket("ws://" + location.hostname + ":" + location.port + "/files");
+webSocketFileManagement.onmessage = function (data) {updateFileStructure(data);};
 //webSocket.createStructure = function () { };
 var cMenu1 = document.getElementById("fileStructureMenu");
 var cMenu1Target;
@@ -30,9 +31,9 @@ function fileDict() {
      * @returns {boolean}  - Prevent unexpected behavior.
      */
     this.addFolder = function(folderName, folderClass) { //indentType="sub-folder" indentType="root-folder"
-        if (!(targetDict[cMenu1Target+"-"+folderName])) { //folder doesn't exist
-            var dirLocate = cMenu1Target;
-            webSocketFileManagement.send("addFolder:" /*+ "/home/austin/sQuire/"*/ + dirLocate.replace(/-/g, "/") + "/"+ folderName);
+        //if (!(targetDict[cMenu1Target+"-"+folderName])) { //folder doesn't exist
+        if (!(document.getElementById(cMenu1Target+"-"+folderName))) { //folder doesn't exist
+            var dirLocate = cMenu1Target.replace(/-/g, "/");
             var divID = cMenu1Target;   //parent of target div
             var folderDiv = createDiv(cMenu1Target+"-"+folderName, folderClass); //new div for folder
             var subDiv = createDiv(cMenu1Target+"-"+folderName+"-sub","sub-container"); //file container inside the folder div
@@ -56,16 +57,24 @@ function fileDict() {
             subDiv.appendChild(foldersDiv);
             subDiv.appendChild(filesDiv);
             folderDiv.appendChild(subDiv);
-            if (divID == "") { //in the case of an empty file structure
-                document.getElementById("fileManagementStart").appendChild(folderDiv);
-            }
-            else {
-                document.getElementById(divID + "-folders").appendChild(folderDiv);
-            }
             contextDiv.setAttribute("oncontextmenu", "menuShowHide(event)");
             contextDiv.addEventListener("focus", changeBackground, true);
             contextDiv.addEventListener("blur", changeBackground, true);
-            targetDict[folderDiv.getAttribute("id")] = filesDiv.getAttribute("id");
+            if (divID == "") { //in the case of an empty file structure
+                document.getElementById("fileManagementStart").appendChild(folderDiv);
+                webSocketFileManagement.send("addFolder:" /*+ "/home/austin/sQuire/"*/ + dirLocate + "/" + folderName
+                    + ":fileManagementStart:"
+                    + document.getElementById("fileManagementStart").innerHTML
+                );
+            }
+            else {
+                document.getElementById(divID + "-folders").appendChild(folderDiv);
+                webSocketFileManagement.send("addFolder:" /*+ "/home/austin/sQuire/"*/ + dirLocate + "/" + folderName
+                    + ":" + divID + "-folders:"
+                    + document.getElementById(divID + "-folders").innerHTML
+                );
+            }
+                //targetDict[folderDiv.getAttribute("id")] = filesDiv.getAttribute("id");
         }
         else { //folder does exist
             alert('Folder already exist!');
@@ -80,10 +89,9 @@ function fileDict() {
      */
 
     this.addFile = function(fileName) {
-        if (!(targetDict[cMenu1Target+"-"+fileName])) {
-            var dirLocate = cMenu1Target;
-            var fileNameFix = fileName.replace(/-/g, "?"); //replace - with illegal "?" to prevent path corruption
-            webSocketFileManagement.send("addFile:" /*+ "/home/austin/sQuire/"*/ + dirLocate.replace(/-/g, "/") + "/" + fileName);
+        var fileNameFix = fileName.replace(/-/g, "?"); //replace - with illegal "?" to prevent path corruption
+        if (!(targetDict[cMenu1Target+"-"+fileNameFix])) {
+            var dirLocate = cMenu1Target.replace(/-/g, "/");
             var divID = cMenu1Target;
             var div = createDiv(cMenu1Target+"-"+fileNameFix, "file");
             var name = document.createTextNode(fileName);
@@ -94,18 +102,25 @@ function fileDict() {
             button.setAttribute("class", "button-text-only");
             button.addEventListener("dblclick", fileOpenDoubleClick);
             div.appendChild(button);
+            div.setAttribute("oncontextmenu", "menuShowHide(event)");
             document.getElementById(divID+"-files").appendChild(div);
             button.removeAttribute("style");
-            targetDict[div.getAttribute("id")] = cMenu1Target+"-"+fileNameFix;
+            webSocketFileManagement.send("addFile:" /*+ "/home/austin/sQuire/"*/ + dirLocate + "/" + fileName
+                                         + ":" + divID + "-files" + ":" + document.getElementById(divID + "-files").innerHTML);
+            //targetDict[div.getAttribute("id")] = cMenu1Target+"-"+fileNameFix;
         }
         else {
             alert('File already exist!');
         }
     };
     this.deleteFolder = function(id) {
-        targetDict[id] = null;
+        var Parent = document.getElementById(id).parentNode;
         document.getElementById(id).remove();
-        webSocketFileManagement.send("deleteFolder:" /*+ "/home/austin/sQuire/"*/ + id.replace(/-/g, "/").replace(/\?/g, "-"));
+        webSocketFileManagement.send("deleteFolder:" /*+ "/home/austin/sQuire/"*/ + id.replace(/-/g, "/").replace(/\?/g, "-")
+                                     + ":" + Parent.id + ":" + document.getElementById(Parent.id).innerHTML);
+    };
+    this.deleteFile = function(id) {
+
     };
     this.getCurrTarget = function() {
         return targetDict[cMenu1Target];
@@ -147,7 +162,6 @@ function initFileStructure(projectName) {
  * @param {string} divID - This is the id of the parent div in which the child div for the new folder will be created.
  */
 
-
 function createFolder (input) {
     dict.addFolder(document.getElementById(input).value, "sub-folder");
     showHide("newFolderForm");
@@ -179,6 +193,12 @@ function menuShowHide(event) {
     } else {
         cMenu1.setAttribute("class", "contextMenuHide");
     }
+}
+
+function updateFileStructure(htmlData) {
+    var newHtml = JSON.parse(htmlData.data);
+    //alert("this works:" + newHtml.htmlContent);
+    document.getElementById(newHtml.targetID).innerHTML = newHtml.htmlContent;
 }
 
 function changeBackground(event) {

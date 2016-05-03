@@ -7,23 +7,63 @@
     color: black;
 }
 
-.form {
-    float: left;
-    padding-left: 5px;
+.button-text-only {
+    /*float: inherit;*/
     position: relative;
-    text-align: left;
+    background: transparent;
+    border: none;
+    margin: 0px;
+    padding: 0;
+}
+
+.root-folder {
+    position: relative;
+    padding-left: 0;
+    width: 100%;
+}
+
+.sub-folder {
+    width: 100%;
+    display: inline-block;
+}
+
+.context1 {
+    width: 100%;
+    background-color: transparent;
+}
+
+.sub-container {
+    top: -3px;
+    display: inline-block;
+    margin-left: 0;
+    position: relative;
+    float: left;
+    width: inherit;
+}
+
+.sub-folder-container {
+    position: absolute;
+    left: 10px;
+    width: 100%;
+}
+
+.file-container {
+    padding-left: 20px;
+}
+
+.file {
+
 }
 
 .bWidth {
-    text-align: center;
     border-radius: 0;
     border-color: #404040;
     background-color: #657b83;
-    width: 196px;
+    width: 197px;
     height: 25px;
     position: relative;
-    left: -16px;
-    top: -1px;
+    left: -57px;
+    top: -1.5px;
 }
 
 .newFolderForm {
@@ -48,109 +88,20 @@
     position: fixed;
     z-index: 9;
     background-color: #b0b0b0;
-    width: 201px;
-    height: 120px;
+    width: 200px;
+    height: 450px;
     border-style: groove;
     border-color: #2b2b2b;
 }
 
-
-.contain {
+.bWidth {
+    text-align: center;
+    border-radius: 0;
+    border-color: #404040;
+    background-color: #657b83;
+    width: 196px;
+    height: 25px;
     position: relative;
-    margin: auto;
+    left: -16px;
+    top: -1px;
 }
-
-.folder {
-    padding-right: 10px; /* changed */
-    white-space: nowrap;
-}
-
-.file {
-    white-space: nowrap;
-    padding-left: 5px;
-}
-
-.fileStyle {
-    padding-left: 25px;
-    background: transparent;
-    border: none;
-}
-
-.folderStyle {
-    background: transparent;
-    border: none;
-    margin: 0;
-    padding-left: 3px;
-    /*
-    background: transparent;
-    border: none;
-*/
-}
-
-.dropdown {
-    background: transparent;
-    border: none;
-    margin: 0;
-    padding-right: 3px;
-    /*
-    left: -5px;
-    background: transparent;
-    border: none;
-*/
-}
-
-.addButton {
-    background: transparent;
-    border: none;
-}
-
-#drop1, #drop2 {
-    background: transparent;
-    border: none;
-    margin: 0;
-    padding: 0;
-}
-
-
-#main, #addmain, #srcs, #addsrc {
-    background: transparent;
-    border: none;
-    margin: 0;
-    padding: 0;
-}
-
-#srcFiles {
-    padding-left: 25px;
-    display: none;
-    padding-top: 0px;
-    width: 40px;
-    margin: 0;
-    background: transparent;
-    border: none;
-}
-
-
-#mainFiles {
-    padding-left: 29px;
-    display: none;
-    padding-top: 0px;
-    width: 40px;
-    margin: 0;
-    background: transparent;
-    border: none;
-}
-
-#srcs {
-    color: #322931;
-    padding-top: 5px;
-}
-
-#src-main {
-    position: relative; /*change*/
-    color: #322931;
-    display: none;
-    padding-left: 28px;
-}
-
-
-
