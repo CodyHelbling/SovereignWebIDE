@@ -4,6 +4,7 @@
 
 import org.eclipse.jetty.websocket.api.*;
 import org.eclipse.jetty.websocket.api.annotations.*;
+import java.util.Arrays;
 
 import org.eclipse.jetty.websocket.api.*;
 import org.json.*;
@@ -34,19 +35,23 @@ import java.util.List;
 
 @WebSocket
 public class fileManagementHandler {
+    private FileManager manager;
     private String sender, msg, username;
     static Map<Session, String> userUsernameMap = new HashMap<>();
-    static int nextUserNumber = 1; //Assign to username for next connecting user
-    static String currentUserName;
     @OnWebSocketConnect
     public void creator(Session user) throws Exception {
+
         FileManager.createProjectSpace();
         username = Chat.currentUserName;
-       /* if(Chat.currentUserName.equals("Placeholder")){
-        username = "User" + Chat.nextUserNumber++;
-        }*/
-
         userUsernameMap.put(user, username);
+        try {
+            if(manager != null){
+                user.getRemote().sendString(String.valueOf(
+                        new JSONObject().put("targetID", "fileManagementStart").put("htmlContent", manager.readFileStructureData())));
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
     @OnWebSocketClose
     public void destructor(int statusCode, String reason){
@@ -66,32 +71,48 @@ public class fileManagementHandler {
 
     @OnWebSocketMessage
     public void decodeFileOpCmd(String command_file_name) {
+        String[] htmlData = new String[3];
         System.out.println(command_file_name);
         String[] decoded_command = SplitString.get_command(command_file_name);
-        if (decoded_command[0].equals("addFolder")) {
+        if(decoded_command.length > 2)
+            htmlData = decoded_command[2].split("~", 3);
+        if(decoded_command[0].equals("newProject")){
+            manager = new FileManager();
+            manager.projectName = decoded_command[1];
+        }
+        /*
+        else if(decoded_command[0].equals("readProject")) {
+            System.out.println("Trying to read project: " + decoded_command[0]);
+            updateFileStructureAll("fileManagementStart", manager.readFileStructureData());
+        }
+        */
+        else if (decoded_command[0].equals("addFolder")) {
             System.out.println("Trying to create folder: " + decoded_command[1]);
             try {
                 FileManager.createDirectory(decoded_command[1]);
-                updateFileStructureAll(decoded_command[2], decoded_command[3]);
+                updateFileStructureAll(htmlData[0], htmlData[1]);
+                manager.saveFileStructureData(htmlData[2]);
             } catch (NullPointerException e) {
                 System.err.println(e);
             }
         }
         else if (decoded_command[0].equals("deleteFolder")) {
             System.out.println("Trying to delete: " + decoded_command[1]);
-            updateFileStructureAll(decoded_command[2], decoded_command[3]);
+            updateFileStructureAll(htmlData[0],  htmlData[1]);
+            manager.saveFileStructureData(htmlData[2]);
             FileManager.deleteDirectory(decoded_command[1]);
         }
         else if(decoded_command[0].equals("addFile")) {
             System.out.println("Trying to create file: " + decoded_command[1]);
-            updateFileStructureAll(decoded_command[2], decoded_command[3]);
+            updateFileStructureAll(htmlData[0], htmlData[1]);
+            manager.saveFileStructureData(htmlData[2]);
             FileManager.createFile(decoded_command[1]);
         }
         else if (decoded_command[0].equals("open2")) {
             System.out.println("fileManagementHandler:Open2\n");
             List<String> lines = new ArrayList<String>();
             try {
-                lines = Files.readAllLines(Paths.get(System.getProperty("user.home") + "/sQuire/" + decoded_command[1]));
+                lines = Files.readAllLines(Paths.get(/*System.getProperty("user.home") + "/sQuire/" + */decoded_command[1]));
             } catch (IOException e) {
                 System.err.println("FileManager::else if(open2) IOException: I/O error; file cannot be read.");
             }
