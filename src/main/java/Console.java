@@ -37,19 +37,17 @@ public class Console {
     }
 
     public static void compile(){
-        System.out.print("Before the code line\n");
-        try{
             try {
+                String sender = "";
                 Runtime rt = Runtime.getRuntime();
-                //Process pr = rt.exec("cmd /c dir");
-                Process pr = rt.exec("c:\\helloworld.exe");
+                Process pr = rt.exec("sudo ./execute");
 
                 BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
 
                 String line=null;
 
                 while((line=input.readLine()) != null) {
-                    System.out.println(line);
+                    Console.updateConsole(sender, line);
                 }
 
                 int exitVal = pr.waitFor();
@@ -59,8 +57,5 @@ public class Console {
                 System.out.println(e.toString());
                 e.printStackTrace();
             }
-        } catch(Exception e){
-            System.out.print("Exception" + e);
-        }
     }
 }

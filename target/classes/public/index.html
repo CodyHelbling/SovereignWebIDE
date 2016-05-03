@@ -60,10 +60,9 @@
 			<a href="./" class="navbar-brand"><span class="glyphicon glyphicon-education"></span> Squire IDE</a>
 		</div>
 		<nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
-			<?php include 'compile.php';?>
 			<ul class="nav navbar-nav">
 				<li>
-					<button id="compile" onclick="webSocketCompile.send('update')" class="glyphicon glyphicon-play"></button>
+					<button id="runbutton" onclick="webSocketCompile.send('CompileandRun')">Run</button>
 				</li>
 				<li>
 					<a href="#"><span class="glyphicon glyphicon-user"></span></a>

@@ -1,5 +1,18 @@
-button {
-    color: red;
+button{
+    color:red;
+}
+
+#runbutton {
+        color: #999999;
+        background: #222222;
+        padding: 40% 20% 20% 20%;
+        border: none;
+
+}
+
+button:hover{
+    color: blue;
+    background: white;
 }
 
 h1 {
