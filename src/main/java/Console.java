@@ -1,5 +1,6 @@
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.WebSocket;
+import java.io.*;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -36,9 +37,28 @@ public class Console {
     }
 
     public static void compile(){
+        System.out.print("Before the code line\n");
         try{
-            Runtime rt = Runtime.getRuntime();
-            Process pr = rt.exec("java -jar map.jar time.rel test.txt debug");
+            try {
+                Runtime rt = Runtime.getRuntime();
+                //Process pr = rt.exec("cmd /c dir");
+                Process pr = rt.exec("c:\\helloworld.exe");
+
+                BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+
+                String line=null;
+
+                while((line=input.readLine()) != null) {
+                    System.out.println(line);
+                }
+
+                int exitVal = pr.waitFor();
+                System.out.println("Exited with error code "+exitVal);
+
+            } catch(Exception e) {
+                System.out.println(e.toString());
+                e.printStackTrace();
+            }
         } catch(Exception e){
             System.out.print("Exception" + e);
         }
