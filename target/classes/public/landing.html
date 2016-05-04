@@ -33,65 +33,121 @@
 
 <div class="jumbotron text-center" style="background:#428bca; color:white;">
     <h1>sQuire</h1>
-    <h3>Where ideas come to life...</h3>
+    <h3>Collaborate on Code</h3>
 </div>
 
 
 
 
 <div class="container">
-
-    <form class="form-signup">
-        <h2 class="form-signup-heading">Please sign up</h2>
-        <label for="inputEmailSignUp" class="sr-only">Email address</label>
-        <input type="text" id="inputEmailSignUp" class="form-control" placeholder="Email address" required autofocus>
-        <label for="inputUNameSignUp" class="sr-only">User Name</label>
-        <input type="text" id="inputUNameSignUp" class="form-control" placeholder="User Name" required autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="text" id="inputPasswordSignUp" class="form-control" placeholder="Password" required>
-        <button class="btn btn-lg btn-primary btn-block" type="button" onclick="SignUp()" id="SignUpButton">Sign Up</button>
-    </form>
-
-    <form class="form-signin">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <label for="inputUser" class="sr-only">Email address</label>
-        <input type="text" id="inputUser" class="form-control" placeholder="User Name" required autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <button class="btn btn-lg btn-primary btn-block" type="button" onclick="LogIn()" id="SignInButton" data-toggle="modal" data-target="#myModal">Sign in</button>
-    </form>
-
-</div> <!-- /container -->
-
-
-
-<div class="container">
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Welcome To sQuire!</h4>
-                </div>
-                <div class="modal-body">
-                    <p id="modalText"></p>
-                </div>
-                <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-                    <form action="/ide" id="link" class="btn btn-success">
-
-                    </form>
+    <div class="row">
+        <div class="col-md-6">
+            <form class="form-signup">
+                <h2 class="form-signup-heading">Please sign up</h2>
+                <label for="inputEmailSignUp" class="sr-only">Email address</label>
+                <input type="text" id="inputEmailSignUp" class="form-control" placeholder="Email address" required autofocus>
+                <label for="inputUNameSignUp" class="sr-only">User Name</label>
+                <input type="text" id="inputUNameSignUp" class="form-control" placeholder="User Name" required autofocus>
+                <label for="inputPassword" class="sr-only">Password</label>
+                <input type="text" id="inputPasswordSignUp" class="form-control" placeholder="Password" required>
+                <button class="btn btn-lg btn-primary btn-block" type="button" onclick="SignUp()" id="SignUpButton">Sign Up</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <form class="form-signin">
+                <h2 class="form-signin-heading">Please sign in</h2>
+                <label for="inputUser" class="sr-only">Email address</label>
+                <input type="text" id="inputUser" class="form-control" placeholder="User Name" required autofocus>
+                <label for="inputPassword" class="sr-only">Password</label>
+                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                <button class="btn btn-lg btn-primary btn-block" type="button" onclick="LogIn()" id="SignInButton" data-toggle="modal" data-target="#myModal">Sign in</button>
+            </form>
+        </div>
+    </div> <!-- /container -->
 
 
+
+<!-- Modal -->
+<div class="modal fade" id="ProjectModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h2 class="modal-title text-center" id="myModalLabel">sQuire</h2>
+            </div>
+            <div class="modal-body">
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 text-center">
+                            <form class="form-new-proj">
+                                <h2 class="form-new-proj-heading">Create New Project</h2>
+                                <label for="new-proj" class="sr-only"></label>
+                                <input type="text" id="new-proj" class="form-control" placeholder="Project Name" required autofocus>
+                                <button class="btn btn-lg btn-primary btn-block" type="button" onclick="CreateProj()" id="CreateProjButton" data-target="#myModal">Create Project</button>
+                                <h3 id="projError" style="background-color:#d9534f;"></h3>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 text-center">
+                            <form class="form-exist-proj">
+                                <h2 class="form-exists-proj-heading">Open Existing Project</h2>
+                                <input type="text" id="exist-proj" class="form-control" placeholder="Project Name" required autofocus>
+                                <button class="btn btn-lg btn-primary btn-block" type="button" onclick="OpenProj()" id="OpenProjButton">Open Project</button>
+                                <h3 id="OprojError" style="background-color:#d9534f;"></h3>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
-
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
         </div>
     </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="UserExistsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h2 class="modal-title text-center" id="myModalLabel">sQuire</h2>
+            </div>
+            <div class="modal-body text-center">
+                <h4>The User Entered Already Exists</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Try Again</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="UserNoExistsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h2 class="modal-title text-center" id="myModalLabel">sQuire</h2>
+            </div>
+            <div class="modal-body text-center">
+                <h4>The User Entered Doesn't Exist</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Try Again</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 
 </div>
 
@@ -101,12 +157,12 @@
     <h2>sQuire Links</h2>
     <a href="./index.html" class="btn btn-success" role="button">Open IDE (Login Not Required)</a>
     <a href="https://github.com/chelbling/SovereignWebIDE" class="btn btn-info" role="button">Git Hub</a>
-    <a href="./projects.html" class="btn btn-warning" role="button">Temp Project Operations</a>
 
 </div>
 
 
 
 <script src = "/login.js"></script>
+<script src = "/project.js"></script>
 </body>
 </html>
