@@ -9,9 +9,7 @@ html {
     font-family: "Times New Roman";
     height: 100%;
     transition: transform 0.3s ease-in-out;
-    /*overflow: hidden;*/
     overflow-y: scroll;
-
 }
 
 .show-me {
@@ -89,7 +87,6 @@ html {
     bottom: 10px;
     right: -300px;
     z-index: 2;
-    /*font-size: 1rem;*/
     line-height: 1.2;
     border-radius: 3px;
     border: 3px solid #343436;
@@ -145,7 +142,6 @@ li {
 #chat2 p {
     margin: 5px 0;
     font-weight: 300
-
 }
 
 #chat2 .timestamp {
@@ -156,7 +152,6 @@ li {
 }
 
 #chat2 article {
-    /*background: #f1f1f1;*/
     background: #343436;
     color: white;
     padding: 10px;
