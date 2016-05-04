@@ -39,7 +39,7 @@ public class Editor {
      */
     public static void main(String[] args) {
         staticFileLocation("public"); //index.html is served at localhost:80
-        port(4567);
+        port(80);
         webSocket("/editor", EditorHandler.class);
         webSocket("/chat", ChatWebSocketHandler.class);
         webSocket("/console", ConsoleHandler.class);
