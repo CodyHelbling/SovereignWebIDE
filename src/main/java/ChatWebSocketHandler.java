@@ -17,7 +17,11 @@ public class ChatWebSocketHandler {
      */
     @OnWebSocketConnect
     public void onConnect(Session user) throws Exception {
-        username = Chat.currentUserName;
+        if(Chat.currentUserName == null){
+            username = "User" + Chat.nextUserNumber++;
+        } else {
+            username = Chat.currentUserName;
+        }
        /* if(Chat.currentUserName.equals("Placeholder")){
         username = "User" + Chat.nextUserNumber++;
         }*/
