@@ -4,11 +4,19 @@
 
 import org.eclipse.jetty.websocket.api.*;
 import org.eclipse.jetty.websocket.api.annotations.WebSocket;
+import org.json.JSONObject;
 
+import static j2html.TagCreator.*;
 import static spark.Spark.*;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.*;
 import java.util.*;
 
 
@@ -36,32 +44,21 @@ public class Editor {
         webSocket("/chat", ChatWebSocketHandler.class);
         webSocket("/console", ConsoleHandler.class);
         webSocket("/compile", CompileHandler.class);
+        webSocket("/files", fileManagementHandler.class);
         Commands.main();
         get("/ide", (request, response) -> {
-
-
-//            try (BufferedWriter bw = new BufferedWriter(new FileWriter(new File("./src/main/resources/public/TEST.txt")))) {
-//                bw.write("Hello, This is a test message");
-//                bw.close();
-//            }catch (FileNotFoundException ex) {
-//                System.out.println(ex.toString());
-//            }
-
 
             String content = new String(Files.readAllBytes(Paths.get("./src/main/resources/public/index.html")));
             return content;
         });
 
+        get("/projects", (request, response) -> {
+
+            String content = new String(Files.readAllBytes(Paths.get("./src/main/resources/public/projects.html")));
+            return content;
+        });
+
         get("/", (request, response) -> {
-
-
-//            try (BufferedWriter bw = new BufferedWriter(new FileWriter(new File("./src/main/resources/public/TEST.txt")))) {
-//                bw.write("Hello, This is a test message");
-//                bw.close();
-//            }catch (FileNotFoundException ex) {
-//                System.out.println(ex.toString());
-//            }
-
 
             String content = new String(Files.readAllBytes(Paths.get("./src/main/resources/public/landing.html")));
             return content;
@@ -72,36 +69,75 @@ public class Editor {
             // Hue, you can plug in your auth and creation stuff here!
             System.out.println("Signing someone up....");
             String response = "";
-            if(Authentication.chop(req.body(), 1)){
-                System.out.println("success");
-                //redirect to editor
-                response = "true";
-            }else{
-                System.out.println("Failiure");
-                //complain that username is taken
-                response = "false";
+            String[] s;
+            if((s=Authentication.chop(req.body()))!=null){
+                if(Authentication.createUser(s[1], s[2], s[0])){
+                    System.out.println("success");
+                    Users.recent=s[1];
+                    //redirect to editor
+                    return "true";
+                }
             }
-            return response;
+            System.out.println("Failiure");
+            //complain that username is taken
+            return "false";
         });
+
 
         post("/login", (req, res) -> {
             System.out.println(req.body());
             // Hue, you can plug in your auth and creation stuff here!
             System.out.println("Logging someone in....");
             String response = "";
-            if(Authentication.chop(req.body(), 2)){
-                System.out.println("success");
-                response = "true";
-                //redirect to editor
-            }else{
-                System.out.println("Failiure");
-                response = "false";
-                //complain of incorrect credentials
+            String[] s;
+            if((s=Authentication.chop(req.body()))!=null) {
+                if (Authentication.logIn(s[2], s[1])) {
+                    Users.userUsernameMap.put(Users.current, s[2]);
+                    System.out.println("success");
+                    Users.recent=s[2];
+                    //redirect to editor
+                    return "true";
+                }
             }
+            System.out.println("Failiure");
+            response = "false";
+            //complain of incorrect credentials
             return response;
         });
 
 
+
+        post("/createproject", (req, res) -> {
+            System.out.println(req.body());
+            System.out.println("Creating Project....");
+            String response = "";
+            // Do ya thang Hue!!
+            String[] s=Authentication.chop(req.body());
+            if(s!=null){
+                if(Users.createProject(s[1], s[0])){
+                    Users.recent=s[1];
+                    return "true";
+                }
+            }
+
+            return "false";
+        });
+
+        post("/openproject", (req, res) -> {
+            System.out.println(req.body());
+            System.out.println("Opening Project....");
+            String response = "";
+            // Do ya thang Hue!!
+            String[] s=Authentication.chop(req.body());
+            if(s!=null){
+                if(Users.enterProject(s[1], s[0])){
+                    Users.recent=s[1];
+                    return "true";
+                }
+            }
+
+            return "false";
+        });
 
         init();
     }

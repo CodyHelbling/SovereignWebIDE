@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="A login page for CS383 [University of Idaho Software Engineering]">
+    <meta name="author" content="Cody Helbling">
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <title>sQuire</title>
+
+
+    <!-- Bootstrap -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+
+
+    <!--[if lt IE 9]>
+    <script src = "https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src = "https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+<div class="jumbotron text-center" style="background:#428bca; color:white;">
+    <h1>sQuire</h1>
+    <h3>Where ideas come to life...</h3>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 text-center">
+            <form class="form-new-proj">
+                <h2 class="form-new-proj-heading">Create New Project</h2>
+                <label for="new-proj" class="sr-only"></label>
+                <input type="text" id="new-proj" class="form-control" placeholder="Project Name" required autofocus>
+                <label for="inputUNameCreateProj" class="sr-only">User Name</label>
+                <input type="text" id="inputUNameCreateProj" class="form-control" placeholder="User Name" required autofocus>
+                <label for="inputPasswordCreateProj" class="sr-only">Password</label>
+                <input type="text" id="inputPasswordCreateProj" class="form-control" placeholder="Password" required>
+                <button class="btn btn-lg btn-primary btn-block" type="button" onclick="CreateProj()" id="CreateProjButton" data-target="#myModal">Create Project</button>
+            </form>
+        </div>
+        <div class="col-md-6 text-center">
+            <form class="form-exist-proj">
+                <h2 class="form-exists-proj-heading">Open Existing Project</h2>
+                <label for="exist-proj" class="sr-only"></label>
+                <label for="inputUNameOpenProj" class="sr-only">User Name</label>
+                <input type="text" id="inputUNameOpenProj" class="form-control" placeholder="User Name" required autofocus>
+                <label for="inputPasswordOpenProj" class="sr-only">Password</label>
+                <input type="text" id="inputPasswordOpenProj" class="form-control" placeholder="Password" required>
+                <input type="text" id="exist-proj" class="form-control" placeholder="Project Name" required autofocus>
+                <button class="btn btn-lg btn-primary btn-block" type="button" onclick="OpenProj()" id="OpenProjButton">Open Project</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 text-center">
+            <h2>Import From GitHub</h2>
+        </div>
+        <div class="col-md-6 text-center">
+            <h2>Upload Project</h2>
+        </div>
+    </div>
+    </div>
+</div>
+
+<div id="loginStatus"></div>
+
+<div class="container">
+    <h2>sQuire Links</h2>
+    <a href="./index.html" class="btn btn-success" role="button">Open IDE (Login Not Required)</a>
+    <a href="https://github.com/chelbling/SovereignWebIDE" class="btn btn-info" role="button">Git Hub</a>
+</div>
+
+
+
+<script src = "/project.js"></script>
+</body>
+</html>

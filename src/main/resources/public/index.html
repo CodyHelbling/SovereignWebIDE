@@ -34,7 +34,7 @@
 	<link rel="stylesheet" href="css/chat.css">
 	<link rel="stylesheet" href="css/console.css">
 	<link rel="stylesheet" href="css/editor.css">
-	<link rel="stylesheet" href="css/fileManagement.css">
+	<link rel="stylesheet" href="css/fileManagementNew.css">
 	<link rel="stylesheet" href="css/mod_bootstrap.css">
 
 </head>
@@ -169,44 +169,33 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-2">
-			<div class="FileManagement" oncontextmenu="return false">
-				<script src="structureLogic.js"></script>
-				<div id="src" class="btn-group-vertical" oncontextmenu="menuShowHide(event);">
-					<button id="drop1" onclick="toggleDisplay('src-main', 'drop1'); toggleDisplay('srcFiles', 'drop1');" value=">">></button>
-					<img id="i1" src="index.png" width="20" height="14">
-					<button id="srcs">src</button>
-					<ul id="srcFiles" class="column">
+			<div id="fileManagementStart" class="FileManagement" oncontextmenu="return false">
+				<script src="structureLogic.js">
 
-					</ul>
-				</div>
-				<div id="src-main" class="btn-group-vertical" oncontextmenu="menuShowHide(event);">
-					<button id="drop2" onclick="toggleDisplay('mainFiles', 'drop2')" value=">">></button>
-					<img id="i2" src="index.png" width="20" height="14">
-					<button id="main" oncontextmenu="displayMenu()">main</button>
-					<ul id="mainFiles" class="column">
-
-					</ul>
-				</div>
+				</script>
+				<!-- Test new project function ------------------------------------------------------------------------------------------>
+				<button onclick="initFileStructure('NewProject')" type="button" class="btn btn-info btn-sm btn-block">New Project Test</button>
+				<!----------------------------------------------------------------------------------------------------------------------->
 			</div>
 		</div>
 			<div class="col-md-8">
 				<div class="Editor">
-					<button type="button" class="btn btn-primary" onclick="saveFile()">Save File</button>
-					<form role="form">
-						<div class="form-group">
-							<label>File Name</label>
-							<input type="text" class="form-control" id="saveFileName">
-						</div>
-					</form>
+					<!--<button type="button" class="btn btn-primary" onclick="saveFile()">Save File</button>-->
+					<!--<form role="form">-->
+						<!--<div class="form-group">-->
+							<!--<label>File Name</label>-->
+							<!--<input type="text" class="form-control" id="saveFileName">-->
+						<!--</div>-->
+					<!--</form>-->
 
-					<button type="button" class="btn btn-primary" onclick="openFile()">Open File</button>
-					<form role="form">
-						<div class="form-group">
-							<label>File Name</label>
-							<input type="text" class="form-control" id="openFileName">
-						</div>
-					</form>
-
+					<!--<button type="button" class="btn btn-primary" onclick="openFile()">Open File</button>-->
+					<!--<form role="form">-->
+						<!--<div class="form-group">-->
+							<!--<label>File Name</label>-->
+							<!--<input type="text" class="form-control" id="openFileName">-->
+						<!--</div>-->
+					<!--</form>-->
+					<!-- Nav tabs -->
 				<a name="editor"></a>
 			</div>
 
@@ -225,9 +214,14 @@
 			</div>
 			<ul id="userlist"> <!-- Built by JS --> </ul>
 			<div id="chat2">    <!-- Built by JS --> </div>
+
+
+
 		</div>
 	</div>
 </div>
+
+
 
 
 
