@@ -19,15 +19,6 @@ var consoleCodeMirror = CodeMirror(document.anchors.namedItem("console"), {
 var updateCount = 0;
 var oldConsole = "";
 
-consoleCodeMirror.on("change", function(consoleCodeMirror, consoleChangeObj){
-    oldConsole = consoleCodeMirror.getValue();
-
-    consoleChangeObj_as_string = JSON.stringify(consoleChangeObj);
-    console.log(consoleChangeObj_as_string); //log consoleChangeObj to console
-
-    //Send stuff to the server via ConsoleHandler
-    webSocketConsole.send(oldConsole);
-});
 
 function updateConsole(msg, consoleCodeMirror) {
     updateCount += 1;
