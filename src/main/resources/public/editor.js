@@ -24,6 +24,7 @@ webSocketChat.onmessage = function(message) {updateChat(message);};
 var oldCode = "";
 var count = 0;
 
+
 var myCodeMirror = CodeMirror(document.anchors.namedItem("editor"), {
     value: "public class HelloWorld {\n\n\tpublic static void main(String[] args) {\n\t\t// Prints \"Hello, World\" to the terminal window.\n\t\tSystem.out.println(\"Hello, World\");\n\t}\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
     mode:  "text/x-java",
