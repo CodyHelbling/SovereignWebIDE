@@ -59,6 +59,8 @@ public class Users {
                         "//\n//"+name+"\n//+read\n//+write\n//+execute\n//\n";
                 Files.write(Paths.get("projects/"+pName+"/users.txt"), temp.getBytes(), StandardOpenOption.APPEND);
                 own(name, pName);
+                fileManagementHandler.message = "new";
+                fileManagementHandler.pName = pName;
                 return true;
             }
             recent=name;
