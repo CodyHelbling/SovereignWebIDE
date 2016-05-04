@@ -32,7 +32,7 @@ consoleCodeMirror.on("change", function(consoleCodeMirror, consoleChangeObj){
 function updateConsole(msg, consoleCodeMirror) {
     updateCount += 1;
     var data = msg;
-    if(oldConsole != msg.data && updateCount%3 == 0){
+    if(oldConsole != msg.data && updateCount%1 == 0){
         consoleCodeMirror.setValue(msg.data);
     }
     else{
