@@ -34,9 +34,12 @@
 	<link rel="stylesheet" href="css/chat.css">
 	<link rel="stylesheet" href="css/console.css">
 	<link rel="stylesheet" href="css/editor.css">
-	<link rel="stylesheet" href="css/fileManagementNew.css">
+	<link rel="stylesheet" href="css/fileManagement.css">
 	<link rel="stylesheet" href="css/mod_bootstrap.css">
 
+
+	<script src="structureLogic.js"></script>
+	<script src="project.js"></script>
 </head>
 <body>
 <div class="pad-top25px"></div>
@@ -114,14 +117,13 @@
 
 
 <div class="container">
-<div class="row text-center contextMenuHide" id="fileStructureMenu">
+<div class="row text-center contextMenuHide" id="fileStructureMenu" oncontextmenu="return false">
 	<div class="col-xs-4">
 		<div class="btn-group-vertical bWidth" role="group">
-				<button onclick="openFile()" type="button" class="btn btn-info btn-sm">Open File</button>
+				<button onclick="fileOpenFromMenu()" type="button" class="btn btn-info btn-sm">Open File</button>
 				<button onclick="showHide('newFolderForm')" type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#newFolderModal">New Folder</button>
 				<button onclick="createFile()" type="button" class="btn btn-info btn-sm btn-block" data-toggle="modal" data-target="#newFileModal">New File</button>
-				<button onclick="deleteFolder()" type="button" class="btn btn-info btn-sm btn-block">Delete</button>
-		</div>
+				<button onclick="Delete()" type="button" class="btn btn-info btn-sm btn-block">Delete</button></div>
 	</div>
 </div>
 <div id="newFolderModal" class="modal" role="dialog" >
@@ -170,39 +172,32 @@
 	<div class="row">
 		<div class="col-md-2">
 			<div id="fileManagementStart" class="FileManagement" oncontextmenu="return false">
-				<script src="structureLogic.js">
 
-				</script>
-				<!-- Test new project function ------------------------------------------------------------------------------------------>
-				<button onclick="initFileStructure('NewProject')" type="button" class="btn btn-info btn-sm btn-block">New Project Test</button>
-				<!----------------------------------------------------------------------------------------------------------------------->
 			</div>
 		</div>
 			<div class="col-md-8">
 				<div class="Editor">
-					<!--<button type="button" class="btn btn-primary" onclick="saveFile()">Save File</button>-->
-					<!--<form role="form">-->
-						<!--<div class="form-group">-->
-							<!--<label>File Name</label>-->
-							<!--<input type="text" class="form-control" id="saveFileName">-->
-						<!--</div>-->
-					<!--</form>-->
+					<button type="button" class="btn btn-primary" onclick="saveFile()">Save File</button>
+<!--
+					<form role="form">
+						<div class="form-group">
+							<label>File Name</label>
+							<input type="text" class="form-control" id="saveFileName">
+						</div>
+					</form>
 
-					<!--<button type="button" class="btn btn-primary" onclick="openFile()">Open File</button>-->
-					<!--<form role="form">-->
-						<!--<div class="form-group">-->
-							<!--<label>File Name</label>-->
-							<!--<input type="text" class="form-control" id="openFileName">-->
-						<!--</div>-->
-					<!--</form>-->
-					<!-- Nav tabs -->
+					<button type="button" class="btn btn-primary" onclick="openFile()">Open File</button>
+					<form role="form">
+						<div class="form-group">
+							<label>File Name</label>
+							<input type="text" class="form-control" id="openFileName">
+						</div>
+					</form>
+					-->
+					 Nav tabs
 				<a name="editor"></a>
 			</div>
-
-			<div class = "console">
-				<div class ="span2">""</div>
-				<a name="console"></a>
-			</div>
+		</div>
 
 			<button type="button" class="button js-trigger">Chat</button>
 			<!-- New Chat-->

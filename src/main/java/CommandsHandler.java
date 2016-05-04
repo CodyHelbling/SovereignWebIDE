@@ -39,16 +39,25 @@ public class CommandsHandler {
         String[] decoded_command = SplitString.get_command(command_file_name);
 
         //new for project differentiation
-        decoded_command[1]=Users.prefix(user, decoded_command[1]);
-        System.out.println("filename modified to:"+decoded_command[1]);
-
+        manager = new fileManagementHandler();
+        if (manager.getCurrOpenPath() != null){
+            System.out.println("There is an open file: " + manager.getCurrOpenPath());
+            //decoded_command[1]=Users.prefix(user, manager.getCurrOpenPath());
+            System.out.println("filename modified to:"+manager.getCurrOpenPath());
+        }
+        else {
+            decoded_command[1] = Users.prefix(user, decoded_command[1]);
+            System.out.println("filename modified to:" + decoded_command[1]);
+        }
 
         if(decoded_command[0].equals("save")) {
-            manager = new fileManagementHandler();
-            if(manager.getCurrOpenPath() != null)
+            if(manager.getCurrOpenPath() != null) {
+                System.out.println("Saving an open file");
                 Commands.save_file(manager.getCurrOpenPath());
-            else
+            }
+            else {
                 Commands.save_file(decoded_command[1]);
+            }
         }
         else if (decoded_command[0].equals("open")) {
             System.out.println("Handler:Open\n");

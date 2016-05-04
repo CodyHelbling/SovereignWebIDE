@@ -10,6 +10,11 @@
  * @type {WebSocket}
  */
 var webSocketFileManagement = new WebSocket("ws://" + location.hostname + ":" + location.port + "/files");
+webSocketFileManagement.onmessage = function (data) {updateFileStructure(data);};
+//var obj ='{'+'"targetID" : "fileManagementStart",'
+//    + '"htmlContent" : "' + document.getElementById("fileManagementStart").innerHTML + '"}';
+//webSocketFileManagement.onopen = function () {if(dict.projectName != "") readFileStructure();};
+
 //webSocket.createStructure = function () { };
 var cMenu1 = document.getElementById("fileStructureMenu");
 var cMenu1Target;
@@ -19,6 +24,7 @@ function fileDict() {
     var targetDict = {};
     var cMenu1Target;
     var currentOpenFilePath;
+    this.projectName = "";
     //targetDict["src"] = "srcFiles";
     //targetDict["src-main"] = "mainFiles";
 //
@@ -30,9 +36,9 @@ function fileDict() {
      * @returns {boolean}  - Prevent unexpected behavior.
      */
     this.addFolder = function(folderName, folderClass) { //indentType="sub-folder" indentType="root-folder"
-        if (!(targetDict[cMenu1Target+"-"+folderName])) { //folder doesn't exist
-            var dirLocate = cMenu1Target;
-            webSocketFileManagement.send("addFolder:" /*+ "/home/austin/sQuire/"*/ + dirLocate.replace(/-/g, "/") + "/"+ folderName);
+        //if (!(targetDict[cMenu1Target+"-"+folderName])) { //folder doesn't exist
+        if (!(document.getElementById(cMenu1Target+"-"+folderName))) { //folder doesn't exist
+            var dirLocate = cMenu1Target.replace(/-/g, "/");
             var divID = cMenu1Target;   //parent of target div
             var folderDiv = createDiv(cMenu1Target+"-"+folderName, folderClass); //new div for folder
             var subDiv = createDiv(cMenu1Target+"-"+folderName+"-sub","sub-container"); //file container inside the folder div
@@ -56,16 +62,27 @@ function fileDict() {
             subDiv.appendChild(foldersDiv);
             subDiv.appendChild(filesDiv);
             folderDiv.appendChild(subDiv);
+            contextDiv.setAttribute("oncontextmenu", "menuShowHide(event)");
+            //contextDiv.addEventListener("focus", changeBackground, true);
+            //contextDiv.addEventListener("blur", changeBackground, true);
             if (divID == "") { //in the case of an empty file structure
                 document.getElementById("fileManagementStart").appendChild(folderDiv);
+                //webSocketFileManagement.send("addFolder:" /*+ "/home/austin/sQuire/"*/ + dirLocate + "/" + folderName
+               //     + ":fileManagementStart~"
+                //    + document.getElementById("fileManagementStart").innerHTML
+                //    + "~" + document.getElementById("fileManagementStart").innerHTML
+                //);
+
             }
             else {
                 document.getElementById(divID + "-folders").appendChild(folderDiv);
+                webSocketFileManagement.send("addFolder:" /*+ "/home/austin/sQuire/"*/ + dirLocate + "/" + folderName
+                    + ":" + divID + "-folders~"
+                    + document.getElementById(divID + "-folders").innerHTML
+                    + "~" + document.getElementById("fileManagementStart").innerHTML
+                );
             }
-            contextDiv.setAttribute("oncontextmenu", "menuShowHide(event)");
-            contextDiv.addEventListener("focus", changeBackground, true);
-            contextDiv.addEventListener("blur", changeBackground, true);
-            targetDict[folderDiv.getAttribute("id")] = filesDiv.getAttribute("id");
+                //targetDict[folderDiv.getAttribute("id")] = filesDiv.getAttribute("id");
         }
         else { //folder does exist
             alert('Folder already exist!');
@@ -80,10 +97,9 @@ function fileDict() {
      */
 
     this.addFile = function(fileName) {
-        if (!(targetDict[cMenu1Target+"-"+fileName])) {
-            var dirLocate = cMenu1Target;
-            var fileNameFix = fileName.replace(/-/g, "?"); //replace - with illegal "?" to prevent path corruption
-            webSocketFileManagement.send("addFile:" /*+ "/home/austin/sQuire/"*/ + dirLocate.replace(/-/g, "/") + "/" + fileName);
+        var fileNameFix = fileName.replace(/-/g, "?"); //replace - with illegal "?" to prevent path corruption
+        if (!(targetDict[cMenu1Target+"-"+fileNameFix])) {
+            var dirLocate = cMenu1Target.replace(/-/g, "/");
             var divID = cMenu1Target;
             var div = createDiv(cMenu1Target+"-"+fileNameFix, "file");
             var name = document.createTextNode(fileName);
@@ -94,21 +110,30 @@ function fileDict() {
             button.setAttribute("class", "button-text-only");
             button.addEventListener("dblclick", fileOpenDoubleClick);
             div.appendChild(button);
+            div.setAttribute("oncontextmenu", "menuShowHide(event)");
             document.getElementById(divID+"-files").appendChild(div);
             button.removeAttribute("style");
-            targetDict[div.getAttribute("id")] = cMenu1Target+"-"+fileNameFix;
+            webSocketFileManagement.send("addFile:" /*+ "/home/austin/sQuire/"*/ + dirLocate + "/" + fileName
+                                         + ":" + divID + "-files" + "~" + document.getElementById(divID + "-files").innerHTML
+                                         + "~" + document.getElementById("fileManagementStart").innerHTML);
+            //targetDict[div.getAttribute("id")] = cMenu1Target+"-"+fileNameFix;
         }
         else {
             alert('File already exist!');
         }
     };
-    this.deleteFolder = function(id) {
-        targetDict[id] = null;
+    this.delete = function(id) {
+        var Parent = document.getElementById(id).parentNode;
         document.getElementById(id).remove();
-        webSocketFileManagement.send("deleteFolder:" /*+ "/home/austin/sQuire/"*/ + id.replace(/-/g, "/").replace(/\?/g, "-"));
+        webSocketFileManagement.send("deleteFolder:" /*+ "/home/austin/sQuire/"*/ + id.replace(/-/g, "/").replace(/\?/g, "-")
+                                     + ":" + Parent.id + "~" + Parent.innerHTML
+                                     + "~" + document.getElementById("fileManagementStart").innerHTML);
+    };
+    this.deleteFile = function(id) {
+
     };
     this.getCurrTarget = function() {
-        return targetDict[cMenu1Target];
+        return cMenu1Target;
     };
     this.getMenuTarget = function(){
         return cMenu1Target;
@@ -123,7 +148,7 @@ function fileDict() {
             return false;
     };
     this.setCurrentOpenFile = function(filePath){
-        if (currentOpenFilePath != null) {
+        if (currentOpenFilePath == null) {
             currentOpenFilePath = filePath;
         }
         else {
@@ -134,6 +159,8 @@ function fileDict() {
 }
 
 function initFileStructure(projectName) {
+    dict.projectName = projectName;
+    //webSocketFileManagement.send("newProject:"+projectName);
     dict.setMenuTarget(""); //just in case
     dict.addFolder(projectName, "root-folder");
     dict.setMenuTarget("-" + projectName);
@@ -142,11 +169,30 @@ function initFileStructure(projectName) {
     dict.addFolder("main", "sub-folder");
 }
 
+function updateFileStructure(htmlData) {
+    var newHtml = JSON.parse(htmlData.data);
+    console.log("update JS target: " + newHtml.targetID);
+    if(newHtml.targetID == "new") {
+        initFileStructure(newHtml.htmlContent);
+    }
+    else if (newHtml.htmlContent != "") {
+        console.log("Updating file structure with..." + newHtml.htmlContent);
+        document.getElementById(newHtml.targetID).innerHTML = newHtml.htmlContent;
+    }
+    else {
+        console.log("file structure update failed");
+    }
+}
+/*
+function readFileStructure() {
+    console.log("Reading fileStructureHTML.txt...");
+    webSocketFileManagement.send("readProject:aaa");
+}
+*/
 /**
  * Creates a new div (folder) to be used as a container for more divs and buttons and places it inside another div (folder).
  * @param {string} divID - This is the id of the parent div in which the child div for the new folder will be created.
  */
-
 
 function createFolder (input) {
     dict.addFolder(document.getElementById(input).value, "sub-folder");
@@ -155,22 +201,17 @@ function createFolder (input) {
     return false;
 }
 
-function deleteFolder() {
-    if(document.getElementById(dict.getCurrTarget()).getAttribute("class") != "file") {
-        var parentContainer = document.getElementById(dict.getCurrTarget()).parentNode.parentNode.id;
-        dict.deleteFolder(parentContainer);
-    }
-    else {
-        dict.deleteFolder(dict.getCurrTarget());
-    }
+function Delete(){
+   dict.delete(dict.getMenuTarget());
 }
 
 //http://stackoverflow.com/questions/15702867/html-tooltip-position-relative-to-mouse-pointer
 function menuShowHide(event) {
+    cMenu1 = document.getElementById("fileStructureMenu");
     cMenu1.addEventListener("click", menuShowHide);
     if(cMenu1.getAttribute("class") == "contextMenuHide"){
-        dict.setMenuTarget(event.target.parentNode.parentNode.getAttribute("id"));
-        //alert(event.target.parentNode.getAttribute("id"));
+        //console.log("targetType: "+targetType(event));
+        dict.setMenuTarget(targetType(event));
         var x = event.clientX, y = event.clientY;
         cMenu1.setAttribute("class", "contextMenuShow");
         cMenu1.style.top = (y + 0) + 'px';
@@ -179,6 +220,22 @@ function menuShowHide(event) {
     } else {
         cMenu1.setAttribute("class", "contextMenuHide");
     }
+}
+
+function targetType(event) {
+    //context1 -- up 1
+    //button-text-only -- need to go up 2 if 1 up is "context1" folder, 1 if file
+    //file -- file div delete this then grab innerhtml up 1 to update
+    //everything else go up two
+    if(event.target.getAttribute("class") == "file") return event.target.id;
+    else if(event.target.getAttribute("class") == "button-text-only") {
+        console.log("targetType:found: "+"button-text-only");
+        if (event.target.parentNode.getAttribute("class") == "file") { console.log("targetType:found: "+"file"); return event.target.parentNode.id;}
+        else {console.log("targetType:found: "+"not file"); return event.target.parentNode.parentNode.id; }
+    }
+    else if(event.target.getAttribute("class") == "context1") {console.log("targetType:found: "+"context1"); return event.target.parentNode.id;}
+    else if(event.target.getAttribute("class") == "sub-folder") {console.log("targetType:found: "+"sub-folder"); return event.target.id;}
+    else {console.log("targetType:found: "+"other:"+event.target.getAttribute("class")); return event.target.parentNode.parentNode.id;}
 }
 
 function changeBackground(event) {
@@ -192,12 +249,17 @@ function changeBackground(event) {
 }
 
 function fileOpenDoubleClick(event) {
-    webSocketFileManagement.send("open2:" /*+ "/home/austin/sQuire/"*/ + event.target.parentNode.getAttribute("id").replace(/-/g, "/").replace(/\?/g, "-"));
+    console.log("open dbl click");
+    webSocketFileManagement.send("open2:" +
+        targetType(event).replace(/-/g, "/").replace(/\?/g, "-"));
 }
 
-function fileOpenFromMenu(event) {
-
+function fileOpenFromMenu() {
+    console.log("open from menu");
+    webSocketFileManagement.send("open2:" +
+        dict.getCurrTarget().replace(/-/g, "/").replace(/\?/g, "-"));
 }
+
 function menuHide() {
     if(cMenu1.getAttribute("class") == "contextMenuShow") {
         cMenu1.setAttribute("class", "contextMenuHide");
@@ -314,19 +376,3 @@ function toggleDisplay(id, id2) {
         document.getElementById(id2).setAttribute("style", "transform: rotate(90deg)");
     }
 }
-
-/**
- * Unimportant.
- */
-function displayMenu(){
-    alert('Menu Displayed')
-}
-
-/**
- * Unimportant.
- */
-/*
-function openFile() {
-    alert('You opened a file');
-}
-*/

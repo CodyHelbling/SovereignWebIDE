@@ -131,7 +131,7 @@ public class fileManagementHandler {
             FileManager.createFile(decoded_command[1]);
         }
         else if (decoded_command[0].equals("open2")) {
-            path = decoded_command[1];
+            path = "projects" + decoded_command[1];
             System.out.println("fileManagementHandler:Open2 " + path +" ");
             List<String> lines = new ArrayList<String>();
             try {
