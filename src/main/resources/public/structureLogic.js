@@ -67,11 +67,12 @@ function fileDict() {
             contextDiv.addEventListener("blur", changeBackground, true);
             if (divID == "") { //in the case of an empty file structure
                 document.getElementById("fileManagementStart").appendChild(folderDiv);
-                webSocketFileManagement.send("addFolder:" /*+ "/home/austin/sQuire/"*/ + dirLocate + "/" + folderName
-                    + ":fileManagementStart~"
-                    + document.getElementById("fileManagementStart").innerHTML
-                    + "~" + document.getElementById("fileManagementStart").innerHTML
-                );
+                //webSocketFileManagement.send("addFolder:" /*+ "/home/austin/sQuire/"*/ + dirLocate + "/" + folderName
+               //     + ":fileManagementStart~"
+                //    + document.getElementById("fileManagementStart").innerHTML
+                //    + "~" + document.getElementById("fileManagementStart").innerHTML
+                //);
+
             }
             else {
                 document.getElementById(divID + "-folders").appendChild(folderDiv);
@@ -167,6 +168,21 @@ function initFileStructure(projectName) {
     dict.setMenuTarget("-"+ projectName + "-src");
     dict.addFolder("main", "sub-folder");
 }
+
+function updateFileStructure(htmlData) {
+    var newHtml = JSON.parse(htmlData.data);
+    console.log("update JS target: " + newHtml.targetID);
+    if(newHtml.targetID == "new") {
+        initFileStructure(newHtml.htmlContent);
+    }
+    else if (newHtml.htmlContent != "") {
+        console.log("Updating file structure with..." + newHtml.htmlContent);
+        document.getElementById(newHtml.targetID).innerHTML = newHtml.htmlContent;
+    }
+    else {
+        console.log("file structure update failed");
+    }
+}
 /*
 function readFileStructure() {
     console.log("Reading fileStructureHTML.txt...");
@@ -191,6 +207,7 @@ function Delete(){
 
 //http://stackoverflow.com/questions/15702867/html-tooltip-position-relative-to-mouse-pointer
 function menuShowHide(event) {
+    cMenu1 = document.getElementById("fileStructureMenu");
     cMenu1.addEventListener("click", menuShowHide);
     if(cMenu1.getAttribute("class") == "contextMenuHide"){
         //console.log("targetType: "+targetType(event));
@@ -219,14 +236,6 @@ function targetType(event) {
     else if(event.target.getAttribute("class") == "context1") {console.log("targetType:found: "+"context1"); return event.target.parentNode.id;}
     else if(event.target.getAttribute("class") == "sub-folder") {console.log("targetType:found: "+"sub-folder"); return event.target.id;}
     else {console.log("targetType:found: "+"other:"+event.target.getAttribute("class")); return event.target.parentNode.parentNode.id;}
-}
-
-function updateFileStructure(htmlData) {
-    var newHtml = JSON.parse(htmlData.data);
-    if (newHtml.htmlContent != "") {
-        console.log("Updating file structure with..." + newHtml.htmlContent);
-        document.getElementById(newHtml.targetID).innerHTML = newHtml.htmlContent;
-    }
 }
 
 function changeBackground(event) {

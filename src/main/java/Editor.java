@@ -24,6 +24,7 @@ public class Editor {
     static Map<Session, String> userUsernameMap = new HashMap<>();
     static int nextUserNumber = 1;
     static String file = "";
+    static fileManagementHandler updater;
 
     /**
      * Configures the server, port, static files, and webSocket.
@@ -124,8 +125,11 @@ public class Editor {
                     Users.recent=s[1];
                     return "true";
                 }
-            }
-
+            }/*
+            updater = new fileManagementHandler();
+            System.out.println("post: " + s[0]);
+            updater.update("new", s[0]); //
+            */
             return "false";
         });
 

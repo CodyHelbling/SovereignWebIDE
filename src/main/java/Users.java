@@ -79,6 +79,8 @@ public class Users {
             if(canRead(name, pName)) {
                 projects.put(name, pName);
                 System.out.println("logging into " + pName);
+                fileManagementHandler.message = "new";
+                fileManagementHandler.pName = pName;
                 return true;
             }
             recent=name;

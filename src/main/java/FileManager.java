@@ -105,4 +105,7 @@ public class FileManager {
         System.out.println("FileManager::readFileStructureData(): Read... " + data);
         return data;
     }
+    public boolean checkForData(String pName) {
+        return Files.exists(Paths.get("projects/" + projectName +"/fileStructureHTML.txt"));
+    }
 }

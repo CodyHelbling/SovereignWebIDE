@@ -4,15 +4,8 @@
 
 import org.eclipse.jetty.websocket.api.*;
 import org.eclipse.jetty.websocket.api.annotations.*;
-import java.util.Arrays;
-
-import org.eclipse.jetty.websocket.api.*;
 import org.json.*;
-import java.text.*;
 import java.util.*;
-import static j2html.TagCreator.*;
-import static spark.Spark.*;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -36,30 +29,45 @@ import java.util.List;
 @WebSocket
 public class fileManagementHandler {
     private FileManager manager;
-    private String sender, msg, username;
+    private String username;
     static Map<Session, String> userUsernameMap = new HashMap<>();
+    public static String message;
+    public static String pName;
     @OnWebSocketConnect
     public void creator(Session user) throws Exception {
-
         FileManager.createProjectSpace();
         username = Chat.currentUserName;
         userUsernameMap.put(user, username);
-        try {
-            if(manager != null){
-                user.getRemote().sendString(String.valueOf(
-                        new JSONObject().put("targetID", "fileManagementStart").put("htmlContent", manager.readFileStructureData())));
+        System.out.println("at connect..." + message);
+        if(manager == null && message != null && message.equals("new")) {
+            System.out.println("Trying to update new..." + message + " " + pName);
+            updateFileStructureAll(message, pName);
+            message = "nil";
+            manager = new FileManager();
+            manager.projectName = pName;
+        }
+        else if(manager != null && manager.checkForData(pName)) {
+            try {
+                //if (manager != null) {
+                    user.getRemote().sendString(String.valueOf(
+                            new JSONObject().put("targetID", "fileManagementStart").put("htmlContent", manager.readFileStructureData())));
+                //}
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch(Exception e) {
-            e.printStackTrace();
         }
     }
     @OnWebSocketClose
     public void destructor(int statusCode, String reason){
-        FileManager.deleteProjectSpace(Paths.get("/home/austin/sQuire"));
-        System.out.println("Destructor: websocket closed with:"); // + closeReason + " " + closeCode);
+        //FileManager.deleteProjectSpace(Paths.get("/home/austin/sQuire"));
+       // System.out.println("Destructor: websocket closed with:"); // + closeReason + " " + closeCode);
     }
-
+    public void update(String t, String data){
+        message = t;
+        pName = data;
+    }
     private void updateFileStructureAll(String target, String htmlData) {
+        System.out.println("update: " + target +" "+ htmlData);
         userUsernameMap.keySet().stream().filter(Session::isOpen).forEach(session -> {
             try {
                 session.getRemote().sendString(String.valueOf(new JSONObject().put("targetID", target).put("htmlContent", htmlData)));

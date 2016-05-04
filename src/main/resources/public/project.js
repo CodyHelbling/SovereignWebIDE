@@ -28,7 +28,6 @@ function CreateProj() {
     xhttp.open("POST", "/createproject", true);
     console.log("CreateProjectData: " + CreateProjectData);
     xhttp.send(JSON.stringify(CreateProjectData));
-    console.log("initFileStructure: "+CreateProjectData.projName);
 }
 
 
