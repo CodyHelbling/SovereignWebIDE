@@ -65,41 +65,41 @@ public class Editor {
         });
 
         post("/signup", (req, res) -> {
-            System.out.println(req.body());
+//            System.out.println(req.body());
             // Hue, you can plug in your auth and creation stuff here!
-            System.out.println("Signing someone up....");
+//            System.out.println("Signing someone up....");
             String response = "";
             String[] s;
             if((s=Authentication.chop(req.body()))!=null){
                 if(Authentication.createUser(s[1], s[2], s[0])){
-                    System.out.println("success");
+//                    System.out.println("success");
                     Users.recent=s[1];
                     //redirect to editor
                     return "true";
                 }
             }
-            System.out.println("Failiure");
+//            System.out.println("Failiure");
             //complain that username is taken
             return "false";
         });
 
 
         post("/login", (req, res) -> {
-            System.out.println(req.body());
+//            System.out.println(req.body());
             // Hue, you can plug in your auth and creation stuff here!
-            System.out.println("Logging someone in....");
+//            System.out.println("Logging someone in....");
             String response = "";
             String[] s;
             if((s=Authentication.chop(req.body()))!=null) {
                 if (Authentication.logIn(s[2], s[1])) {
                     Users.userUsernameMap.put(Users.current, s[2]);
-                    System.out.println("success");
+//                    System.out.println("success");
                     Users.recent=s[2];
                     //redirect to editor
                     return "true";
                 }
             }
-            System.out.println("Failiure");
+//            System.out.println("Failiure");
             response = "false";
             //complain of incorrect credentials
             return response;
@@ -108,8 +108,8 @@ public class Editor {
 
 
         post("/createproject", (req, res) -> {
-            System.out.println(req.body());
-            System.out.println("Creating Project....");
+//            System.out.println(req.body());
+//            System.out.println("Creating Project....");
             String response = "";
             // Do ya thang Hue!!
             String[] s=Authentication.chop(req.body());
@@ -124,8 +124,8 @@ public class Editor {
         });
 
         post("/openproject", (req, res) -> {
-            System.out.println(req.body());
-            System.out.println("Opening Project....");
+//            System.out.println(req.body());
+//            System.out.println("Opening Project....");
             String response = "";
             // Do ya thang Hue!!
             String[] s=Authentication.chop(req.body());
@@ -153,7 +153,7 @@ public class Editor {
             try {
                 //file.add(update);
                 Editor.file = update;
-                System.out.print("Editor: " + file + "\n");
+//                System.out.print("Editor: " + file + "\n");
                 session.getRemote().sendString(String.valueOf(file));
             } catch (Exception e) {
                 e.printStackTrace();
