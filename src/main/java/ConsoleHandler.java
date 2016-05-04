@@ -10,13 +10,15 @@ public class ConsoleHandler{
     private String msg = "";
 
     @OnWebSocketConnect
-    public void onConnect(Session user) throws Exception {
+    public void onConnect(Session user){
+        NumberOfUsers += 1;
+        String username = "User" + Console.nextUserNumber++;
+        Console.userUsernameMap.put(user, username);
         System.out.print("Console Connection Established!\n");
     }
 
     @OnWebSocketMessage
     public void onMessage(Session user, String message) {
-        System.out.print("Console Update!: " + message + "\n");
         Console.updateConsole(Console.userUsernameMap.get(user), msg = message);
     }
 

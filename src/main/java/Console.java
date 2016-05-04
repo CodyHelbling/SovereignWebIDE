@@ -26,9 +26,7 @@ public class Console {
     public static void updateConsole(String sender, String update) {
         userUsernameMap.keySet().stream().filter(Session::isOpen).forEach(session -> {
             try {
-                Console.consoleFile = update;
-                System.out.print("Console: " + consoleFile + "\n");
-                System.out.print("actually runing update console in the loop");
+                Console.consoleFile += update + "\n";
                 session.getRemote().sendString(String.valueOf(consoleFile));
             } catch (Exception e) {
                 e.printStackTrace();
@@ -37,25 +35,27 @@ public class Console {
     }
 
     public static void compile(){
-            try {
-                String sender = "";
-                Runtime rt = Runtime.getRuntime();
-                Process pr = rt.exec("sudo ./execute");
+        try {
+            consoleFile = "";
+            String sender = "";
+            Runtime rt = Runtime.getRuntime();
+            Process pr = rt.exec("sudo ./execute");
 
-                BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+            BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
 
-                String line=null;
+            String line=null;
 
-                while((line=input.readLine()) != null) {
-                    Console.updateConsole(sender, line);
-                }
-
-                int exitVal = pr.waitFor();
-                System.out.println("Exited with error code "+exitVal);
-
-            } catch(Exception e) {
-                System.out.println(e.toString());
-                e.printStackTrace();
+            while((line=input.readLine()) != null) {
+                Console.updateConsole(sender, line);
+                Thread.sleep(50);
             }
+
+            int exitVal = pr.waitFor();
+            System.out.println("Exited with error code "+exitVal);
+
+        } catch(Exception e) {
+            System.out.println(e.toString());
+            e.printStackTrace();
+        }
     }
 }

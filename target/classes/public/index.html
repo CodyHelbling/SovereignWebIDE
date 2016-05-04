@@ -62,7 +62,7 @@
 		<nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
 			<ul class="nav navbar-nav">
 				<li>
-					<button id="runbutton" onclick="webSocketCompile.send('CompileandRun')">Run</button>
+					<button id="runbutton" onclick="webSocketCompile.send('CompileAndRun')">Run</button>
 				</li>
 				<li>
 					<a href="#"><span class="glyphicon glyphicon-user"></span></a>
@@ -218,6 +218,11 @@
 
 				<a name="editor"></a>
 			</div>
+
+			<div class = "console">
+				<div class ="span2">""</div>
+				<a name="console"></a>
+			</div>
 		</div>
 
 			<button type="button" class="button js-trigger">Chat</button>
@@ -230,25 +235,6 @@
 			</div>
 			<ul id="userlist"> <!-- Built by JS --> </ul>
 			<div id="chat2">    <!-- Built by JS --> </div>
-
-
-
-		</div>
-		<div class="row">
-			<div class="pad-top25px"></div>
-		</div>
-		<div class="row">
-        </div>
-        <div class="row">
-            <div class="pad-top25px"></div>
-        </div>
-        <div class="row">
-            <div class="col-md-offset-2 col-md-8">
-                <div class="Console">
-                    <a name="console"></a>
-                </div>
-            </div>
-
 	</div>
 </div>
 

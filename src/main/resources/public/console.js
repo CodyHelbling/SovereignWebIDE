@@ -1,6 +1,3 @@
-
-
-
 // The link below explains WebSocket Client Applications.
 // https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications
 
@@ -42,4 +39,3 @@ function updateConsole(msg, consoleCodeMirror) {
         console.log("Console is up to date")
     }
 }
-
