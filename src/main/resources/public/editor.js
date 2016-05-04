@@ -64,7 +64,7 @@ function updateEditor(msg, myCodeMirror) {
     else {
         console.log("No code to update!")
     }
-    console.log("\n\n" + msg.data + " : updateEditor");
+    // console.log("\n\n" + msg.data + " : updateEditor");
 }
 //Helper function for inserting HTML as the first child of an element
 function insert(targetId, message) {

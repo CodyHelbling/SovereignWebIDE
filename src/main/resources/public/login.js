@@ -14,7 +14,9 @@ function SignUp() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
-
+            var response = xhttp.response;
+            console.log(response);
+            VerifySignUp(response);
         }
     };
     console.log("Signing Up: ....");
@@ -26,6 +28,13 @@ function SignUp() {
     xhttp.send(JSON.stringify(signUpData));
 }
 
+function VerifySignUp(fb){
+    if(fb === 'true'){
+        $("#ProjectModal").modal()
+    } else {
+        $("#UserExistsModal").modal()
+    }
+}
 
 
 
@@ -38,7 +47,9 @@ function LogIn() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
-
+            var response = xhttp.response;
+            console.log(response);
+            VerifySignIn(response);
         }
     };
 
@@ -50,3 +61,10 @@ function LogIn() {
     xhttp.send(JSON.stringify(logInData));
 }
 
+function VerifySignIn(fb){
+    if(fb === 'true'){
+        $("#ProjectModal").modal()
+    } else {
+        $("#UserNoExistsModal").modal()
+    }
+}

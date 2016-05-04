@@ -41,7 +41,7 @@ public class EditorHandler {
      */
     @OnWebSocketMessage
     public void onMessage(Session user, String message) {
-        System.out.print("Handler execution!: " + message + "\n");
+        // System.out.print("Handler execution!: " + message + "\n");
         Editor.updateEditors(Editor.userUsernameMap.get(user), msg = message);
     }
 
