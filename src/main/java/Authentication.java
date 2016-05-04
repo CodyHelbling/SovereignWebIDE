@@ -77,7 +77,7 @@ public class Authentication {
         //logs a user in.
         try {
             if(Authentication.isUser(uName, password, true)){
-                Chat.currentUserName=uName;
+                    Chat.currentUserName=uName;
                 return true;
             }
             return false;
