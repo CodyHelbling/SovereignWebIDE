@@ -39,18 +39,19 @@ public class Console {
             consoleFile = "";
             String sender = "";
             Runtime rt = Runtime.getRuntime();
-            Process pr = rt.exec("sudo ./execute");
+            Process initialize = rt.exec("sudo ./findJavaFiles");
+            Thread.sleep(100);
+            Process execute = rt.exec("sudo ./execute");
 
-            BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+            BufferedReader input = new BufferedReader(new InputStreamReader(execute.getInputStream()));
 
             String line=null;
 
             while((line=input.readLine()) != null) {
                 Console.updateConsole(sender, line);
-                Thread.sleep(50);
             }
 
-            int exitVal = pr.waitFor();
+            int exitVal = execute.waitFor();
             System.out.println("Exited with error code "+exitVal);
 
         } catch(Exception e) {
