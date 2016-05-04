@@ -2,8 +2,8 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="00668b5d-816d-4ee3-980f-2a09cd7c3a38" name="CS383 AWS" url="http://ec2-54-213-117-101.us-west-2.compute.amazonaws.com">
-        <fileTransfer host="ec2-54-213-117-101.us-west-2.compute.amazonaws.com" port="22" privateKey="$USER_HOME$/Documents/School/CS383/cs383.pem" rootFolder="/home/ubuntu" accessType="SFTP" username="ubuntu" keyPair="true">
+      <webServer id="00668b5d-816d-4ee3-980f-2a09cd7c3a38" name="CS383 AWS" url="http://54.186.115.124">
+        <fileTransfer host="54.186.115.124" port="22" privateKey="$USER_HOME$/Documents/School/CS383/cs383.pem" rootFolder="/home/ubuntu" accessType="SFTP" username="ubuntu" keyPair="true">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" />
           </advancedOptions>

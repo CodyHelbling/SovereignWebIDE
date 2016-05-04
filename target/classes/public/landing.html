@@ -10,15 +10,8 @@
     <meta name="author" content="Cody Helbling">
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <title>sQuire</title>
 
-    <!-- Bootstrap -->
-
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 
     <!-- Bootstrap -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
@@ -38,17 +31,25 @@
 
 <body>
 
+<div class="jumbotron text-center" style="background:#428bca; color:white;">
+    <h1>sQuire</h1>
+    <h3>Where ideas come to life...</h3>
+</div>
+
+
+
+
 <div class="container">
 
     <form class="form-signup">
         <h2 class="form-signup-heading">Please sign up</h2>
         <label for="inputEmailSignUp" class="sr-only">Email address</label>
-        <input type="email" id="inputEmailSignUp" class="form-control" placeholder="Email address" required autofocus>
+        <input type="text" id="inputEmailSignUp" class="form-control" placeholder="Email address" required autofocus>
         <label for="inputUNameSignUp" class="sr-only">User Name</label>
         <input type="text" id="inputUNameSignUp" class="form-control" placeholder="User Name" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPasswordSignUp" class="form-control" placeholder="Password" required>
-        <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="SignUp()">Sign Up</button>
+        <input type="text" id="inputPasswordSignUp" class="form-control" placeholder="Password" required>
+        <button class="btn btn-lg btn-primary btn-block" type="button" onclick="SignUp()" id="SignUpButton">Sign Up</button>
     </form>
 
     <form class="form-signin">
@@ -57,10 +58,44 @@
         <input type="text" id="inputUser" class="form-control" placeholder="User Name" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="LogIn()">Sign in</button>
+        <button class="btn btn-lg btn-primary btn-block" type="button" onclick="LogIn()" id="SignInButton" data-toggle="modal" data-target="#myModal">Sign in</button>
     </form>
 
 </div> <!-- /container -->
+
+
+
+<div class="container">
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Welcome To sQuire!</h4>
+                </div>
+                <div class="modal-body">
+                    <p id="modalText"></p>
+                </div>
+                <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                    <form action="/ide" id="link" class="btn btn-success">
+
+                    </form>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<div id="loginStatus"></div>
 
 <div class="container">
     <h2>sQuire Links</h2>
@@ -68,8 +103,7 @@
     <a href="https://github.com/chelbling/SovereignWebIDE" class="btn btn-info" role="button">Git Hub</a>
 </div>
 
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src = "//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
 
 <script src = "/login.js"></script>
 </body>

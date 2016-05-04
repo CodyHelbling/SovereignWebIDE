@@ -4,19 +4,11 @@
 
 import org.eclipse.jetty.websocket.api.*;
 import org.eclipse.jetty.websocket.api.annotations.WebSocket;
-import org.json.JSONObject;
 
-import static j2html.TagCreator.*;
 import static spark.Spark.*;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.text.*;
 import java.util.*;
 
 
@@ -79,16 +71,34 @@ public class Editor {
             System.out.println(req.body());
             // Hue, you can plug in your auth and creation stuff here!
             System.out.println("Signing someone up....");
-            String something = "hello";
-            return something;
+            String response = "";
+            if(Authentication.chop(req.body(), 1)){
+                System.out.println("success");
+                //redirect to editor
+                response = "true";
+            }else{
+                System.out.println("Failiure");
+                //complain that username is taken
+                response = "false";
+            }
+            return response;
         });
 
         post("/login", (req, res) -> {
             System.out.println(req.body());
             // Hue, you can plug in your auth and creation stuff here!
             System.out.println("Logging someone in....");
-            String something = "hello";
-            return something;
+            String response = "";
+            if(Authentication.chop(req.body(), 2)){
+                System.out.println("success");
+                response = "true";
+                //redirect to editor
+            }else{
+                System.out.println("Failiure");
+                response = "false";
+                //complain of incorrect credentials
+            }
+            return response;
         });
 
 
@@ -115,3 +125,7 @@ public class Editor {
         });
     }
 }
+
+
+
+

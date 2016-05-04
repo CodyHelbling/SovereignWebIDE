@@ -13,7 +13,7 @@ webSocketEdit.onclose = function (event) { alert("WebSocket connection closed");
 
 
 var webSocketChat = new WebSocket("ws://" + location.hostname + ":" + location.port + "/chat");
-webSocketChat.onmessage = function(msg) {updateChat(msg);};
+webSocketChat.onmessage = function(message) {updateChat(message);};
 //webSocketChat.onclose = function(event){alert ("Chat WebSocket Closed");};
 
 
@@ -54,7 +54,7 @@ myCodeMirror.on("change", function(myCodeMirror, changeObj){
 function updateEditor(msg, myCodeMirror) {
     count = count+1;
     var data = msg;
-    if(oldCode != msg.data && count%3 == 0){
+    if(oldCode != msg.data && count%2 == 0){
         // console.log("new Code")
         myCodeMirror.setValue(msg.data)
     }
@@ -63,12 +63,10 @@ function updateEditor(msg, myCodeMirror) {
     }
     console.log("\n\n" + msg.data + " : updateEditor");
 }
-
 //Helper function for inserting HTML as the first child of an element
 function insert(targetId, message) {
     id(targetId).insertAdjacentHTML("afterbegin", message);
 }
-
 //Helper function for selecting element by id
 function id(id) {
     return document.getElementById(id);
@@ -111,8 +109,8 @@ function sendMessage(message) {
 }
 
 //Update the chat-panel, and the list of connected users
-function updateChat(msg) {
-    var data = JSON.parse(msg.data);
+function updateChat(message) {
+    var data = JSON.parse(message.data);
     insert("chat2", data.userMessage);
     id("userlist").innerHTML = "";
     data.userlist.forEach(function (user) {

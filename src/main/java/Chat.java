@@ -6,6 +6,8 @@ import java.util.*;
 import static j2html.TagCreator.*;
 import static spark.Spark.*;
 
+
+
 @WebSocket
 public class Chat {
 

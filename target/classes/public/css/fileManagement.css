@@ -4,18 +4,26 @@
     height: 700px;
     text-align: left;
     overflow: scroll;
+    color: black;
+}
 
+.form {
+    float: left;
+    padding-left: 5px;
+    position: relative;
+    text-align: left;
 }
 
 .bWidth {
+    text-align: center;
     border-radius: 0;
     border-color: #404040;
     background-color: #657b83;
-    width: 197px;
+    width: 196px;
     height: 25px;
     position: relative;
-    left: -57px;
-    top: -1.5px;
+    left: -16px;
+    top: -1px;
 }
 
 .newFolderForm {
@@ -40,8 +48,8 @@
     position: fixed;
     z-index: 9;
     background-color: #b0b0b0;
-    width: 200px;
-    height: 450px;
+    width: 201px;
+    height: 120px;
     border-style: groove;
     border-color: #2b2b2b;
 }
@@ -54,6 +62,7 @@
 
 
 .folder {
+    padding-right: 10px; /* changed */
     white-space: nowrap;
 }
 
@@ -70,11 +79,24 @@
 .folderStyle {
     background: transparent;
     border: none;
+    margin: 0;
+    padding-left: 3px;
+    /*
+    background: transparent;
+    border: none;
+*/
 }
 
 .dropdown {
     background: transparent;
     border: none;
+    margin: 0;
+    padding-right: 3px;
+    /*
+    left: -5px;
+    background: transparent;
+    border: none;
+*/
 }
 
 .addButton {
@@ -90,7 +112,7 @@
 }
 
 
-#main, #addmain, #src, #addsrc {
+#main, #addmain, #srcs, #addsrc {
     background: transparent;
     border: none;
     margin: 0;
@@ -118,12 +140,13 @@
     border: none;
 }
 
-#Srcs {
+#srcs {
     color: #322931;
     padding-top: 5px;
 }
 
-#Mains {
+#src-main {
+    position: relative; /*change*/
     color: #322931;
     display: none;
     padding-left: 28px;
