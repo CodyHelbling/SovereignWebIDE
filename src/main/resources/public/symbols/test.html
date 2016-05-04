@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <title>sQuire</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE = edge">
+    <meta name="viewport" content="width = device-width, initial-scale = 1">
+
+    <!-- Bootstrap -->
+
+    <link href="sQuire_files/bootstrap.css" rel="stylesheet">
+    <script src="sQuire_files/bootstrap.js"></script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+
+    <!-- Bootstrap -->
+
+    <link href="sQuire_files/bootstrap.css" rel="stylesheet">
+    <script src="sQuire_files/bootstrap.js"></script>
+    <script src="sQuire_files/jquery_002.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="sQuire_files/index.css">
+    <link rel="stylesheet" href="sQuire_files/chat.css">
+    <link rel="stylesheet" href="sQuire_files/console.css">
+    <link rel="stylesheet" href="sQuire_files/editor.css">
+    <link rel="stylesheet" href="sQuire_files/fileManagement.css">
+    <link rel="stylesheet" href="sQuire_files/mod_bootstrap.css">
+
+</head>
+<body class="" style="">
+<div class="pad-top25px"></div>
+<div class="pad-top25px"></div>
+<div class="pad-top25px"></div>
+
+<h1>
+    Sovereign IDE
+</h1>
+
+
+<header class="navbar navbar-inverse navbar-fixed-top bs-docs-nav" role="banner">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="http://localhost:4568/" class="navbar-brand"><span class="glyphicon glyphicon-education"></span>
+                Squire IDE</a>
+        </div>
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="#"><span class="glyphicon glyphicon-play"></span></a>
+                </li>
+                <li>
+                    <a href="#"><span class="glyphicon glyphicon-user"></span></a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li><a href="#">Separated link</a></li>
+                        <li><a href="#">One more separated link</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><span class="glyphicon glyphicon-envelope"></span></a>
+                </li>
+                <li>
+                    <a href="#"><span class="glyphicon glyphicon-cog"></span></a>
+                </li>
+                <li>
+                    <a href="#"><span class="glyphicon glyphicon-remove"></span></a>
+                </li>
+                <li>
+                    <a href="#"><span class="glyphicon glyphicon-zoom-in"></span></a>
+                </li>
+                <li>
+                    <a href="#"><span class="glyphicon glyphicon-zoom-out"></span></a>
+                </li>
+                <li>
+                    <a href="#"><span class="glyphicon glyphicon-download-alt"></span></a>
+                </li>
+                <li>
+                    <a href="#"><span class="glyphicon glyphicon-stop"></span></a>
+                </li>
+                <li>
+                    <a href="#"><span class="glyphicon glyphicon-pause"></span></a>
+                </li>
+                <li>
+                    <a href="#"><span class="glyphicon glyphicon-folder-open"></span></a>
+                </li>
+                <li>
+                    <a href="#"><span class="glyphicon glyphicon-console"></span></a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+<div class="container">
+    <div style="top: 190px; left: 291px;" class="contextMenuHide" id="fileStructureMenu" oncontextmenu="return false">
+        <div class="col-xs-4">
+            <div class="btn-group-vertical bWidth" role="group">
+                <button onclick="openFile()" type="button" class="btn btn-info btn-sm">Open File</button>
+                <button onclick="showHide('newFolderForm')" type="button" class="btn btn-info btn-sm"
+                        data-toggle="modal" data-target="#newFolderModal">New Folder
+                </button>
+                <button onclick="createFile()" type="button" class="btn btn-info btn-sm btn-block" data-toggle="modal"
+                        data-target="#newFileModal">New File
+                </button>
+                <button onclick="Delete()" type="button" class="btn btn-info btn-sm btn-block">Delete</button>
+            </div>
+        </div>
+    </div>
+    <div aria-hidden="true" style="display: none;" id="newFolderModal" class="modal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form class="form-horizontal" onsubmit="return false">
+                        <div class="form-group form-group-sm">
+                            <label class="form" for="formGroupInputSmall">Folder Name</label>
+                            <div class="col-sm-10">
+                                <input value="folder" class="form-control" id="formGroupInputSmall"
+                                       placeholder="New Folder" type="text">
+                                <button onclick="createFolder('formGroupInputSmall')" class="btn btn-default btn-info"
+                                        type="submit" data-toggle="modal" data-target="#newFolderModal">Create
+                                </button>
+                                <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div aria-hidden="true" style="display: none;" id="newFileModal" class="modal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form class="form-horizontal" onsubmit="return false">
+                        <div class="form-group form-group-sm">
+                            <label class="form" for="formGroupInputSmall">File Name</label>
+                            <div class="col-sm-10">
+                                <input value="file" class="form-control" id="formGroupInputSmall2"
+                                       placeholder="New File" type="text">
+                                <button onclick="createFile('formGroupInputSmall2')" class="btn btn-default btn-info"
+                                        type="submit" data-toggle="modal" data-target="#newFileModal">Create
+                                </button>
+                                <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">
+            <div id="fileManagementStart" class="FileManagement" oncontextmenu="return false">
+                <script src="sQuire_files/structureLogic.js">
+
+                </script>
+                <!-- Test new project function ------------------------------------------------------------------------------------------>
+                <button onclick="initFileStructure('NewProject')" type="button" class="btn btn-info btn-sm btn-block">
+                    New Project
+                </button>
+                <!----------------------------------------------------------------------------------------------------------------------->
+                <div class="root-folder" id="-NewProject">
+                    <div oncontextmenu="menuShowHide(event)" class="context1" id="-NewProject-context">
+                        <button style="margin:1px" class="button-text-only"
+                                onclick="toggleDisplay('-NewProject-sub','-NewProject-arrow');" id="-NewProject_drop">
+                            <img style="transform: rotate(90deg)" src="sQuire_files/file_arrow.png"
+                                 id="-NewProject-arrow" height="9" width="9"></button>
+                        <img src="sQuire_files/index.png" id="NewProjectimg_" height="14" width="20">
+                        <button class="button-text-only" id="NewProject" style="margin: 1px;">NewProject</button>
+                    </div>
+                    <div style="display: block;" class="sub-container" id="-NewProject-sub">
+                        <div class="sub-folder-container" id="-NewProject-folders">
+                            <div class="sub-folder" id="-NewProject-src">
+                                <div oncontextmenu="menuShowHide(event)" class="context1" id="-NewProject-src-context">
+                                    <button style="margin:1px" class="button-text-only"
+                                            onclick="toggleDisplay('-NewProject-src-sub','-NewProject-src-arrow');"
+                                            id="-NewProject-src_drop"><img style="transform: rotate(90deg)"
+                                                                           src="sQuire_files/file_arrow.png"
+                                                                           id="-NewProject-src-arrow" height="9"
+                                                                           width="9"></button>
+                                    <img src="sQuire_files/index.png" id="srcimg_-NewProject" height="14" width="20">
+                                    <button class="button-text-only" id="src-NewProject" style="margin: 1px;">src
+                                    </button>
+                                </div>
+                                <div style="display: block;" class="sub-container" id="-NewProject-src-sub">
+                                    <div class="sub-folder-container" id="-NewProject-src-folders">
+                                        <div class="sub-folder" id="-NewProject-src-main">
+                                            <div oncontextmenu="menuShowHide(event)" class="context1"
+                                                 id="-NewProject-src-main-context">
+                                                <button style="margin:1px" class="button-text-only"
+                                                        onclick="toggleDisplay('-NewProject-src-main-sub','-NewProject-src-main-arrow');"
+                                                        id="-NewProject-src-main_drop"><img
+                                                        style="transform: rotate(90deg)"
+                                                        src="sQuire_files/file_arrow.png"
+                                                        id="-NewProject-src-main-arrow" height="9" width="9"></button>
+                                                <img src="sQuire_files/index.png" id="mainimg_-NewProject-src"
+                                                     height="14" width="20">
+                                                <button class="button-text-only" id="main-NewProject-src"
+                                                        style="margin: 1px;">main
+                                                </button>
+                                            </div>
+                                            <div style="display: block;" class="sub-container"
+                                                 id="-NewProject-src-main-sub">
+                                                <div class="sub-folder-container" id="-NewProject-src-main-folders">
+                                                    <div class="sub-folder" id="-NewProject-src-main-folder">
+                                                        <div oncontextmenu="menuShowHide(event)" class="context1"
+                                                             id="-NewProject-src-main-folder-context">
+                                                            <button style="margin:1px" class="button-text-only"
+                                                                    onclick="toggleDisplay('-NewProject-src-main-folder-sub','-NewProject-src-main-folder-arrow');"
+                                                                    id="-NewProject-src-main-folder_drop"><img
+                                                                    style="transform: rotate(90deg)"
+                                                                    src="sQuire_files/file_arrow.png"
+                                                                    id="-NewProject-src-main-folder-arrow" height="9"
+                                                                    width="9"></button>
+                                                            <img src="sQuire_files/index.png"
+                                                                 id="folderimg_-NewProject-src-main" height="14"
+                                                                 width="20">
+                                                            <button class="button-text-only"
+                                                                    id="folder-NewProject-src-main"
+                                                                    style="margin: 1px;">folder
+                                                            </button>
+                                                        </div>
+                                                        <div style="display: block;" class="sub-container"
+                                                             id="-NewProject-src-main-folder-sub">
+                                                            <div class="sub-folder-container"
+                                                                 id="-NewProject-src-main-folder-folders"></div>
+                                                            <div class="file-container"
+                                                                 id="-NewProject-src-main-folder-files">
+                                                                <div oncontextmenu="menuShowHide(event)" class="file"
+                                                                     id="-NewProject-src-main-folder-file">
+                                                                    <button class="button-text-only"
+                                                                            id="file-NewProject-src-main-folder">file
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="file-container" id="-NewProject-src-main-files"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="file-container" id="-NewProject-src-files"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="file-container" id="-NewProject-files"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="Editor">
+                <button type="button" class="btn btn-primary" onclick="saveFile()">Save File</button>
+                <form role="form">
+                    <div class="form-group">
+                        <label>File Name</label>
+                        <input class="form-control" id="saveFileName" type="text">
+                    </div>
+                </form>
+
+                <button type="button" class="btn btn-primary" onclick="openFile()">Open File</button>
+                <form role="form">
+                    <div class="form-group">
+                        <label>File Name</label>
+                        <input class="form-control" id="openFileName" type="text">
+                    </div>
+                </form>
+
+                <a name="editor">
+                    <div class="CodeMirror cm-s-erlang-dark">
+                        <div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 4px; left: 35px;">
+                            <textarea tabindex="0" spellcheck="false" autocapitalize="off" autocorrect="off"
+                                      style="position: absolute; padding: 0px; width: 1px; height: 1em; outline: medium none;"
+                                      wrap="off"></textarea></div>
+                        <div cm-not-content="true" class="CodeMirror-vscrollbar">
+                            <div style="min-width: 1px; height: 0px;"></div>
+                        </div>
+                        <div cm-not-content="true" class="CodeMirror-hscrollbar">
+                            <div style="height: 100%; min-height: 1px; width: 0px;"></div>
+                        </div>
+                        <div cm-not-content="true" class="CodeMirror-scrollbar-filler"></div>
+                        <div cm-not-content="true" class="CodeMirror-gutter-filler"></div>
+                        <div draggable="true" tabindex="-1" class="CodeMirror-scroll">
+                            <div style="margin-left: 31px; margin-bottom: -11px; border-right-width: 19px; min-height: 148px; min-width: 473.667px; padding-right: 0px; padding-bottom: 0px;"
+                                 class="CodeMirror-sizer">
+                                <div style="position: relative; top: 0px;">
+                                    <div class="CodeMirror-lines">
+                                        <div style="position: relative; outline: medium none;">
+                                            <div class="CodeMirror-measure"><span><span>​</span>x</span></div>
+                                            <div class="CodeMirror-measure"></div>
+                                            <div style="position: relative; z-index: 1;"></div>
+                                            <div class="CodeMirror-cursors">
+                                                <div style="left: 4px; top: 0px; height: 20px;"
+                                                     class="CodeMirror-cursor">&nbsp;</div>
+                                            </div>
+                                            <div style="" class="CodeMirror-code">
+                                                <div style="position: relative;">
+                                                    <div style="left: -31px;" class="CodeMirror-gutter-wrapper">
+                                                        <div style="left: 0px; width: 21px;"
+                                                             class="CodeMirror-linenumber CodeMirror-gutter-elt">1
+                                                        </div>
+                                                    </div>
+                                                    <pre class=" CodeMirror-line "><span><span
+                                                            class="cm-keyword">public</span> <span class="cm-keyword">class</span> <span
+                                                            class="cm-def">HelloWorld</span> {</span></pre>
+                                                </div>
+                                                <div style="position: relative;">
+                                                    <div style="left: -31px;" class="CodeMirror-gutter-wrapper">
+                                                        <div style="left: 0px; width: 21px;"
+                                                             class="CodeMirror-linenumber CodeMirror-gutter-elt">2
+                                                        </div>
+                                                    </div>
+                                                    <pre class=" CodeMirror-line "><span><span
+                                                            cm-text="">​</span></span></pre>
+                                                </div>
+                                                <div style="position: relative;">
+                                                    <div style="left: -31px;" class="CodeMirror-gutter-wrapper">
+                                                        <div style="left: 0px; width: 21px;"
+                                                             class="CodeMirror-linenumber CodeMirror-gutter-elt">3
+                                                        </div>
+                                                    </div>
+                                                    <pre class=" CodeMirror-line "><span><span cm-text="	"
+                                                                                               role="presentation"
+                                                                                               class="cm-tab">    </span><span
+                                                            class="cm-keyword">public</span> <span class="cm-keyword">static</span> <span
+                                                            class="cm-variable-3">void</span> <span class="cm-variable">main</span>(<span
+                                                            class="cm-variable-3">String</span>[] <span
+                                                            class="cm-variable">args</span>) {</span></pre>
+                                                </div>
+                                                <div style="position: relative;">
+                                                    <div style="left: -31px;" class="CodeMirror-gutter-wrapper">
+                                                        <div style="left: 0px; width: 21px;"
+                                                             class="CodeMirror-linenumber CodeMirror-gutter-elt">4
+                                                        </div>
+                                                    </div>
+                                                    <pre class=" CodeMirror-line "><span><span cm-text="	"
+                                                                                               role="presentation"
+                                                                                               class="cm-tab">    </span><span
+                                                            cm-text="	" role="presentation"
+                                                            class="cm-tab">    </span><span class="cm-comment">// Prints "Hello, World" to the terminal window.</span></span></pre>
+                                                </div>
+                                                <div style="position: relative;">
+                                                    <div style="left: -31px;" class="CodeMirror-gutter-wrapper">
+                                                        <div style="left: 0px; width: 21px;"
+                                                             class="CodeMirror-linenumber CodeMirror-gutter-elt">5
+                                                        </div>
+                                                    </div>
+                                                    <pre class=" CodeMirror-line "><span><span cm-text="	"
+                                                                                               role="presentation"
+                                                                                               class="cm-tab">    </span><span
+                                                            cm-text="	" role="presentation"
+                                                            class="cm-tab">    </span><span
+                                                            class="cm-variable">System</span>.<span class="cm-variable">out</span>.<span
+                                                            class="cm-variable">println</span>(<span class="cm-string">"Hello, World"</span>);</span></pre>
+                                                </div>
+                                                <div style="position: relative;">
+                                                    <div style="left: -31px;" class="CodeMirror-gutter-wrapper">
+                                                        <div style="left: 0px; width: 21px;"
+                                                             class="CodeMirror-linenumber CodeMirror-gutter-elt">6
+                                                        </div>
+                                                    </div>
+                                                    <pre class=" CodeMirror-line "><span><span cm-text="	"
+                                                                                               role="presentation"
+                                                                                               class="cm-tab">    </span>}</span></pre>
+                                                </div>
+                                                <div style="position: relative;">
+                                                    <div style="left: -31px;" class="CodeMirror-gutter-wrapper">
+                                                        <div style="left: 0px; width: 21px;"
+                                                             class="CodeMirror-linenumber CodeMirror-gutter-elt">7
+                                                        </div>
+                                                    </div>
+                                                    <pre class=" CodeMirror-line "><span>}</span></pre>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="position: absolute; height: 19px; width: 1px; border-bottom: 0px solid transparent; top: 148px;"></div>
+                            <div style="height: 167px;" class="CodeMirror-gutters">
+                                <div style="width: 29px;" class="CodeMirror-gutter CodeMirror-linenumbers"></div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <button type="button" class="button js-trigger">Chat</button>
+        <!-- New Chat-->
+        <div id="sidebar">
+        </div>
+        <div id="chatControls">
+            <input id="message" placeholder="Type your message">
+            <button type="button" id="send">Send</button>
+        </div>
+        <ul id="userlist">
+            <li>null</li>
+        </ul>
+        <div id="chat2">
+            <article><b>Server:</b>
+                <p>null joined the chat</p></article>    <!-- Built by JS --> </div>
+
+
+    </div>
+    <div class="row">
+        <div class="pad-top25px"></div>
+    </div>
+    <div class="row">
+    </div>
+    <div class="row">
+        <div class="pad-top25px"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+            <div class="Console">
+                Console
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script src="sQuire_files/codemirror.js"></script>
+<link rel="stylesheet" href="sQuire_files/codemirror.css">
+<link rel="stylesheet" href="sQuire_files/erlang-dark.css">
+<script src="sQuire_files/clike.js"></script>
+<link rel="stylesheet" href="sQuire_files/editor.css">
+<script src="sQuire_files/editor.js"></script>
+<script src="sQuire_files/commands.js"></script>
+
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="sQuire_files/jquery.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="sQuire_files/bootstrap_002.js"></script>
+
+
+</body>
+</html>
