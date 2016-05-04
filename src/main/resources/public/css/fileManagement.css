@@ -5,6 +5,7 @@
     text-align: left;
     overflow: scroll;
     color: black;
+    position: relative;
 }
 
 .button-text-only {
@@ -23,35 +24,42 @@
 }
 
 .sub-folder {
+    position: relative;
+    height: auto;
     width: 100%;
-    display: inline-block;
+    /*display: inline-block;*/
 }
 
 .context1 {
+    position: relative;
     width: 100%;
     background-color: transparent;
+    height: 19px;
 }
 
 .sub-container {
-    top: -3px;
-    display: inline-block;
     margin-left: 0;
     position: relative;
-    float: left;
-    width: inherit;
+
 }
 
+
 .sub-folder-container {
-    position: absolute;
+    position: relative;
     left: 10px;
     width: 100%;
+    height: auto;
 }
 
 .file-container {
+    position: relative;
     padding-left: 20px;
+    bottom: 0;
+    height: auto;
 }
 
 .file {
+    position: relative;
     color: black;
 }
 

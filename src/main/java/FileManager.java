@@ -106,6 +106,6 @@ public class FileManager {
         return data;
     }
     public boolean checkForData(String pName) {
-        return Files.exists(Paths.get("projects/" + projectName +"/fileStructureHTML.txt"));
+        return Files.exists(Paths.get("projects/" + pName +"/fileStructureHTML.txt"));
     }
 }

@@ -33,28 +33,42 @@ public class fileManagementHandler {
     static Map<Session, String> userUsernameMap = new HashMap<>();
     public static String message;
     public static String pName;
+    private static String path;
+    public String getCurrOpenPath() {return path;}
+    private boolean dataExist;
     @OnWebSocketConnect
     public void creator(Session user) throws Exception {
         FileManager.createProjectSpace();
         username = Chat.currentUserName;
         userUsernameMap.put(user, username);
         System.out.println("at connect..." + message);
-        if(manager == null && message != null && message.equals("new")) {
-            System.out.println("Trying to update new..." + message + " " + pName);
-            updateFileStructureAll(message, pName);
-            message = "nil";
-            manager = new FileManager();
-            manager.projectName = pName;
-        }
-        else if(manager != null && manager.checkForData(pName)) {
-            try {
-                //if (manager != null) {
+        if (pName != null) {
+            System.out.println("fileManagementHandler: ...looking for project to open");
+            if (manager == null) {
+                manager = new FileManager();
+                manager.projectName = pName;
+                dataExist = manager.checkForData(pName);
+            } else {
+                dataExist = manager.checkForData(pName);
+                System.err.println("fileManagementHandler: Found data!");
+            }
+            if (!dataExist && message != null && message.equals("new")) {
+                System.out.println("Trying to update new..." + message + " " + pName);
+                updateFileStructureAll(message, pName);
+                message = "nil";
+            } else if (dataExist) {
+                try {
+                    //if (manager != null) {
                     user.getRemote().sendString(String.valueOf(
                             new JSONObject().put("targetID", "fileManagementStart").put("htmlContent", manager.readFileStructureData())));
-                //}
-            } catch (Exception e) {
-                e.printStackTrace();
+                    //}
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
+        }
+        else {
+            System.err.println("fileManagementHandler: No project to open.");
         }
     }
     @OnWebSocketClose
@@ -117,12 +131,13 @@ public class fileManagementHandler {
             FileManager.createFile(decoded_command[1]);
         }
         else if (decoded_command[0].equals("open2")) {
-            System.out.println("fileManagementHandler:Open2\n");
+            path = decoded_command[1];
+            System.out.println("fileManagementHandler:Open2 " + path +" ");
             List<String> lines = new ArrayList<String>();
             try {
-                lines = Files.readAllLines(Paths.get(/*System.getProperty("user.home") + "/sQuire/" + */decoded_command[1]));
+                lines = Files.readAllLines(Paths.get("projects"+decoded_command[1]));
             } catch (IOException e) {
-                System.err.println("FileManager::else if(open2) IOException: I/O error; file cannot be read.");
+                System.err.println("FileManager::else if(open2) IOException: I/O error; file cannot be read: " + e);
             }
                 String file_as_str = "";
             for (String s : lines) {
@@ -130,6 +145,7 @@ public class fileManagementHandler {
             }
             Editor.file = file_as_str;
             // This is a hack but it updates users
+            Editor.updateEditors("User OPEN", file_as_str);
             Editor.updateEditors("User OPEN", file_as_str);
             System.out.println("Handler:Open:file: "+file_as_str);
         }

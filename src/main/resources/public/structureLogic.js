@@ -63,8 +63,8 @@ function fileDict() {
             subDiv.appendChild(filesDiv);
             folderDiv.appendChild(subDiv);
             contextDiv.setAttribute("oncontextmenu", "menuShowHide(event)");
-            contextDiv.addEventListener("focus", changeBackground, true);
-            contextDiv.addEventListener("blur", changeBackground, true);
+            //contextDiv.addEventListener("focus", changeBackground, true);
+            //contextDiv.addEventListener("blur", changeBackground, true);
             if (divID == "") { //in the case of an empty file structure
                 document.getElementById("fileManagementStart").appendChild(folderDiv);
                 //webSocketFileManagement.send("addFolder:" /*+ "/home/austin/sQuire/"*/ + dirLocate + "/" + folderName
@@ -133,7 +133,7 @@ function fileDict() {
 
     };
     this.getCurrTarget = function() {
-        return targetDict[cMenu1Target];
+        return cMenu1Target;
     };
     this.getMenuTarget = function(){
         return cMenu1Target;
@@ -148,7 +148,7 @@ function fileDict() {
             return false;
     };
     this.setCurrentOpenFile = function(filePath){
-        if (currentOpenFilePath != null) {
+        if (currentOpenFilePath == null) {
             currentOpenFilePath = filePath;
         }
         else {
@@ -160,7 +160,7 @@ function fileDict() {
 
 function initFileStructure(projectName) {
     dict.projectName = projectName;
-    webSocketFileManagement.send("newProject:"+projectName);
+    //webSocketFileManagement.send("newProject:"+projectName);
     dict.setMenuTarget(""); //just in case
     dict.addFolder(projectName, "root-folder");
     dict.setMenuTarget("-" + projectName);
@@ -249,12 +249,17 @@ function changeBackground(event) {
 }
 
 function fileOpenDoubleClick(event) {
-    webSocketFileManagement.send("open2:" /*+ "/home/austin/sQuire/"*/ + event.target.parentNode.getAttribute("id").replace(/-/g, "/").replace(/\?/g, "-"));
+    console.log("open dbl click");
+    webSocketFileManagement.send("open2:" +
+        targetType(event).replace(/-/g, "/").replace(/\?/g, "-"));
 }
 
-function fileOpenFromMenu(event) {
-
+function fileOpenFromMenu() {
+    console.log("open from menu");
+    webSocketFileManagement.send("open2:" +
+        dict.getCurrTarget().replace(/-/g, "/").replace(/\?/g, "-"));
 }
+
 function menuHide() {
     if(cMenu1.getAttribute("class") == "contextMenuShow") {
         cMenu1.setAttribute("class", "contextMenuHide");
