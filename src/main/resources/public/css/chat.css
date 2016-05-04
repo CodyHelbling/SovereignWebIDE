@@ -26,7 +26,7 @@ html {
     line-height: 1.2;
     border-radius: 3px;
     border: 3px solid #343436;
-    background: #343436;
+    background: #28282B;/*#343436;*/
     color: white;
     cursor: pointer;
     white-space: nowrap;
