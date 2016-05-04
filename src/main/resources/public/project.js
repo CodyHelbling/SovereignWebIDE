@@ -52,4 +52,5 @@ function OpenProj() {
     xhttp1.open("POST", "/openproject", true);
     console.log("OpenProjectData: " + OpenProjectData);
     xhttp1.send(JSON.stringify(OpenProjectData));
+   // initFileStructure(OpenProjectData.projName);
 }

@@ -15,7 +15,7 @@ import java.lang.*;
 
 @WebSocket
 public class CommandsHandler {
-
+    fileManagementHandler manager;
     private int NumberOfUsers = 0;
     private String msg;
     private FileManager projectSpace;
@@ -44,7 +44,11 @@ public class CommandsHandler {
 
 
         if(decoded_command[0].equals("save")) {
-            Commands.save_file(decoded_command[1]);
+            manager = new fileManagementHandler();
+            if(manager.getCurrOpenPath() != null)
+                Commands.save_file(manager.getCurrOpenPath());
+            else
+                Commands.save_file(decoded_command[1]);
         }
         else if (decoded_command[0].equals("open")) {
             System.out.println("Handler:Open\n");
