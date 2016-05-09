@@ -98,7 +98,7 @@ function fileDict() {
 
     this.addFile = function(fileName) {
         var fileNameFix = fileName.replace(/-/g, "?"); //replace - with illegal "?" to prevent path corruption
-        if (!(targetDict[cMenu1Target+"-"+fileNameFix])) {
+        if (!(document.getElementById(cMenu1Target+"-"+fileNameFix))) {
             var dirLocate = cMenu1Target.replace(/-/g, "/");
             var divID = cMenu1Target;
             var div = createDiv(cMenu1Target+"-"+fileNameFix, "file");
@@ -177,6 +177,10 @@ function updateFileStructure(htmlData) {
     }
     else if (newHtml.htmlContent != "") {
         console.log("Updating file structure with..." + newHtml.htmlContent);
+        document.getElementById(newHtml.targetID).innerHTML = newHtml.htmlContent;
+    }
+    else if (newHtml.htmlContent == "") {
+        console.log("Updating file structure with... No content");
         document.getElementById(newHtml.targetID).innerHTML = newHtml.htmlContent;
     }
     else {
